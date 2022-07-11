@@ -1,45 +1,71 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { Notifications } from './component/Notification';
+import { fetchApi, getToken, setToken } from './lib/api';
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+interface AppContextContainerType {
+    app: AppContextType;
+    updateApp: (changes: AppContextType) => void;
 }
 
-export default App
+interface AppContextType {
+    token?: string;
+    tuuid?: string;
+    user?: UserType;
+}
+
+interface UserType {
+    id: number;
+    username: string;
+}
+
+const AppContext = createContext<AppContextContainerType>(null!)
+
+function App({ children }: { children: React.ReactNode }) {
+    let savedToken = getToken()
+    const [ctx, setCtx] = useState<AppContextType>({})
+    const [loading, setLoading] = useState(!!savedToken)
+
+    const updateApp = (newVal: AppContextType) => {
+        setCtx((old) => {
+            const clone = { ...old, ...newVal }
+            if (old.token != clone.token)
+                setToken(clone.token)
+            return clone
+        })
+    }
+
+    useEffect(() => {
+        if (savedToken) {
+            fetchApi("/auth").then(async response => {
+                if (response.status != 200) {
+                    updateApp({
+                        token: undefined,
+                        user: undefined,
+                    })
+                } else if (response.ok) {
+                    const body = await response.json()
+                    updateApp({
+                        token: savedToken as string,
+                        user: body.response,
+                    })
+                }
+                setLoading(false)
+            }).catch(error => {
+                console.log(error)
+                Notifications.error('sdsadsd')
+            });
+        }
+    }, [])
+
+    if (loading) {
+        return <p>Loading...</p>
+    }
+
+    return <AppContext.Provider value={{ app: ctx, updateApp }}>
+        {children}
+    </AppContext.Provider>
+}
+
+const useApp = () => useContext(AppContext)
+
+export { App, useApp }
