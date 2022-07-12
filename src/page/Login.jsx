@@ -11,15 +11,12 @@ export const LoginPage = () => {
         try {
             const response = await fetchApi('/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+                body: {
                     username: login,
                     password,
                     tuuid: app.tuuid,
                     recaptcha_response: ''
-                })
+                }
             })
             const body = await response.json()
             if (response.ok) {

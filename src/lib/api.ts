@@ -14,15 +14,25 @@ interface ApiRequestInit extends Omit<RequestInit, 'headers'> {
     headers?: Record<string, string>;
 }
 
+function addHeader(options: ApiRequestInit, name: string, value: string) {
+    options.headers = options.headers || {}
+    options.headers[name] = value
+}
+
+// https://stackoverflow.com/a/8511350/6620659
+function isObject(val: any): boolean {
+    return typeof val === 'object' &&
+        !Array.isArray(val) &&
+        val !== null
+}
+
 export const fetchApi = async (path: string, options: ApiRequestInit = {}) => {
-    if (cachedToken) {
-        if (options.headers) {
-            options.headers['Authorization'] = 'Bearer ' + cachedToken
-        } else {
-            options.headers = {
-                'Authorization': 'Bearer ' + cachedToken,
-            };
-        }
+    if (cachedToken)
+        addHeader(options, 'Authorization', 'Bearer ' + cachedToken)
+
+    if (isObject(options.body)) {
+        options.body = JSON.stringify(options.body)
+        addHeader(options, 'Content-Type', 'application/json')
     }
 
     const url = import.meta.env.VITE_API_ENDPOINT + path
