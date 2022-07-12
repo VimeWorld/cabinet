@@ -41,7 +41,6 @@ export const fetchApi = async (path: string, options: ApiRequestInit = {}) => {
 
 export const setToken = (token?: string) => {
     cachedToken = token || ''
-    console.log('setToken', token)
     if (token)
         localStorage.setItem('at', token)
     else
@@ -49,7 +48,6 @@ export const setToken = (token?: string) => {
 }
 
 export const getToken = (): string => {
-    console.log('getToken', cachedToken)
     return cachedToken
 }
 
