@@ -1,4 +1,6 @@
+import { useApp } from "../App"
 
 export const HomePage = () => {
-    return <h1>Home</h1>
+    const { app } = useApp()
+    return <h1>Hello {app.user.username}!</h1>
 }

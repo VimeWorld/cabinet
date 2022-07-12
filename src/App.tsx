@@ -78,21 +78,10 @@ function AppProvider({ children }: { children: React.ReactNode }) {
 
 const useApp = () => useContext(AppContext)
 
-let AuthRequired = (
-    { children }:
-        { children: JSX.Element }
-): JSX.Element => {
-    let { app } = useApp();
-    let location = useLocation();
-    if (!app.user)
-        return <Navigate to="/login" state={{ from: location }} replace />;
-    return children;
-};
-
 const pagesWithNoAuth = ['/login', '/register', '/recovery']
 const pagesWithNoMfa = ['/login_mfa', '/login_mfa_recovery']
 
-const AuthRedirector = ({ children }: { children?: JSX.Element | JSX.Element[] }): JSX.Element => {
+const AuthRedirector = (): JSX.Element => {
     const { app } = useApp()
     const location = useLocation()
     if (!app.user) {
