@@ -1,18 +1,19 @@
 import classNames from 'classnames';
 import { useEffect, useState, useRef } from 'react';
+import { Toast, ToastBody, ToastContainer } from 'react-bootstrap';
 
-let list: any[] = [];
+let list: any[] = []
 
-let idCounter = 0;
+let idCounter = 0
 let genNextId = () => {
-    idCounter++;
-    return "" + idCounter;
-};
+    idCounter++
+    return "" + idCounter
+}
 
 let hooks: any[] = [];
 let callHooks = () => {
-    hooks.forEach(h => h(list));
-};
+    hooks.forEach(h => h(list))
+}
 
 let defaultNotification: NotificationOptions = {
     ttl: 5000,
@@ -20,13 +21,13 @@ let defaultNotification: NotificationOptions = {
 };
 
 interface NotificationOptions {
-    ttl?: number;
-    type?: 'info' | 'success' | 'error';
+    ttl?: number
+    type?: 'info' | 'success' | 'error'
 }
 
 interface Notification extends NotificationOptions {
-    id: string;
-    message: string;
+    id: string
+    message: string
 }
 
 export const Notifications = {
@@ -37,69 +38,68 @@ export const Notifications = {
             ...defaultNotification,
             ...options,
         };
-        list.push(notify);
-        callHooks();
-        return notify;
+        list.push(notify)
+        callHooks()
+        return notify
     },
     error(message: string, options: NotificationOptions = {}): Notification {
         return this.add(message, {
             type: 'error',
             ...options,
-        });
+        })
     },
     success(message: string, options: NotificationOptions = {}): Notification {
         return this.add(message, {
             type: 'success',
             ...options,
-        });
+        })
     },
     remove(notify: Notification) {
-        let len = list.length;
-        list = list.filter(n => n.id !== notify.id);
+        let len = list.length
+        list = list.filter(n => n.id !== notify.id)
         if (list.length !== len)
-            callHooks();
+            callHooks()
     },
-};
+}
 
 let NotificationComponent = ({ notify }: { notify: Notification }) => {
-    let ref = useRef(null);
+    const [show, setShow] = useState(false)
+    useEffect(() => {
+        setShow(true)
+    }, [])
 
-    let color = classNames({
-        'bg-info': notify.type === 'info',
-        'bg-danger': notify.type === 'error',
-        'bg-success': notify.type === 'success',
-    });
+    let bg: string = notify.type!
+    if (bg === 'error')
+        bg = 'danger'
 
-    return (
-        <div ref={ref} className={"toast align-items-center text-white border-0 " + color} role="alert" aria-live="assertive" aria-atomic="true">
-            <div className="d-flex">
-                <div className="toast-body">
-                    {notify.message}
-                </div>
-                <button type="button" className="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-    );
-};
+    const onClose = () => {
+        setShow(false)
+        Notifications.remove(notify)
+    }
+
+    return <Toast show={show} bg={bg} onClose={onClose} delay={notify.ttl} autohide>
+        <Toast.Body>{notify.message}</Toast.Body>
+    </Toast>
+}
 
 export const NotificationBox = () => {
-    let [list, setList] = useState<Notification[]>([]);
+    let [list, setList] = useState<Notification[]>([])
 
     useEffect(() => {
         let handler = (data: Notification[]) => {
-            setList([...data]);
-        };
-        hooks.push(handler);
+            setList([...data])
+        }
+        hooks.push(handler)
         return () => {
             hooks = hooks.filter(elem => {
-                return elem !== handler;
-            });
-        };
-    }, []);
+                return elem !== handler
+            })
+        }
+    }, [setList])
 
     return (
-        <div className="toast-container position-fixed top-0 end-0 p-3">
+        <ToastContainer containerPosition='fixed' position='top-end'>
             {list.map(n => <NotificationComponent key={n.id} notify={n} />)}
-        </div>
+        </ToastContainer>
     )
 }
