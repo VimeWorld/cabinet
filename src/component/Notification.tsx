@@ -1,6 +1,5 @@
-import classNames from 'classnames';
-import { useEffect, useState, useRef } from 'react';
-import { Toast, ToastBody, ToastContainer } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { Toast, ToastContainer } from 'react-bootstrap';
 
 let list: any[] = []
 
@@ -63,21 +62,27 @@ export const Notifications = {
 }
 
 let NotificationComponent = ({ notify }: { notify: Notification }) => {
+    // Стейт нужен для рабочей анимации. Если создать тост сразу видимым, то не будет анимации появления
     const [show, setShow] = useState(false)
     useEffect(() => {
         setShow(true)
     }, [])
 
+    const onClose = () => {
+        if (!show)
+            return
+        setShow(false)
+        // Ждем завершение анимации
+        setTimeout(() => {
+            Notifications.remove(notify)
+        }, 1000)
+    }
+
     let bg: string = notify.type!
     if (bg === 'error')
         bg = 'danger'
 
-    const onClose = () => {
-        setShow(false)
-        Notifications.remove(notify)
-    }
-
-    return <Toast show={show} bg={bg} onClose={onClose} delay={notify.ttl} autohide>
+    return <Toast show={show} bg={bg} onClose={onClose} delay={notify.ttl} autohide onClick={onClose}>
         <Toast.Body>{notify.message}</Toast.Body>
     </Toast>
 }
@@ -98,7 +103,7 @@ export const NotificationBox = () => {
     }, [setList])
 
     return (
-        <ToastContainer containerPosition='fixed' position='top-end'>
+        <ToastContainer className='p-4' containerPosition='fixed' position='top-end'>
             {list.map(n => <NotificationComponent key={n.id} notify={n} />)}
         </ToastContainer>
     )
