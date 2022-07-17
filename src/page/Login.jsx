@@ -4,7 +4,7 @@ import { useApp } from "../App"
 import { Notifications } from "../component/Notification"
 import { fetchApi } from "../lib/api"
 import ReCAPTCHA from "react-google-recaptcha"
-import { Form } from "react-bootstrap"
+import { Form, Spinner } from "react-bootstrap"
 
 export const LoginPage = () => {
     const { app, updateApp } = useApp()
@@ -65,7 +65,7 @@ export const LoginPage = () => {
 
                     <Form.Group className="mb-3" controlId="password">
                         <Form.Label>Пароль</Form.Label>
-                        <Link className="float-end" to="/recovery">Забыли пароль?</Link>
+                        <Link className="float-end" to="/recovery" tabIndex="2">Забыли пароль?</Link>
                         <Form.Control type="password" required
                             value={password} onChange={e => setPassword(e.target.value)} />
                     </Form.Group>
@@ -78,10 +78,12 @@ export const LoginPage = () => {
 
                     <div className="mt-2 mb-4">
                         <button className="btn btn-lg btn-primary w-100" type="submit" disabled={loading}>
-                            {loading && <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>}
-                            {loading ? 'Загрузка...' : 'Вход'}
+                            {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                            {loading ? ' Загрузка...' : 'Вход'}
                         </button>
                     </div>
+
+                    <p className="text-center">Еще нет аккаунта? <Link to="/register">Регистрация</Link></p>
                 </Form>
             </div>
         </div>

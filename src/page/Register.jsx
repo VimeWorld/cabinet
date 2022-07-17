@@ -1,40 +1,227 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useRef, useState } from "react"
+import { Form, Spinner } from "react-bootstrap"
+import ReCAPTCHA from "react-google-recaptcha"
+import { useForm } from "react-hook-form"
+import { Link } from "react-router-dom"
+import { Notifications } from "../component/Notification"
 import { fetchApi } from "../lib/api"
 
-export const RegisterPage = () => {
-    const navigate = useNavigate()
-    const [login, setLogin] = useState('')
-    const [password, setPassword] = useState('')
-    const [email, setEmail] = useState('')
+const RegisterSuccessPage = () => {
+    return <section className="container vh-100">
+        <div className="row justify-content-center">
+            <div className="col-md-6 col-lg-4">
+                <div className="card w-100 p-4 mt-5">
+                    <h3 className="mb-1 text-center">VimeWorld</h3>
+                    <h5 className="fw-normal mb-4 text-center">Спасибо за регистрацию!</h5>
 
-    const submit = async () => {
+                    <p>Теперь вы можете <Link to="/login">войти</Link> в свой аккаунт.</p>
+                    <Link to="/login" className="btn btn-lg btn-primary w-100">Вход</Link>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+export const RegisterPage = () => {
+    const {
+        register,
+        handleSubmit,
+        watch,
+        setError,
+        formState: { errors },
+    } = useForm({
+        mode: 'onChange',
+        defaultValues: {
+            login: '',
+            password: '',
+            password_confirm: '',
+            email: '',
+        }
+    })
+
+    const [checkedLogin, setCheckedLogin] = useState({
+        login: '',
+        error: '',
+    })
+    const [loading, setLoading] = useState(false)
+    const [registered, setRegistered] = useState(false)
+    const recaptchaRef = useRef(null)
+
+    if (registered) {
+        return <RegisterSuccessPage />
+    }
+
+    const submit = async (data) => {
+        if (checkedLogin.login == data.login && checkedLogin.error) {
+            setError('login', { type: 'custom', message: checkedLogin.error }, { shouldFocus: true })
+            return
+        }
+        setLoading(true)
+
         try {
+            const recaptchaValue = recaptchaRef.current.getValue();
             const response = await fetchApi('/register', {
                 method: 'POST',
                 body: {
-                    username: login,
-                    password,
-                    email,
-                    recaptcha_response: ''
+                    username: data.login,
+                    password: data.password,
+                    email: data.email,
+                    recaptcha_response: recaptchaValue,
                 }
             })
             const body = await response.json()
             if (response.ok) {
-                navigate('/login')
+                setRegistered(true)
             } else {
-                console.log(body.response)
+                let message = null
+                switch (body.response.type) {
+                    case "username_exists":
+                        setError('login', { type: 'custom', message: 'Игрок с таким логином уже зарегистрирован' }, { shouldFocus: true })
+                        setCheckedLogin({ login, error: 'Игрок с таким логином уже зарегистрирован' })
+                        break
+                    case "invalid_username":
+                        setError('login', { type: 'custom', message: 'Недопустимый логин' }, { shouldFocus: true })
+                        break
+                    case "invalid_password":
+                        setError('password', { type: 'custom', message: 'Недопустимый пароль' }, { shouldFocus: true })
+                        break
+                    case "invalid_email":
+                        setError('email', { type: 'custom', message: 'Недопустимый Email' }, { shouldFocus: true })
+                        break
+                    case "captcha":
+                        message = 'Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.'
+                        break
+                    default:
+                        message = body.response.title
+                }
+                if (message)
+                    Notifications.error(message)
             }
         } catch (e) {
-            console.log(e)
+            Notifications.error('Невозможно подключиться к серверу')
         }
+        setLoading(false)
     }
 
-    return <div>
-        <h1>Register</h1>
-        <input type="text" value={login} onChange={e => setLogin(e.target.value)} placeholder="Login" />
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
-        <input type="text" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
-        <button onClick={submit}>Submit</button>
-    </div>
+    const onLoginBlur = async () => {
+        const login = watch('login')
+        if (!!errors.login || !login)
+            return
+        if (checkedLogin.login == login && !checkedLogin.error)
+            return
+
+        let error = ''
+        try {
+            const response = await fetchApi('/user?name=' + login)
+            if (response.ok) {
+                const body = await response.json()
+                if (body.response.exists)
+                    error = 'Игрок с таким логином уже зарегистрирован'
+            } else {
+                error = 'Ошибка сервера, невозможно проверить доступность логина'
+            }
+        } catch {
+            error = 'Сетевая ошибка, невозможно проверить доступность логина'
+        }
+        if (error)
+            setError('login', { type: 'custom', message: error })
+        setCheckedLogin({ login, error })
+    }
+
+    return <section className="container vh-100">
+        <div className="row justify-content-center">
+            <div className="col-md-6 col-lg-4">
+                <Form className="card w-100 p-4 mt-5" onSubmit={handleSubmit(submit)}>
+                    <h3 className="mb-1 text-center">VimeWorld</h3>
+                    <h5 className="fw-normal mb-4 text-center">Регистрация аккаунта</h5>
+
+                    <Form.Group className="mb-3" controlId="login">
+                        <Form.Label>Логин</Form.Label>
+                        <Form.Control
+                            {...register('login', {
+                                required: 'Логин не может быть пустым',
+                                minLength: {
+                                    value: 3,
+                                    message: 'Логин должен быть не менее 3 символов'
+                                },
+                                maxLength: {
+                                    value: 16,
+                                    message: 'Логина должен быть не более 16 символов'
+                                },
+                                pattern: {
+                                    value: /^[0-9a-zA-Z_]{3,16}$/,
+                                    message: 'Логин может содержать только англ. буквы, цифры и _'
+                                }
+                            })}
+                            isInvalid={!!errors.login}
+                            isValid={checkedLogin.login && !checkedLogin.error && checkedLogin.login == watch('login')}
+                            onBlur={onLoginBlur}
+                        />
+                        {errors.login && <Form.Control.Feedback type="invalid">{errors.login.message}</Form.Control.Feedback>}
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="password">
+                        <Form.Label>Пароль</Form.Label>
+                        <Form.Control type="password" {...register('password', {
+                            required: 'Пароль не может быть пустым',
+                            minLength: {
+                                value: 6,
+                                message: 'Минимальная длина пароля 6 символов'
+                            },
+                            maxLength: {
+                                value: 50,
+                                message: 'Максимальная длина пароля 50 символов'
+                            },
+                            deps: ['password_confirm']
+                        })} isInvalid={!!errors.password} />
+                        {errors.password && <Form.Control.Feedback type="invalid">{errors.password.message}</Form.Control.Feedback>}
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="password_confirm">
+                        <Form.Label>Повтор пароля</Form.Label>
+                        <Form.Control type="password" {...register('password_confirm', {
+                            validate: (val) => {
+                                if (watch('password') != val)
+                                    return 'Пароли должны совпадать'
+                            },
+                        })} isInvalid={!!errors.password_confirm} />
+                        {errors.password_confirm && <Form.Control.Feedback type="invalid">{errors.password_confirm.message}</Form.Control.Feedback>}
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="email">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="email" {...register('email', {
+                            required: 'Email не может быть пустым',
+                            validate: (val) => {
+                                if (!/^[0-9a-zA-Z_\-.@]+$/.test(val))
+                                    return 'Email содержит недопустимые символы'
+                                if (!/^[0-9a-zA-Z_\-.]{1,64}@[0-9a-zA-Z_\-.]{4,190}$/.test(val))
+                                    return 'Введен некорректный Email'
+                            },
+                        })} isInvalid={!!errors.email} />
+                        {errors.email && <Form.Control.Feedback type="invalid">{errors.email.message}</Form.Control.Feedback>}
+                    </Form.Group>
+
+                    <ReCAPTCHA
+                        ref={recaptchaRef}
+                        sitekey={import.meta.env.VITE_RECAPTCHA_KEY}
+                        size="invisible"
+                    />
+
+                    <p className="text-center text-muted text-small"><small>
+                        Нажатием кнопки Регистрация, вы соглашаетесь с <a href="https://vime.one/terms">Пользовательским соглашением</a>, <a href="https://vime.one/rules">Правилами сервера</a> и признаете что применяется наша <a href="https://vime.one/privacy">Политика конфиденциальности</a>.
+                    </small></p>
+
+                    <div className="mt-2 mb-4">
+                        <button className="btn btn-lg btn-primary w-100" type="submit" disabled={loading}>
+                            {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                            {loading ? ' Загрузка...' : 'Регистрация'}
+                        </button>
+                    </div>
+
+                    <p className="text-center">Уже есть аккаунт? <Link to="/login">Войти</Link></p>
+                </Form>
+            </div>
+        </div>
+    </section>
 }
