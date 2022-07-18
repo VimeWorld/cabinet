@@ -1,4 +1,4 @@
-import { useApp } from "../App"
+import useApp from "../hook/useApp"
 
 export const HomePage = () => {
     const { app } = useApp()

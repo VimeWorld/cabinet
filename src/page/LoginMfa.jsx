@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { Form, Spinner } from "react-bootstrap"
 import { useForm } from "react-hook-form"
-import { useApp } from "../App"
 import Notifications from '../lib/notifications';
 import { fetchApi } from "../lib/api"
 import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha";
 import { Link } from "react-router-dom";
+import useApp from "../hook/useApp";
 
 export const LoginMfaRecoveryPage = () => {
     const { app, updateApp, logout } = useApp()

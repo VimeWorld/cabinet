@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { useApp } from "../App"
 import Notifications from '../lib/notifications';
 import { fetchApi } from "../lib/api"
 import { Form, Spinner } from "react-bootstrap"
 import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha";
+import useApp from "../hook/useApp";
 
 export const LoginPage = () => {
     const { app, updateApp } = useApp()

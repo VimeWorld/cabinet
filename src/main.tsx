@@ -5,13 +5,14 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import { AppProvider, AuthRedirector } from './App'
 import NotificationBox from './component/NotificationBox'
 import { LoginMfaPage, LoginMfaRecoveryPage } from './page/LoginMfa'
 import { RegisterPage } from './page/Register'
 import { LoginPage } from './page/Login'
 import { InnerPage } from './component/InnerPage'
 import { HomePage } from './page/Home'
+import AuthRedirector from './component/AuthRedirector'
+import AppProvider from './component/AppProveder'
 
 
 
