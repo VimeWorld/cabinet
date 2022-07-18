@@ -13,6 +13,7 @@ import { InnerPage } from './component/InnerPage'
 import { HomePage } from './page/Home'
 import AuthRedirector from './component/AuthRedirector'
 import AppProvider from './component/AppProveder'
+import { PaymentsPage } from './page/Payments'
 
 
 
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path='/recovery' element={<h1>Password recovery</h1>} />
             <Route path='/' element={<InnerPage />}>
               <Route path='/' element={<HomePage />} />
+              <Route path='/payments' element={<PaymentsPage />} />
             </Route>
             <Route path="*" element={<h1>Not found</h1>} />
           </Route>
