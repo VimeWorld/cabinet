@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Toast, ToastContainer } from 'react-bootstrap';
+import { CloseButton, Toast, ToastContainer } from 'react-bootstrap';
 import Notifications, { subscribeNotificationChange, unsubscribeNotificationChange } from '../lib/notifications';
 
 const NotificationComponent = ({ notify }) => {
@@ -19,11 +19,27 @@ const NotificationComponent = ({ notify }) => {
         }, 1000)
     }
 
-    let bg = notify.type
-    if (bg === 'error') bg = 'danger'
+    let color = notify.type
+    if (color === 'error') color = 'danger'
+    color = 'text-bg-' + color
 
-    return <Toast show={show} bg={bg} onClose={onClose} delay={notify.ttl} autohide onClick={onClose}>
-        <Toast.Body>{notify.message}</Toast.Body>
+    return <Toast
+        show={show}
+        className={"mb-3 border-0 " + color}
+        onClose={onClose}
+        delay={notify.ttl}
+        autohide
+    >
+        <div className="d-flex">
+            <Toast.Body>{notify.message}</Toast.Body>
+            <CloseButton
+                aria-label="Close"
+                variant='white'
+                onClick={onClose}
+                data-dismiss="toast"
+                className='me-2 m-auto'
+            />
+        </div>
     </Toast>
 }
 
@@ -37,7 +53,7 @@ const NotificationBox = () => {
     }, [setList])
 
     return (
-        <ToastContainer className='p-4' containerPosition='fixed' position='top-end'>
+        <ToastContainer className='p-3' containerPosition='fixed' position='top-end'>
             {list.map(n => <NotificationComponent key={n.id} notify={n} />)}
         </ToastContainer>
     )
