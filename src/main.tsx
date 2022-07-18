@@ -2,8 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import './bootstrap.scss'
 import './index.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 import NotificationBox from './component/NotificationBox'
 import { LoginMfaPage, LoginMfaRecoveryPage } from './page/LoginMfa'
