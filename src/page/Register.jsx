@@ -1,10 +1,10 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { Form, Spinner } from "react-bootstrap"
-import ReCAPTCHA from "react-google-recaptcha"
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
-import { Notifications } from "../component/Notification"
+import Notifications from '../lib/notifications';
 import { fetchApi } from "../lib/api"
+import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha";
 
 const RegisterSuccessPage = () => {
     return <section className="container vh-100">
@@ -45,13 +45,16 @@ export const RegisterPage = () => {
     })
     const [loading, setLoading] = useState(false)
     const [registered, setRegistered] = useState(false)
-    const recaptchaRef = useRef(null)
+    const { recaptchaComponent, getRecaptchaValue } = useInvisibleRecaptcha()
 
     if (registered) {
         return <RegisterSuccessPage />
     }
 
     const submit = async (data) => {
+        if (loading)
+            return
+
         if (checkedLogin.login == data.login && checkedLogin.error) {
             setError('login', { type: 'custom', message: checkedLogin.error }, { shouldFocus: true })
             return
@@ -59,7 +62,7 @@ export const RegisterPage = () => {
         setLoading(true)
 
         try {
-            const recaptchaValue = recaptchaRef.current.getValue();
+            const recaptchaValue = await getRecaptchaValue()
             const response = await fetchApi('/register', {
                 method: 'POST',
                 body: {
@@ -73,7 +76,6 @@ export const RegisterPage = () => {
             if (response.ok) {
                 setRegistered(true)
             } else {
-                let message = null
                 switch (body.response.type) {
                     case "username_exists":
                         setError('login', { type: 'custom', message: 'Игрок с таким логином уже зарегистрирован' }, { shouldFocus: true })
@@ -89,13 +91,11 @@ export const RegisterPage = () => {
                         setError('email', { type: 'custom', message: 'Недопустимый Email' }, { shouldFocus: true })
                         break
                     case "captcha":
-                        message = 'Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.'
+                        Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.')
                         break
                     default:
-                        message = body.response.title
+                        Notifications.error(body.response.title)
                 }
-                if (message)
-                    Notifications.error(message)
             }
         } catch (e) {
             Notifications.error('Невозможно подключиться к серверу')
@@ -202,11 +202,7 @@ export const RegisterPage = () => {
                         {errors.email && <Form.Control.Feedback type="invalid">{errors.email.message}</Form.Control.Feedback>}
                     </Form.Group>
 
-                    <ReCAPTCHA
-                        ref={recaptchaRef}
-                        sitekey={import.meta.env.VITE_RECAPTCHA_KEY}
-                        size="invisible"
-                    />
+                    {recaptchaComponent}
 
                     <p className="text-center text-muted text-small"><small>
                         Нажатием кнопки Регистрация, вы соглашаетесь с <a href="https://vime.one/terms">Пользовательским соглашением</a>, <a href="https://vime.one/rules">Правилами сервера</a> и признаете что применяется наша <a href="https://vime.one/privacy">Политика конфиденциальности</a>.

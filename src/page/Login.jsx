@@ -1,25 +1,28 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useApp } from "../App"
-import { Notifications } from "../component/Notification"
+import Notifications from '../lib/notifications';
 import { fetchApi } from "../lib/api"
-import ReCAPTCHA from "react-google-recaptcha"
 import { Form, Spinner } from "react-bootstrap"
+import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha";
 
 export const LoginPage = () => {
     const { app, updateApp } = useApp()
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
-    const recaptchaRef = useRef(null)
+    const { recaptchaComponent, getRecaptchaValue } = useInvisibleRecaptcha()
 
     const submit = async (e) => {
+        if (loading)
+            return
+
         e.preventDefault()
         e.stopPropagation()
         setLoading(true)
 
         try {
-            const recaptchaValue = recaptchaRef.current.getValue();
+            const recaptchaValue = await getRecaptchaValue()
             const response = await fetchApi('/login', {
                 method: 'POST',
                 body: {
@@ -36,13 +39,20 @@ export const LoginPage = () => {
                     user: body.response.auth,
                 })
             } else {
-                let message = body.response.title
                 switch (body.response.type) {
                     case "invalid_credentials":
-                        message = 'Некорректный логин или пароль'
+                        Notifications.error('Некорректный логин или пароль')
+                        break
+                    case "throttle":
+                        Notifications.warning('Слишком много попыток, попробуйте позже')
+                        break
+                    case "captcha":
+                        Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.')
+                        break
+                    default:
+                        Notifications.error(body.response.title)
                         break
                 }
-                Notifications.error(message)
             }
         } catch (e) {
             Notifications.error('Невозможно подключиться к серверу')
@@ -70,11 +80,7 @@ export const LoginPage = () => {
                             value={password} onChange={e => setPassword(e.target.value)} />
                     </Form.Group>
 
-                    <ReCAPTCHA
-                        ref={recaptchaRef}
-                        sitekey={import.meta.env.VITE_RECAPTCHA_KEY}
-                        size="invisible"
-                    />
+                    {recaptchaComponent}
 
                     <div className="mt-2 mb-4">
                         <button className="btn btn-lg btn-primary w-100" type="submit" disabled={loading}>

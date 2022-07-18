@@ -6,8 +6,8 @@ import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { AppProvider, AuthRedirector } from './App'
-import { NotificationBox } from './component/Notification'
-import { LoginMfaPage } from './page/LoginMfa'
+import NotificationBox from './component/NotificationBox'
+import { LoginMfaPage, LoginMfaRecoveryPage } from './page/LoginMfa'
 import { RegisterPage } from './page/Register'
 import { LoginPage } from './page/Login'
 import { InnerPage } from './component/InnerPage'
@@ -22,7 +22,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path='/' element={<AuthRedirector />}>
             <Route path='/login' element={<LoginPage />} />
-            <Route path='/login_mfa' element={<LoginMfaPage />} />
+            <Route path='/login/mfa' element={<LoginMfaPage />} />
+            <Route path='/login/mfa/recovery' element={<LoginMfaRecoveryPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/recovery' element={<h1>Password recovery</h1>} />
             <Route path='/' element={<InnerPage />}>

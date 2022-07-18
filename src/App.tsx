@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { Notifications } from './component/Notification';
+import Notifications from './lib/notifications';
 import { fetchApi, getToken, setToken, getTuuid } from './lib/api';
 
 interface AppContextContainerType {
     app: AppContextType;
     updateApp: (changes: AppContextType) => void;
+    logout: () => Promise<void>;
 }
 
 interface AppContextType {
@@ -44,6 +45,14 @@ function AppProvider({ children }: { children: React.ReactNode }) {
         })
     }
 
+    const logout = async () => {
+        await fetchApi('/logout', { method: 'POST' })
+        updateApp({
+            token: undefined,
+            user: undefined,
+        })
+    }
+
     useEffect(() => {
         if (app.token) {
             fetchApi("/auth").then(async response => {
@@ -61,8 +70,9 @@ function AppProvider({ children }: { children: React.ReactNode }) {
                 }
                 setLoading(false)
             }).catch(error => {
-                console.log(error)
-                Notifications.error('sdsadsd')
+                Notifications.error('Невозможно подключиться к серверу', {
+                    ttl: 24 * 60 * 60 * 1000
+                })
             });
         }
     }, [])
@@ -71,7 +81,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
         return <p>Loading...</p>
     }
 
-    return <AppContext.Provider value={{ app, updateApp }}>
+    return <AppContext.Provider value={{ app, updateApp, logout }}>
         {children}
     </AppContext.Provider>
 }
@@ -79,7 +89,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
 const useApp = () => useContext(AppContext)
 
 const pagesWithNoAuth = ['/login', '/register', '/recovery']
-const pagesWithNoMfa = ['/login_mfa', '/login_mfa_recovery']
+const pagesWithNoMfa = ['/login/mfa', '/login/mfa/recovery']
 
 const AuthRedirector = (): JSX.Element => {
     const { app } = useApp()
@@ -89,7 +99,7 @@ const AuthRedirector = (): JSX.Element => {
             return <Navigate to='/login' state={{ from: location }} replace />
     } else if (app.user.mfa_needed) {
         if (!pagesWithNoMfa.includes(location.pathname))
-            return <Navigate to='/login_mfa' state={{ from: location }} replace />
+            return <Navigate to='/login/mfa' state={{ from: location }} replace />
     } else {
         if (pagesWithNoAuth.includes(location.pathname) || pagesWithNoMfa.includes(location.pathname)) {
             const state = location.state as any;
