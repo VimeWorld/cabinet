@@ -29,27 +29,34 @@ function AppProvider({ children }) {
         })
     }
 
+    const fetchAuth = async (options) => {
+        fetchApi("/auth").then(async response => {
+            if (response.status != 200) {
+                updateApp({
+                    token: undefined,
+                    user: undefined,
+                })
+            } else if (response.ok) {
+                const body = await response.json()
+                updateApp({
+                    token: app.token,
+                    user: body.response,
+                })
+            }
+            options?.success?.()
+        }).catch(error => {
+            options?.error?.(error)
+            Notifications.error('Невозможно подключиться к серверу', {
+                ttl: 24 * 60 * 60 * 1000
+            })
+        });
+    }
+
     useEffect(() => {
         if (app.token) {
-            fetchApi("/auth").then(async response => {
-                if (response.status != 200) {
-                    updateApp({
-                        token: undefined,
-                        user: undefined,
-                    })
-                } else if (response.ok) {
-                    const body = await response.json()
-                    updateApp({
-                        token: app.token,
-                        user: body.response,
-                    })
-                }
-                setLoading(false)
-            }).catch(error => {
-                Notifications.error('Невозможно подключиться к серверу', {
-                    ttl: 24 * 60 * 60 * 1000
-                })
-            });
+            fetchAuth({
+                success: () => setLoading(false)
+            })
         }
     }, [])
 
@@ -57,7 +64,7 @@ function AppProvider({ children }) {
         return <p>Loading...</p>
     }
 
-    const value = { app, updateApp, logout }
+    const value = { app, updateApp, logout, fetchAuth }
     return <AppContext.Provider value={value}>
         {children}
     </AppContext.Provider>

@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import './bootstrap.scss'
 import './index.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 import NotificationBox from './component/NotificationBox'
 import { LoginMfaPage, LoginMfaRecoveryPage } from './page/LoginMfa'
@@ -12,7 +13,7 @@ import { LoginPage } from './page/Login'
 import { InnerPage } from './component/InnerPage'
 import { HomePage } from './page/Home'
 import AuthRedirector from './component/AuthRedirector'
-import AppProvider from './component/AppProveder'
+import AppProvider from './component/AppProvider'
 import { PaymentsPage } from './page/Payments'
 
 

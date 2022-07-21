@@ -4,10 +4,10 @@ import Sidebar from "./Sidebar"
 export const InnerPage = () => {
     return <div className="container pt-5">
         <div className="row justify-content-center">
-            <div className="col-3">
+            <div className="col-lg-3 col-md-4 col-12">
                 <Sidebar />
             </div>
-            <div className="col-7">
+            <div className="col-lg-9 col-md-8 col-12">
                 <Outlet />
             </div>
         </div>

@@ -1,8 +1,14 @@
 import { createContext, useContext } from "react";
 
+interface FetchAuthOptionsType {
+    success?: () => void;
+    error?: (error: any) => void;
+}
+
 interface AppContextContainerType {
     app: AppContextType;
     updateApp: (changes: AppContextType) => void;
+    fetchAuth: (options?: FetchAuthOptionsType) => Promise<void>;
     logout: () => Promise<void>;
 }
 
@@ -20,6 +26,7 @@ interface UserType {
     reg_time: string;
     mfa_needed: boolean;
     account_deleted: boolean;
+    client_country: string;
 }
 
 export const AppContext = createContext<AppContextContainerType>(null!)

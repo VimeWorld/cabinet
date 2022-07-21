@@ -1,41 +1,40 @@
-import { ListGroup } from "react-bootstrap"
+import classNames from "classnames"
 import { Link, useLocation, useResolvedPath } from "react-router-dom"
 import useApp from "../hook/useApp"
+import './Sidebar.css'
 
-const MenuItem = ({ to, children }) => {
+const MenuItem2 = ({ to, icon, children }) => {
     const location = useLocation()
     const path = useResolvedPath(to)
 
-    const active = path.pathname == location.pathname
+    const active = !!to && path.pathname == location.pathname
 
-    return <ListGroup.Item
-        as={Link}
-        to={to}
-        active={active}
-        action
-    >
-        {children}
-    </ListGroup.Item>
+    return <li className="nav-item">
+        <Link className={classNames("nav-link", { "active": active })} to={to}>
+            <i className={icon} />
+            {children}
+        </Link>
+    </li>
 }
 
 const Sidebar = () => {
     const { logout } = useApp()
 
-    return <div>
-        <ListGroup className="mb-3 shadow">
-            <MenuItem to="/">Главная</MenuItem>
-            <MenuItem to="/payments">Платежи</MenuItem>
-            <MenuItem to="/settings">Настройки</MenuItem>
-            <ListGroup.Item action onClick={logout}>Выход</ListGroup.Item>
-        </ListGroup>
-
-        <div className="card shadow">
-            <h5 className="card-header">Minigames</h5>
-            <ListGroup>
-                <MenuItem to="/minigames/donate">Платные услуги</MenuItem>
-                <MenuItem to="/minigames/guild">Управление гильдией</MenuItem>
-                <MenuItem to="/minigames/bans">Баны</MenuItem>
-            </ListGroup>
+    return <div className="sidebar rounded-3 shadow-sm p-4 mb-5">
+        <div>
+            <div className="nav-header p-1 mb-1">Меню</div>
+            <ul className="nav nav-pills flex-column mb-3">
+                <MenuItem2 to="/" icon="bi-house-door">Главная</MenuItem2>
+                <MenuItem2 to="/payments" icon="bi-credit-card">Платежи</MenuItem2>
+                <MenuItem2 to="/settings" icon="bi-gear">Настройки</MenuItem2>
+                <MenuItem2 to="" onClick={logout} icon="bi-power">Выход</MenuItem2>
+            </ul>
+            <div className="nav-header p-1 mb-1">Minigames</div>
+            <ul className="nav nav-pills flex-column">
+                <MenuItem2 to="/minigames/donate" icon="bi-cash-coin">Платные услуги</MenuItem2>
+                <MenuItem2 to="/minigames/guild" icon="bi-people">Управление гильдией</MenuItem2>
+                <MenuItem2 to="/minigames/bans" icon="bi-slash-circle">Баны</MenuItem2>
+            </ul>
         </div>
     </div>
 }
