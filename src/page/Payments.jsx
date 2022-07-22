@@ -238,12 +238,12 @@ const PayCard = () => {
 
 export const PaymentsPage = () => {
     return <>
-        <div className="row mb-4">
-            <div className="col">
+        <div className="row mb-4 gy-4">
+            <div className="col-lg-6 col-12">
                 <PayCard />
             </div>
 
-            <div className="col">
+            <div className="col-lg-6 col-12">
                 <div className="mb-4">
                     <BalanceCard />
                 </div>

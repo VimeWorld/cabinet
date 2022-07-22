@@ -40,7 +40,7 @@ export const LoginMfaRecoveryPage = () => {
             const body = await response.json()
             if (response.ok) {
                 updateApp({
-                    user: { ...app.user, mfa_needed: false }
+                    user: { ...app.user, mfa: "disabled" }
                 })
             } else {
                 switch (body.response.type) {
@@ -140,7 +140,7 @@ export const LoginMfaPage = () => {
             const body = await response.json()
             if (response.ok) {
                 updateApp({
-                    user: { ...app.user, mfa_needed: false }
+                    user: { ...app.user, mfa: 'completed' }
                 })
             } else {
                 switch (body.response.type) {
@@ -175,14 +175,10 @@ export const LoginMfaPage = () => {
                         <Form.Label>Одноразовый код</Form.Label>
                         <Form.Control
                             {...register('code', {
-                                valueAsNumber: true,
                                 required: true,
-                                min: 100000,
-                                max: 999999,
-                                validate: (val) => {
-                                    if (isNaN(val)) return false
-                                }
+                                pattern: /^[0-9]{6}$/,
                             })}
+                            type="number"
                             isInvalid={!!errors.code}
                             autoComplete="off"
                             placeholder="6 цифр"

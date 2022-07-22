@@ -10,7 +10,7 @@ export default () => {
     if (!app.user) {
         if (!pagesWithNoAuth.includes(location.pathname))
             return <Navigate to='/login' state={{ from: location }} replace />
-    } else if (app.user.mfa_needed) {
+    } else if (app.user.mfa == "needed") {
         if (!pagesWithNoMfa.includes(location.pathname))
             return <Navigate to='/login/mfa' state={{ from: location }} replace />
     } else {

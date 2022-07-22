@@ -9,9 +9,9 @@ export const IdPagination = ({ prev, next, hasMore, onChange }) => {
         {prev.map((page, idx) => {
             let name = idx + 1
             if (page == 0)
-                name = <i className="bi-chevron-bar-left" />
+                name = <i className="bi bi-chevron-bar-left" />
             else if (idx == 0)
-                name = <i className="bi-chevron-left" />
+                name = <i className="bi bi-chevron-left" />
             return <li key={page} className="page-item">
                 <button className="page-link" onClick={() => onChange(page)}>{name}</button>
             </li>
@@ -24,9 +24,9 @@ export const IdPagination = ({ prev, next, hasMore, onChange }) => {
         {next.map((page, idx) => {
             let name = idx + 1
             if (page == -1 || (!hasMore && idx == next.length - 1))
-                name = <i className="bi-chevron-bar-right" />
+                name = <i className="bi bi-chevron-bar-right" />
             else if (idx == 0)
-                name = <i className="bi-chevron-right" />
+                name = <i className="bi bi-chevron-right" />
             return <li key={page} className="page-item">
                 <button className="page-link" onClick={() => onChange(page)}>{name}</button>
             </li>

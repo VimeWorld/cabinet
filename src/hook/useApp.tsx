@@ -24,7 +24,7 @@ interface UserType {
     email: string;
     cash: number;
     reg_time: string;
-    mfa_needed: boolean;
+    mfa: 'disabled' | 'needed' | 'completed';
     account_deleted: boolean;
     client_country: string;
 }

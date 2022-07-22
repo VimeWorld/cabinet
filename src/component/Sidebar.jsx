@@ -11,7 +11,7 @@ const MenuItem2 = ({ to, icon, children }) => {
 
     return <li className="nav-item">
         <Link className={classNames("nav-link", { "active": active })} to={to}>
-            <i className={icon} />
+            <i className={"bi " + icon} />
             {children}
         </Link>
     </li>
@@ -26,7 +26,7 @@ const Sidebar = () => {
             <ul className="nav nav-pills flex-column mb-3">
                 <MenuItem2 to="/" icon="bi-house-door">Главная</MenuItem2>
                 <MenuItem2 to="/payments" icon="bi-credit-card">Платежи</MenuItem2>
-                <MenuItem2 to="/settings" icon="bi-gear">Настройки</MenuItem2>
+                <MenuItem2 to="/security" icon="bi-shield">Безопасность</MenuItem2>
                 <MenuItem2 to="" onClick={logout} icon="bi-power">Выход</MenuItem2>
             </ul>
             <div className="nav-header p-1 mb-1">Minigames</div>

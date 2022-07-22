@@ -89,14 +89,14 @@ export const PaymentHistoryCard = () => {
             <h4 className="mb-0">История переводов</h4>
             <span>Здесь отображаются все ваши операции с вимерами</span>
         </div>
-        <div className="table-responsive">
-            <table className="card-table table table-payments">
+        <div className="card-table table-responsive">
+            <table className="table table-payments">
                 <thead className="table-light">
                     <tr>
                         <th scope="col" className="border-bottom-0">#</th>
                         <th scope="col" className="border-bottom-0">Дата</th>
                         <th scope="col" className="border-bottom-0">Сумма</th>
-                        <th scope="col" className="border-bottom-0">Информация</th>
+                        <th scope="col" style={{ minWidth: 300 }} className="border-bottom-0">Информация</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -116,9 +116,9 @@ export const PaymentHistoryCard = () => {
                             ? <b className="text-success">+{p.amount}</b>
                             : <b className="text-danger">{p.amount}</b>
                         return <tr key={p.id}>
-                            <td className="fit align-middle text-muted">{p.id}</td>
-                            <td className="fit align-middle">{new Date(Date.parse(p.date)).toLocaleString()}</td>
-                            <td className="fit align-middle">{amount}</td>
+                            <td className="fit text-muted">{p.id}</td>
+                            <td className="fit">{new Date(Date.parse(p.date)).toLocaleString()}</td>
+                            <td className="fit">{amount}</td>
                             <td className="description">{paymentDescription(p)}</td>
                         </tr>
                     })}

@@ -15,6 +15,7 @@ import { HomePage } from './page/Home'
 import AuthRedirector from './component/AuthRedirector'
 import AppProvider from './component/AppProvider'
 import { PaymentsPage } from './page/Payments'
+import { SecurityPage } from './page/Security'
 
 
 
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path='/' element={<InnerPage />}>
               <Route path='/' element={<HomePage />} />
               <Route path='/payments' element={<PaymentsPage />} />
+              <Route path='/security' element={<SecurityPage />} />
             </Route>
             <Route path="*" element={<h1>Not found</h1>} />
           </Route>

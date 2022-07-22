@@ -41,12 +41,12 @@ const PersonalInfoCard = () => {
 
 export const HomePage = () => {
     return <>
-        <div className="row mb-4">
-            <div className="col">
+        <div className="row mb-4 gy-4">
+            <div className="col-lg-6 col-12">
                 <PersonalInfoCard />
             </div>
 
-            <div className="col">
+            <div className="col-lg-6 col-12">
                 <BalanceCard pay />
             </div>
         </div>
