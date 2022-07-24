@@ -1,24 +1,11 @@
+import { EventBus, EVENT_NOTIFICATIONS_CHANGED } from "./eventbus"
+
 let list: any[] = []
 
 let idCounter = 0
 let genNextId = () => {
     idCounter++
     return "" + idCounter
-}
-
-let listeners: any[] = [];
-let notifyListeners = () => {
-    listeners.forEach(h => h(list))
-}
-
-const subscribeNotificationChange = (handler: (arg0: Notification[]) => void) => {
-    listeners.push(handler)
-}
-
-const unsubscribeNotificationChange = (handler: (arg0: Notification[]) => void) => {
-    listeners = listeners.filter(elem => {
-        return elem !== handler
-    })
 }
 
 let defaultOptions: NotificationOptions = {
@@ -45,7 +32,7 @@ const Notifications = {
             ...options,
         };
         list.push(notify)
-        notifyListeners()
+        EventBus.emit(EVENT_NOTIFICATIONS_CHANGED, list)
         return notify
     },
     error(message: string, options: NotificationOptions = {}): Notification {
@@ -76,9 +63,8 @@ const Notifications = {
         let len = list.length
         list = list.filter(n => n.id !== notify.id)
         if (list.length !== len)
-            notifyListeners()
+            EventBus.emit(EVENT_NOTIFICATIONS_CHANGED, list)
     },
 }
 
 export default Notifications
-export { subscribeNotificationChange, unsubscribeNotificationChange }

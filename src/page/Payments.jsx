@@ -5,6 +5,7 @@ import { BalanceCard } from "../component/BalanceCard"
 import { PaymentHistoryCard } from "../component/PaymentHistoryCard"
 import useApp from "../hook/useApp"
 import { fetchApi } from "../lib/api"
+import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
 import { ruPluralize } from "../lib/i18n"
 import Notifications from "../lib/notifications"
 
@@ -15,6 +16,7 @@ const TransferCard = () => {
         handleSubmit,
         watch,
         setError,
+        reset,
         formState: { errors },
     } = useForm({
         mode: 'onChange',
@@ -50,6 +52,8 @@ const TransferCard = () => {
             const body = await response.json()
             if (response.ok) {
                 Notifications.success('Вы перевели ' + data.amount + ' ' + ruPluralize(data.amount, ['вимер', 'вимера', 'вимеров']) + ' игроку ' + data.target)
+                reset({ target: '', amount: '' })
+                EventBus.emit(EVENT_UPDATE_PAYMENTS)
                 fetchAuth()
             } else {
                 switch (body.response.type) {

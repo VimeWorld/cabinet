@@ -139,6 +139,7 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
         }
     })
     const { app } = useApp()
+    // null - loading or error, string - data
     const [secret, setSecret] = useState(null)
     const [loading, setLoading] = useState(false)
 
@@ -164,7 +165,7 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
     }, [])
 
     const onSubmit = data => {
-        if (loading) return
+        if (loading || !secret) return
         setLoading(true)
         fetchApi('/cp/settings/totp/setup/confirm', {
             method: 'POST',
@@ -213,28 +214,33 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
                     Затем, чтобы подтвердить правильную настройку приложения, введите код из приложения.
                 </p>
                 <div className="row gy-2">
-                    <div className="col-12 col-sm-6 text-center">
-                        <img width="200px" height="200px" src={"https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=" + encodeURIComponent(otpurl)} />
-                    </div>
-                    <div className="col-12 col-sm-6 d-flex flex-column align-items-middle justify-content-center">
-                        <div className="mb-sm-4">
-                            Секретный ключ: <code className="user-select-all">{secret}</code>
+                    {secret == null && <div className="d-flex justify-content-center">
+                        <Spinner animation="border" variant="secondary" />
+                    </div>}
+                    {secret && <>
+                        <div className="col-12 col-sm-6 text-center">
+                            <img width="200px" height="200px" src={"https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=" + encodeURIComponent(otpurl)} />
                         </div>
-                        <Form.Group controlId="setup-totp-code">
-                            <Form.Label>Код из приложения</Form.Label>
-                            <Form.Control
-                                {...register('code', {
-                                    required: true,
-                                    pattern: /^[0-9]{6}$/,
-                                })}
-                                type="number"
-                                isInvalid={!!errors.code}
-                                autoComplete="off"
-                                placeholder="6 цифр"
-                            />
-                            {errors.code && <Form.Control.Feedback type="invalid">{errors.code.message}</Form.Control.Feedback>}
-                        </Form.Group>
-                    </div>
+                        <div className="col-12 col-sm-6 d-flex flex-column align-items-middle justify-content-center">
+                            <div className="mb-sm-4">
+                                Секретный ключ: <code className="user-select-all">{secret}</code>
+                            </div>
+                            <Form.Group controlId="setup-totp-code">
+                                <Form.Label>Код из приложения</Form.Label>
+                                <Form.Control
+                                    {...register('code', {
+                                        required: true,
+                                        pattern: /^[0-9]{6}$/,
+                                    })}
+                                    type="number"
+                                    isInvalid={!!errors.code}
+                                    autoComplete="off"
+                                    placeholder="6 цифр"
+                                />
+                                {errors.code && <Form.Control.Feedback type="invalid">{errors.code.message}</Form.Control.Feedback>}
+                            </Form.Group>
+                        </div>
+                    </>}
                 </div>
             </Modal.Body>
             <Modal.Footer>
@@ -333,6 +339,7 @@ const ModalDisableMfa = ({ show, close, onDisable }) => {
 
 const MfaCard = () => {
     const { app, updateApp } = useApp()
+    // null - loading, false - load error, []...] - data
     const [sessions, setSessions] = useState(null)
     const [modalDisableMfa, setModalDisableMfa] = useState(false)
     const [modalSetupMfa, setModalSetupMfa] = useState(false)

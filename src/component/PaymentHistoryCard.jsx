@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
+import { Spinner } from "react-bootstrap"
 import { fetchApi } from "../lib/api"
+import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
 import { IdPagination } from "./Pagination"
 
 const paymentDescription = (p) => {
@@ -69,9 +71,12 @@ const paymentDescription = (p) => {
 
 export const PaymentHistoryCard = () => {
     const [position, setPosition] = useState(0)
+    // null - loading, false - load error, {...} - data
     const [data, setData] = useState(null)
+    const [dataLoading, setDataLoading] = useState(true)
 
-    useEffect(() => {
+    const loadPage = () => {
+        setDataLoading(true)
         fetchApi('/cp/payment/history?count=20&id=' + position)
             .then(response => {
                 if (!response.ok)
@@ -79,15 +84,26 @@ export const PaymentHistoryCard = () => {
                 return response.json()
             }).then(body => {
                 setData(body.response)
-            }).catch(error => {
-                setData(false)
-            })
-    }, [position])
+            }).catch(() => setData(false))
+            .finally(() => setDataLoading(false))
+    }
+
+    useEffect(() => loadPage(), [position])
+    useEffect(() => {
+        return EventBus.on(EVENT_UPDATE_PAYMENTS, () => {
+            if (position == 0 && data) loadPage()
+        })
+    }, [position, data])
 
     return <div className="card" id="promo">
-        <div className="card-header">
-            <h4 className="mb-0">История переводов</h4>
-            <span>Здесь отображаются все ваши операции с вимерами</span>
+        <div className="card-header d-flex justify-content-between align-items-center">
+            <div className="mb-0">
+                <h4 className="mb-0">История переводов</h4>
+                <span>Здесь отображаются все ваши операции с вимерами</span>
+            </div>
+            {dataLoading && <div>
+                <Spinner animation="border" variant="secondary" />
+            </div>}
         </div>
         <div className="card-table table-responsive">
             <table className="table table-payments">
@@ -126,7 +142,13 @@ export const PaymentHistoryCard = () => {
             </table>
         </div>
         <div className="card-body">
-            {data && <IdPagination prev={data.prev_pages} next={data.next_pages} hasMore={data.has_more} onChange={setPosition} />}
+            {data && <IdPagination
+                prev={data.prev_pages}
+                next={data.next_pages}
+                hasMore={data.has_more}
+                onChange={setPosition}
+                disabled={dataLoading}
+            />}
         </div>
     </div>
 }

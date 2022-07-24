@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { CloseButton, Toast, ToastContainer } from 'react-bootstrap';
-import Notifications, { subscribeNotificationChange, unsubscribeNotificationChange } from '../lib/notifications';
+import { EventBus, EVENT_NOTIFICATIONS_CHANGED } from '../lib/eventbus';
+import Notifications from '../lib/notifications';
 
 const NotificationComponent = ({ notify }) => {
     // Стейт нужен для рабочей анимации. Если создать тост сразу видимым, то не будет анимации появления
@@ -47,9 +48,9 @@ const NotificationBox = () => {
     let [list, setList] = useState([])
 
     useEffect(() => {
-        let handler = data => setList([...data])
-        subscribeNotificationChange(handler)
-        return () => unsubscribeNotificationChange(handler)
+        return EventBus.on(EVENT_NOTIFICATIONS_CHANGED, data => {
+            setList([...data])
+        })
     }, [setList])
 
     return (

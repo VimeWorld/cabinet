@@ -17,8 +17,6 @@ import AppProvider from './component/AppProvider'
 import { PaymentsPage } from './page/Payments'
 import { SecurityPage } from './page/Security'
 
-
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AppProvider>
