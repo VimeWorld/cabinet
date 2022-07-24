@@ -1,24 +1,181 @@
-import { useEffect, useState } from "react"
-import { Button, Modal } from "react-bootstrap"
+import { useEffect, useRef, useState } from "react"
+import { Button, Modal, OverlayTrigger, Spinner, Tooltip } from "react-bootstrap"
 import useApp from "../hook/useApp"
 import { fetchApi } from "../lib/api"
+import Notifications from "../lib/notifications"
 
+const maxSizeKb = 50
 let capeExistsCache = null
 
-const ModalCape = ({ show, close, exists }) => {
+const ModalSkin = ({ show, close }) => {
+    const file = useRef()
+    const [alex, setAlex] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+    const onSubmit = e => {
+        e.preventDefault()
+        const skinFile = file.current.files[0]
+
+        if (skinFile.size >= maxSizeKb * 1024) {
+            Notifications.error(`Максимальный размер скина ${maxSizeKb}кб`)
+            return
+        }
+
+        setLoading(true)
+        const formData = new FormData()
+        formData.append('file', skinFile)
+        formData.append('type', alex ? 'alex' : 'steve')
+        fetchApi('/cp/user/skin', {
+            method: 'POST',
+            body: formData,
+        }).then(r => r.json())
+            .then(body => {
+                if (body.success) {
+                    Notifications.success('Скин успешно изменен')
+                    close()
+                } else {
+                    switch (body.response.type) {
+                        case "too_large":
+                            Notifications.error(`Максимальный размер скина ${maxSizeKb}кб`)
+                            break
+                        case "invalid_dimension":
+                            Notifications.error('Размеры скина должны быть 64x64 или 64x32')
+                            break
+                        case "not_png":
+                            Notifications.error('Файл скина должен быть .png файлом')
+                            break
+                        default:
+                            Notifications.error(body.response.title)
+                    }
+                }
+            })
+            .catch(() => Notifications.error('Невозможно подключиться к серверу'))
+            .finally(() => setLoading(false))
+    }
+
     return <Modal show={show} onHide={close}>
-        <Modal.Header closeButton>
-            <Modal.Title>Покупка плаща</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-            <Button variant="secondary" onClick={close}>
-                Закрыть
-            </Button>
-            <Button variant="primary" onClick={close}>
-                Купить
-            </Button>
-        </Modal.Footer>
+        <form onSubmit={onSubmit}>
+            <Modal.Header closeButton>
+                <Modal.Title>Изменение скина</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <p>
+                    Скин должен быть в формате <code>.png</code>.
+                    Размеры скина должны быть <code>64x64</code> или <code>64х32</code>.
+                </p>
+
+                <input ref={file} className="form-control mb-3" type="file" required accept="image/png" />
+
+                <OverlayTrigger overlay={<Tooltip>Более тонкие руки</Tooltip>}>
+                    <div className="form-check form-check-inline">
+                        <input
+                            id="check-alex"
+                            className="form-check-input"
+                            type="checkbox"
+                            checked={alex}
+                            onChange={e => setAlex(e.target.checked)}
+                        />
+                        <label class="form-check-label" for="check-alex">Скин Алекса</label>
+                    </div>
+                </OverlayTrigger>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={close}>
+                    Закрыть
+                </Button>
+                <Button type="submit" variant="primary" disabled={loading}>
+                    {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                    {loading ? ' Загрузка...' : 'Изменить'}
+                </Button>
+            </Modal.Footer>
+        </form>
+    </Modal>
+}
+
+const ModalCape = ({ show, close, exists, onChanged }) => {
+    const { fetchAuth } = useApp()
+    const file = useRef()
+    const [loading, setLoading] = useState(false)
+
+    const onSubmit = e => {
+        e.preventDefault()
+        const skinFile = file.current.files[0]
+
+        if (skinFile.size >= maxSizeKb * 1024) {
+            Notifications.error(`Максимальный размер плаща ${maxSizeKb}кб`)
+            return
+        }
+
+        setLoading(true)
+        const formData = new FormData()
+        formData.append('file', skinFile)
+        fetchApi('/cp/user/cape', {
+            method: 'POST',
+            body: formData,
+        }).then(r => r.json())
+            .then(body => {
+                if (body.success) {
+                    if (!exists) {
+                        Notifications.success('Плащ успешно установлен')
+                        capeExistsCache = true
+                        fetchAuth()
+                    } else {
+                        Notifications.success('Плащ успешно изменен')
+                    }
+                    onChanged?.()
+                    close()
+                } else {
+                    switch (body.response.type) {
+                        case "insufficient_funds":
+                            Notifications.error('У вас недостаточно вимеров')
+                            close()
+                            break
+                        case "too_large":
+                            Notifications.error(`Максимальный размер плаща ${maxSizeKb}кб`)
+                            break
+                        case "invalid_dimension":
+                            Notifications.error('Размеры плаща должны быть 22х17 или 64х32')
+                            break
+                        case "not_png":
+                            Notifications.error('Файл плаща должен быть .png файлом')
+                            break
+                        default:
+                            Notifications.error(body.response.title)
+                    }
+                }
+            })
+            .catch(() => Notifications.error('Невозможно подключиться к серверу'))
+            .finally(() => setLoading(false))
+    }
+
+    return <Modal show={show} onHide={close}>
+        <form onSubmit={onSubmit}>
+            <Modal.Header closeButton>
+                <Modal.Title>{exists ? 'Изменение' : 'Покупка'} плаща</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                {!exists && <p>
+                    Стоимость плаща <b className="text-success">50 вимеров</b>.
+                    После покупки вы сможете менять плащ сколько угодно раз.
+                </p>}
+                
+                <p>
+                    Плащ должен быть в формате <code>.png</code>.
+                    Размеры плаща должны быть <code>22х17</code> или <code>64х32</code>.
+                </p>
+
+                <input ref={file} className="form-control" type="file" required accept="image/png" />
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={close}>
+                    Закрыть
+                </Button>
+                <Button type="submit" variant="primary" disabled={loading}>
+                    {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                    {loading ? ' Загрузка...' : exists ? 'Изменить' : 'Купить'}
+                </Button>
+            </Modal.Footer>
+        </form>
     </Modal>
 }
 
@@ -26,9 +183,10 @@ export const SkinCard = () => {
     const { app } = useApp()
     const [capeExists, setCapeExists] = useState(capeExistsCache)
     const [showModalCape, setShowModalCape] = useState(false)
+    const [showModalSkin, setShowModalSkin] = useState(false)
 
     useEffect(() => {
-        if (capeExists)
+        if (capeExists != null)
             return
         fetchApi('/cp/user/cape')
             .then(response => response.json())
@@ -39,7 +197,7 @@ export const SkinCard = () => {
                 }
             })
             .catch(console.log)
-    }, [])
+    }, [capeExists])
 
     const capeStyle = { width: 150, height: 240 }
 
@@ -52,7 +210,7 @@ export const SkinCard = () => {
             <div className="row">
                 <div className="col d-flex align-items-center justify-content-center flex-column">
                     <img src={`https://skin.vimeworld.com/body/${app.user.username}.png`} style={{ width: 160, height: 320 }} />
-                    <button className="btn btn-outline-primary mt-3 ">Изменить</button>
+                    <button className="btn btn-outline-primary mt-3" onClick={() => setShowModalSkin(true)}>Изменить</button>
                 </div>
                 <div className="col d-flex align-items-center justify-content-center flex-column">
                     <div className="flex-grow-1 d-flex align-items-center justify-items-center">
@@ -69,6 +227,11 @@ export const SkinCard = () => {
                 show={showModalCape}
                 close={() => setShowModalCape(false)}
                 exists={capeExists}
+                onChanged={() => setCapeExists(true)}
+            />
+            <ModalSkin
+                show={showModalSkin}
+                close={() => setShowModalSkin(false)}
             />
         </div>
     </div>

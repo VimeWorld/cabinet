@@ -14,7 +14,7 @@ interface ApiRequestInit extends Omit<RequestInit, 'headers'> {
     headers?: Record<string, string>;
 }
 
-function addHeader(options: ApiRequestInit, name: string, value: string) {
+function setHeader(options: ApiRequestInit, name: string, value: string) {
     options.headers = options.headers || {}
     options.headers[name] = value
 }
@@ -28,12 +28,14 @@ function isObject(val: any): boolean {
 
 export const fetchApi = async (path: string, options: ApiRequestInit = {}) => {
     if (cachedToken)
-        addHeader(options, 'Authorization', 'Bearer ' + cachedToken)
+        setHeader(options, 'Authorization', 'Bearer ' + cachedToken)
 
-    if (isObject(options.body)) {
+    if (isObject(options.body) && !(options.body instanceof FormData)) {
         options.body = JSON.stringify(options.body)
-        addHeader(options, 'Content-Type', 'application/json')
+        setHeader(options, 'Content-Type', 'application/json')
     }
+
+    setHeader(options, 'Accept', 'application/json')
 
     const url = import.meta.env.VITE_API_ENDPOINT + path
     return fetch(url, options)
