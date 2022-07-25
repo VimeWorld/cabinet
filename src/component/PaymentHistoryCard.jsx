@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Spinner } from "react-bootstrap"
+import useLoadPages from "../hook/useLoadPages"
 import { fetchApi } from "../lib/api"
 import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
 import { IdPagination } from "./Pagination"
@@ -70,30 +71,13 @@ const paymentDescription = (p) => {
 }
 
 export const PaymentHistoryCard = () => {
-    const [position, setPosition] = useState(0)
-    // null - loading, false - load error, {...} - data
-    const [data, setData] = useState(null)
-    const [dataLoading, setDataLoading] = useState(true)
+    const pages = useLoadPages(id => fetchApi('/cp/payment/history?count=20&id=' + id))
 
-    const loadPage = () => {
-        setDataLoading(true)
-        fetchApi('/cp/payment/history?count=20&id=' + position)
-            .then(response => {
-                if (!response.ok)
-                    throw new Error('Invalid response')
-                return response.json()
-            }).then(body => {
-                setData(body.response)
-            }).catch(() => setData(false))
-            .finally(() => setDataLoading(false))
-    }
-
-    useEffect(() => loadPage(), [position])
     useEffect(() => {
-        return EventBus.on(EVENT_UPDATE_PAYMENTS, () => {
-            if (position == 0 && data) loadPage()
-        })
-    }, [position, data])
+        if (pages.id != 0 || !pages.items)
+            return
+        return EventBus.on(EVENT_UPDATE_PAYMENTS, () => pages.load())
+    }, [pages.id, pages.items])
 
     return <div className="card" id="promo">
         <div className="card-header d-flex justify-content-between align-items-center">
@@ -101,10 +85,11 @@ export const PaymentHistoryCard = () => {
                 <h4 className="mb-0">История переводов</h4>
                 <span>Здесь отображаются все ваши операции с вимерами</span>
             </div>
-            {dataLoading && <div>
+            {pages.loading && <div>
                 <Spinner animation="border" variant="secondary" />
             </div>}
         </div>
+
         <div className="card-table table-responsive">
             <table className="table table-payments">
                 <thead className="table-light">
@@ -116,18 +101,20 @@ export const PaymentHistoryCard = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data == null && <tr><td className="placeholder-glow" colSpan={4}>
+                    {pages.loading && !pages.items && <tr><td className="placeholder-glow" colSpan="4">
                         <span className="placeholder bg-secondary col-1"></span>
                         <span className="placeholder bg-secondary col-10 ms-2"></span>
                     </td></tr>}
-                    {data === false && <tr><td className="text-center text-danger" colSpan={4}>
+
+                    {pages.error && <tr><td className="text-center text-danger" colSpan="4">
                         При загрузке возникла ошибка
                     </td></tr>}
-                    {data?.payments.length == 0 && <tr><td className="text-center text-muted" colSpan={4}>
+
+                    {pages.items?.length == 0 && <tr><td className="text-center text-muted" colSpan="4">
                         Пусто...
                     </td></tr>}
 
-                    {data?.payments.length > 0 && data.payments.map(p => {
+                    {pages.items?.map(p => {
                         const amount = p.amount > 0
                             ? <b className="text-success">+{p.amount}</b>
                             : <b className="text-danger">{p.amount}</b>
@@ -141,14 +128,10 @@ export const PaymentHistoryCard = () => {
                 </tbody>
             </table>
         </div>
-        <div className="card-body">
-            {data && <IdPagination
-                prev={data.prev_pages}
-                next={data.next_pages}
-                hasMore={data.has_more}
-                onChange={setPosition}
-                disabled={dataLoading}
-            />}
-        </div>
+
+        {pages.hasPages &&
+            <div className="card-body">
+                {pages.Pagination}
+            </div>}
     </div>
 }

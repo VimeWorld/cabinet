@@ -1,15 +1,22 @@
-export const IdPagination = ({ prev, next, hasMore, onChange, disabled }) => {
-    if (prev.length == 5 && prev[4] != 0)
+const maxPages = 5 // sync with server
+
+export const IdPagination = ({ pagination, onChange, disabled }) => {
+    if (!pagination)
+        return <></>
+
+    let { prev, next, has_more } = pagination
+
+    if (prev.length == maxPages && prev[maxPages - 1] != 0)
         prev = [...prev, 0]
 
-    if (next.length > 0 && hasMore)
+    if (next.length > 0 && has_more)
         next = [...next, -1]
 
     let itemClassName = 'page-item'
     if (disabled)
         itemClassName += ' disabled'
 
-    return <ul className="pagination justify-content-center">
+    return <ul className="pagination mb-0 justify-content-center">
         {prev.map((page, idx) => {
             let name = idx + 1
             if (page == 0)
@@ -27,7 +34,7 @@ export const IdPagination = ({ prev, next, hasMore, onChange, disabled }) => {
 
         {next.map((page, idx) => {
             let name = idx + 1
-            if (page == -1 || (!hasMore && idx == next.length - 1))
+            if (page == -1 || (!has_more && idx == next.length - 1))
                 name = <i className="bi bi-chevron-bar-right" />
             else if (idx == 0)
                 name = <i className="bi bi-chevron-right" />
