@@ -158,7 +158,7 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
                     Стоимость плаща <b className="text-success">50 вимеров</b>.
                     После покупки вы сможете менять плащ сколько угодно раз.
                 </p>}
-                
+
                 <p>
                     Плащ должен быть в формате <code>.png</code>.
                     Размеры плаща должны быть <code>22х17</code> или <code>64х32</code>.
@@ -218,9 +218,12 @@ export const SkinCard = () => {
                         {capeExists === false && <img src="/assets/image/no_cloak.jpg" style={capeStyle} />}
                         {capeExists === true && <img src={`https://skin.vimeworld.com/cape/${app.user.username}.png`} style={capeStyle} />}
                     </div>
-                    {capeExists !== null &&
-                        <button className="flex-shrink-1 btn btn-outline-primary mt-3" onClick={() => setShowModalCape(true)}>{capeExists ? 'Изменить' : 'Купить'}</button>
-                    }
+                    <button
+                        className="flex-shrink-1 btn btn-outline-primary mt-3"
+                        onClick={() => setShowModalCape(true)}
+                        disabled={capeExists === null}>
+                        {capeExists === null ? 'Загрузка...' : capeExists ? 'Изменить' : 'Купить'}
+                    </button>
                 </div>
             </div>
             <ModalCape

@@ -10,10 +10,11 @@ const useLoadPages = (
 ) => {
     const [id, setId] = useState(0)
     const [data, setData] = useState<any>(null)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
     const load = () => {
+        if (loading) return
         setLoading(true)
         request(id).then(response => {
             if (!response.ok)

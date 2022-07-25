@@ -339,13 +339,19 @@ const ModalDisableMfa = ({ show, close, onDisable }) => {
 
 const MfaCard = () => {
     const { app, updateApp } = useApp()
-    // null - loading, false - load error, []...] - data
+
+    // null - loading, false - not active, [...] - data
     const [sessions, setSessions] = useState(null)
+    const [sessionsError, setSessionsError] = useState(false)
+    const [sessionsLoading, setSessionsLoading] = useState(false)
+
     const [modalDisableMfa, setModalDisableMfa] = useState(false)
     const [modalSetupMfa, setModalSetupMfa] = useState(false)
 
-    useEffect(() => {
-        if (sessions != null) return
+    const loadSessions = () => {
+        if (sessionsLoading) return
+        setSessionsError(false)
+        setSessionsLoading(true)
         fetchApi('/cp/settings/totp/session/list')
             .then(r => r.json())
             .then(body => {
@@ -354,10 +360,13 @@ const MfaCard = () => {
                 } else if (body.response.type == "not_active") {
                     setSessions(false)
                 } else {
-                    throw new Error(body.response?.title)
+                    setSessionsError(true)
                 }
-            }).catch(() => Notifications.error('Не удалось загрузить информацию'))
-    }, [sessions])
+            }).catch(() => setSessionsError(true))
+            .finally(() => setSessionsLoading(false))
+    }
+
+    useEffect(loadSessions, [])
 
     const revokeSession = (e, id) => {
         e.target.setAttribute('disabled', 'disabled')
@@ -404,12 +413,19 @@ const MfaCard = () => {
                 </div>
             }
         </div>
-        {sessions == null &&
+
+        {sessionsLoading &&
             <div className="card-body">
                 <div className="d-flex justify-content-center">
                     <Spinner animation="border" variant="secondary" />
                 </div>
             </div>}
+
+        {sessionsError && <div className="card-body text-danger text-center">
+            <p>При загрузке произошла ошибка</p>
+            <button className="btn btn-outline-secondary" onClick={loadSessions}>Попробовать снова</button>
+        </div>}
+
         {sessions === false && <div className="card-body">
             <div className="d-flex justify-content-center">
                 <button className="btn btn-primary" onClick={() => setModalSetupMfa(true)}>Установить</button>
@@ -423,6 +439,7 @@ const MfaCard = () => {
                 />
             </div>
         </div>}
+
         {sessions && <>
             <div className="card-table table-responsive">
                 <table className="table">
@@ -448,6 +465,7 @@ const MfaCard = () => {
                                 <td className="fit"><button className="btn btn-sm btn-outline-danger" onClick={e => revokeSession(e, s.id)}>Завершить</button></td>
                             </tr>
                         })}
+
                         {sessions.length == 0 && <tr><td className="text-center" colSpan="4">Сохраненных сессий нет</td></tr>}
                     </tbody>
                 </table>
