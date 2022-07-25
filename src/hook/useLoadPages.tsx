@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { IdPagination } from "../component/Pagination"
 
 const hasPages = (pagination: any) => {
@@ -6,34 +6,30 @@ const hasPages = (pagination: any) => {
 }
 
 const useLoadPages = (
-    request: (id: number) => Promise<Response>
+    request: (id: number) => Promise<Response>,
+    autoload: boolean = true,
 ) => {
+    const loadRequested = useRef(autoload)
     const [id, setId] = useState(0)
     const [data, setData] = useState<any>(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
     const load = () => {
-        if (loading) return
+        if (loading || !loadRequested.current) return
         setLoading(true)
         request(id).then(response => {
             if (!response.ok)
                 throw new Error('Invalid response')
             return response.json()
         }).then(body => {
-            //setTimeout(() => {
             setError(null)
             setData(body.response)
-            //}, 1000)
         }).catch(e => {
-            //setTimeout(() => {
             setError(e)
             setData(null)
-            //}, 1000)
         }).finally(() =>
-            //setTimeout(() => {
             setLoading(false)
-            //}, 1000)
         )
     }
 
@@ -44,7 +40,11 @@ const useLoadPages = (
         setId,
         loading,
         error,
-        load,
+        load: () => {
+            loadRequested.current = true
+            load()
+        },
+        isLoadRequested: loadRequested.current,
 
         items: data?.items,
         hasPages: hasPages(data?.pagination),

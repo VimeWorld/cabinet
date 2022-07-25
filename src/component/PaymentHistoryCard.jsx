@@ -106,7 +106,7 @@ export const PaymentHistoryCard = () => {
                         <span className="placeholder bg-secondary col-10 ms-2"></span>
                     </td></tr>}
 
-                    {pages.error && <tr><td className="text-center text-danger" colSpan="4">
+                    {pages.error && !pages.loading && <tr><td className="text-center text-danger" colSpan="4">
                         <p>При загрузке произошла ошибка</p>
                         <button className="btn btn-outline-secondary" onClick={() => pages.load()}>Попробовать снова</button>
                     </td></tr>}
