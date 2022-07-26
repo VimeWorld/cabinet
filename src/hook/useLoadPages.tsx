@@ -51,7 +51,7 @@ const useLoadPages = (
         Pagination: <IdPagination
             pagination={data?.pagination}
             onChange={setId}
-            disabled={loading}
+            loading={loading}
         />
     }
 }

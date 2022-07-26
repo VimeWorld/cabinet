@@ -116,7 +116,7 @@ export const PromoCard = () => {
 
                         {pages.items?.map(p => {
                             return <tr key={p.id}>
-                                <td className="fit text-muted">{p.code}</td>
+                                <td className="fit text-muted"><code>{p.code}</code></td>
                                 <td className="fit">{new Date(Date.parse(p.date)).toLocaleString()}</td>
                                 <td>{p.info}</td>
                             </tr>

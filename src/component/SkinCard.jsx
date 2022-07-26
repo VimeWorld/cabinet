@@ -48,6 +48,7 @@ const ModalSkin = ({ show, close }) => {
                             Notifications.error(body.response.title)
                     }
                 }
+                file.current.value = null
             })
             .catch(() => Notifications.error('Невозможно подключиться к серверу'))
             .finally(() => setLoading(false))
@@ -158,6 +159,7 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
                             Notifications.error(body.response.title)
                     }
                 }
+                file.current.value = null
             })
             .catch(() => Notifications.error('Невозможно подключиться к серверу'))
             .finally(() => setLoading(false))

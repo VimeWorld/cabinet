@@ -127,6 +127,18 @@ const EmailCard = () => {
     </div>
 }
 
+const AuthSessionsCard = () => {
+    return <div className="card">
+        <div className="card-header">
+            <h4 className="mb-0">Активные сессии</h4>
+            <span>Места, с которых выполнен вход</span>
+        </div>
+        <div className="card-body text-center">
+            <button className="btn btn-outline-primary">Посмотреть</button>
+        </div>
+    </div>
+}
+
 const ModalSetupMfa = ({ show, close, onEnable }) => {
     const {
         register,
@@ -144,6 +156,7 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        if (!show) return
         fetchApi('/cp/settings/totp/setup', { method: 'POST' })
             .then(r => r.json())
             .then(body => {
@@ -162,7 +175,7 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
                 }
             })
             .catch(() => Notifications.error('Невозможно подключиться к серверу'))
-    }, [])
+    }, [show])
 
     const onSubmit = data => {
         if (loading || !secret) return
@@ -474,6 +487,18 @@ const MfaCard = () => {
     </div>
 }
 
+const DeleteCard = () => {
+    return <div className="card border border-danger">
+        <div className="card-header text-danger">
+            <h4 className="mb-0">Удаление аккаунта</h4>
+            <span>Навсегда удаляет этот аккаунт и все связанные данные</span>
+        </div>
+        <div className="card-body text-center">
+            <button className="btn btn-outline-danger">Удалить аккаунт</button>
+        </div>
+    </div>
+}
+
 export const SecurityPage = () => {
     return <>
         <div className="row mb-4 gy-4">
@@ -482,11 +507,19 @@ export const SecurityPage = () => {
             </div>
             <div className="col-lg-6 col-12">
                 <EmailCard />
+                <div className="mt-4">
+                    <AuthSessionsCard />
+                </div>
             </div>
         </div>
         <div className="row mb-4">
             <div className="col">
                 <MfaCard />
+            </div>
+        </div>
+        <div className="row mb-4">
+            <div className="col">
+                <DeleteCard />
             </div>
         </div>
     </>

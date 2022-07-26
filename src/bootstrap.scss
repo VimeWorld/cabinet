@@ -1,5 +1,13 @@
+@import "bootstrap/scss/functions";
+
 $primary: #2196f3;
-$min-contrast-ratio: 3;
+$info: #593cc1;
+$success: #19b968;
+$danger: #f44758;
+$warning: #ea9127;
+$secondary: #798791;
+
+$min-contrast-ratio: 1.5;
 $body-bg: #f5f4f8;
 $input-bg: #fff;
 $font-family-sans-serif: system-ui, "Nunito", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
@@ -7,17 +15,16 @@ $font-family-sans-serif: system-ui, "Nunito", sans-serif, "Apple Color Emoji", "
 $headings-font-family: system-ui, "Inter", sans-serif;
 
 // Configuration
-@import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
-@import "bootstrap/scss/maps";
 
 $card-box-shadow: $box-shadow-sm;
 
+@import "bootstrap/scss/maps";
 @import "bootstrap/scss/mixins";
-@import "bootstrap/scss/utilities";
 
 // Layout & components
 @import "bootstrap/scss/root";
+@import "bootstrap/scss/utilities";
 @import "bootstrap/scss/reboot";
 @import "bootstrap/scss/type";
 //@import "bootstrap/scss/images";
