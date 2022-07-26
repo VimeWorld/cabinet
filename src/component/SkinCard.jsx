@@ -9,7 +9,7 @@ let capeExistsCache = null
 
 const ModalSkin = ({ show, close }) => {
     const file = useRef()
-    const [alex, setAlex] = useState(false)
+    const [skinType, setSkinType] = useState('steve')
     const [loading, setLoading] = useState(false)
 
     const onSubmit = e => {
@@ -24,7 +24,7 @@ const ModalSkin = ({ show, close }) => {
         setLoading(true)
         const formData = new FormData()
         formData.append('file', skinFile)
-        formData.append('type', alex ? 'alex' : 'steve')
+        formData.append('type', skinType)
         fetchApi('/cp/user/skin', {
             method: 'POST',
             body: formData,
@@ -66,18 +66,33 @@ const ModalSkin = ({ show, close }) => {
 
                 <input ref={file} className="form-control mb-3" type="file" required accept="image/png" />
 
-                <OverlayTrigger overlay={<Tooltip>Более тонкие руки</Tooltip>}>
+                <div>
+                    <span className="me-3">Тип скина:</span>
+                    <div className="form-check form-check-inline">
+                        <input
+                            id="check-steve"
+                            className="form-check-input"
+                            type="radio"
+                            checked={skinType == 'steve'}
+                            onChange={e => setSkinType('steve')}
+                        />
+                        <OverlayTrigger overlay={<Tooltip>Стандартный скин</Tooltip>}>
+                            <label className="form-check-label" htmlFor="check-steve">Стив</label>
+                        </OverlayTrigger>
+                    </div>
                     <div className="form-check form-check-inline">
                         <input
                             id="check-alex"
                             className="form-check-input"
-                            type="checkbox"
-                            checked={alex}
-                            onChange={e => setAlex(e.target.checked)}
+                            type="radio"
+                            checked={skinType == 'alex'}
+                            onChange={e => setSkinType('alex')}
                         />
-                        <label class="form-check-label" for="check-alex">Скин Алекса</label>
+                        <OverlayTrigger overlay={<Tooltip>Более тонкие руки</Tooltip>}>
+                            <label className="form-check-label" htmlFor="check-alex">Алекс</label>
+                        </OverlayTrigger>
                     </div>
-                </OverlayTrigger>
+                </div>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={close}>

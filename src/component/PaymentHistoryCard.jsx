@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Spinner } from "react-bootstrap"
 import useLoadPages from "../hook/useLoadPages"
 import { fetchApi } from "../lib/api"
 import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
-import { IdPagination } from "./Pagination"
 
 const paymentDescription = (p) => {
     if (p.alias.startsWith('up_'))
