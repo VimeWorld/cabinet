@@ -189,10 +189,62 @@ const paysystems = [
 const PayCard = () => {
     const { app } = useApp()
     const [amount, setAmount] = useState('')
-    const [paysystem, setPaysystem] = useState('fondy')
+    const [loading, setLoading] = useState(false)
 
     const filteredPaysystems = paysystems.filter(p => !p.filter || p.filter(app.user))
     const filteredLogos = new Set([].concat(...filteredPaysystems.map(p => p.logos)))
+    const [paysystem, setPaysystem] = useState(filteredPaysystems[0].id)
+
+    const onSubmit = e => {
+        e.preventDefault()
+        if (loading) return
+        setLoading(true)
+
+        fetchApi('/cp/payment/purchase', {
+            method: 'POST',
+            body: {
+                method: paysystem,
+                amount: parseInt(amount),
+            }
+        }).then(r => r.json())
+            .then(body => {
+                if (body.success) {
+                    if (body.response.method == 'url') {
+                        window.open(body.response.data, '_blank').focus()
+                    } else if (body.response.method == 'post') {
+                        const data = body.response.data
+                        const form = document.createElement('form')
+                        form.style.visibility = 'hidden'
+                        form.method = 'POST'
+                        form.action = data.url
+                        form.target = "_blank"
+                        for (let key in data.params) {
+                            const input = document.createElement('input')
+                            input.name = key
+                            input.value = data.params[key]
+                            form.appendChild(input)
+                        }
+                        document.body.appendChild(form)
+                        form.submit()
+                        document.body.removeChild(form)
+                    }
+                } else {
+                    switch (body.response.type) {
+                        case "invalid_method":
+                            Notifications.error('Выбранный метод оплаты не поддерживается')
+                            break
+                        case "invalid_amount":
+                            Notifications.error('Некорректная сумма пополнения')
+                            break
+                        default:
+                            Notifications.error('Ошибка сервера, попробуйте позже')
+
+                    }
+                }
+            })
+            .catch(e => Notifications.error('Невозможно подключиться к серверу' + e))
+            .finally(() => setLoading(false))
+    }
 
     return <div className="card">
         <div className="card-header">
@@ -200,37 +252,44 @@ const PayCard = () => {
             <span>Вы можете пополнить свой счет на любое количество вимеров</span>
         </div>
         <div className="card-body">
-            <div className="d-flex mb-3">
-                <input
-                    className="form-control"
-                    type="number"
-                    value={amount}
-                    onChange={e => setAmount(e.target.value)}
-                    autoComplete="off"
-                    placeholder="Количество"
-                />
-                <button className="btn btn-primary ms-3">Пополнить</button>
-            </div>
-            <ul className="list-group list-group-flush mb-3">
-                {filteredPaysystems.map(e => {
-                    return <li key={e.id} className="list-group-item px-0 py-3">
-                        <div className="form-check">
-                            <input
-                                type="radio"
-                                id={e.id}
-                                name="paysystem"
-                                className="form-check-input"
-                                checked={paysystem == e.id}
-                                onChange={() => setPaysystem(e.id)}
-                            />
-                            <label className="form-check-label w-100" htmlFor={e.id}>
-                                {e.img}
-                                <span className="d-block">{e.description}</span>
-                            </label>
-                        </div>
-                    </li>
-                })}
-            </ul>
+            <form onSubmit={onSubmit}>
+                <div className="d-flex mb-3">
+                    <input
+                        className="form-control"
+                        type="number"
+                        value={amount}
+                        onChange={e => setAmount(e.target.value)}
+                        autoComplete="off"
+                        placeholder="Количество"
+                        required
+                        min="1"
+                    />
+                    <button className="btn btn-primary ms-3" type="submit" disabled={loading}>
+                        {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                        {!loading && 'Пополнить'}
+                    </button>
+                </div>
+                <ul className="list-group list-group-flush mb-3">
+                    {filteredPaysystems.map(e => {
+                        return <li key={e.id} className="list-group-item px-0 py-3">
+                            <div className="form-check">
+                                <input
+                                    type="radio"
+                                    id={e.id}
+                                    name="paysystem"
+                                    className="form-check-input"
+                                    checked={paysystem == e.id}
+                                    onChange={() => setPaysystem(e.id)}
+                                />
+                                <label className="form-check-label w-100" htmlFor={e.id}>
+                                    {e.img}
+                                    <span className="d-block">{e.description}</span>
+                                </label>
+                            </div>
+                        </li>
+                    })}
+                </ul>
+            </form>
             <div className="text-center opacity-25">
                 {Array.from(filteredLogos).map(e => {
                     return <span key={e}>{logos[e]}</span>
