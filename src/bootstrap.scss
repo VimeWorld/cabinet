@@ -13,6 +13,7 @@ $input-bg: #fff;
 $font-family-sans-serif: system-ui, "Nunito", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     "Noto Color Emoji";
 $headings-font-family: system-ui, "Inter", sans-serif;
+$enable-negative-margins: true;
 
 // Configuration
 @import "bootstrap/scss/variables";

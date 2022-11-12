@@ -216,7 +216,7 @@ const AvatarCard = ({ guild }) => {
     </div>
 }
 
-const MinigamesGuild = () => {
+const MinigamesGuildPage = () => {
     const [loading, setLoading] = useState(true)
     const [guild, setGuild] = useState(null)
     const [error, setError] = useState(false)
@@ -264,4 +264,4 @@ const MinigamesGuild = () => {
     </>
 }
 
-export default MinigamesGuild
+export default MinigamesGuildPage

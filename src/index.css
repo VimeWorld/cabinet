@@ -17,9 +17,14 @@
   margin-bottom: 0;
 }
 
-.card-table td,
-.card-table th {
-  padding: var(--bs-card-cap-padding-y) var(--bs-card-cap-padding-x);
+.card-table td:first-child,
+.card-table th:first-child {
+  padding-left: var(--bs-card-cap-padding-x);
+}
+
+.card-table td:last-child,
+.card-table th:last-child {
+  padding-right: var(--bs-card-cap-padding-x);
 }
 
 .table-payments .description b {
@@ -28,7 +33,6 @@
 }
 
 td.fit {
-  width: 1%;
   white-space: nowrap;
   vertical-align: middle;
 }
