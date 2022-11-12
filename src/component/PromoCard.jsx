@@ -61,7 +61,7 @@ export const PromoCard = () => {
                 <span>Если у вас есть промо-код, активируйте его и получите награду</span>
             </div>
             {pages.loading && <div>
-                <Spinner animation="border" variant="secondary" />
+                <Spinner variant="secondary" />
             </div>}
         </div>
 
@@ -81,7 +81,7 @@ export const PromoCard = () => {
                     </Form.Group>
                     <div className="ms-3">
                         <button className="btn btn-primary text-nowrap" type="submit" disabled={activateLoading}>
-                            {activateLoading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                            {activateLoading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                             {activateLoading ? ' Загрузка...' : 'Активировать'}
                         </button>
                     </div>

@@ -102,7 +102,7 @@ const PasswordCard = () => {
 
                 <div className="text-end">
                     <button className="btn btn-primary" disabled={loading}>
-                        {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                        {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                         {loading ? ' Загрузка...' : 'Изменить'}
                     </button>
                 </div>
@@ -228,7 +228,7 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
                 </p>
                 <div className="row gy-2">
                     {secret == null && <div className="d-flex justify-content-center">
-                        <Spinner animation="border" variant="secondary" />
+                        <Spinner variant="secondary" />
                     </div>}
                     {secret && <>
                         <div className="col-12 col-sm-6 text-center">
@@ -261,7 +261,7 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
                     Закрыть
                 </Button>
                 <Button type="submit" variant="primary" disabled={loading}>
-                    {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                     {loading ? ' Загрузка...' : 'Подтвердить'}
                 </Button>
             </Modal.Footer>
@@ -342,7 +342,7 @@ const ModalDisableMfa = ({ show, close, onDisable }) => {
                     Закрыть
                 </Button>
                 <Button type="submit" variant="danger" disabled={loading}>
-                    {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                     {loading ? ' Загрузка...' : 'Отключить'}
                 </Button>
             </Modal.Footer>
@@ -430,7 +430,7 @@ const MfaCard = () => {
         {sessionsLoading &&
             <div className="card-body">
                 <div className="d-flex justify-content-center">
-                    <Spinner animation="border" variant="secondary" />
+                    <Spinner variant="secondary" />
                 </div>
             </div>}
 

@@ -146,7 +146,7 @@ const TransferCard = () => {
                 </Form.Group>
                 <div className="text-end">
                     <button className="btn btn-primary" disabled={loading}>
-                        {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                        {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                         {loading ? ' Загрузка...' : 'Перевести'}
                     </button>
                 </div>
@@ -265,7 +265,7 @@ const PayCard = () => {
                         min="1"
                     />
                     <button className="btn btn-primary ms-3" type="submit" disabled={loading}>
-                        {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                        {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                         {!loading && 'Пополнить'}
                     </button>
                 </div>

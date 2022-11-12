@@ -360,7 +360,7 @@ const ExchangeCoins = ({ profile }) => {
         {errors.vimers?.message && <div className="invalid-feedback d-block mt-n3">{errors.vimers.message}</div>}
         <div className="text-end">
             <button className="btn btn-primary" disabled={loading}>
-                {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                 {loading ? ' Загрузка...' : 'Обменять'}
             </button>
         </div>
@@ -490,7 +490,7 @@ const MinigamesDonatePage = () => {
                 <span>Обмен вимеров на коины и получение донатного статуса</span>
             </div>
             <div className='card-body'>
-                {loading && <div className='text-center'><Spinner animation='border' variant='secondary' /></div>}
+                {loading && <div className='text-center'><Spinner variant='secondary' /></div>}
                 {error && <div className='text-center text-danger'>При загрузке произошла ошибка</div>}
                 {!loading && !error && <div className='text-center text-muted'>Вы еще ни разу не заходили на MiniGames</div>}
             </div>

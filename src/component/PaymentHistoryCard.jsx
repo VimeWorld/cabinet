@@ -85,7 +85,7 @@ export const PaymentHistoryCard = () => {
                 <span>Здесь отображаются все ваши операции с вимерами</span>
             </div>
             {pages.loading && <div>
-                <Spinner animation="border" variant="secondary" />
+                <Spinner variant="secondary" />
             </div>}
         </div>
 

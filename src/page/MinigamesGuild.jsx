@@ -89,7 +89,7 @@ const InfoCard = ({ guild }) => {
         />
         <div className='card-body text-end'>
             <button className="btn btn-primary" onClick={save} disabled={loading}>
-                {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                 {loading ? ' Загрузка...' : 'Сохранить'}
             </button>
         </div>
@@ -191,7 +191,7 @@ const AvatarCard = ({ guild }) => {
                         <div className='flex-shrink-1 text-end w-100'>
                             {guild.avatar && <>
                                 <button className="btn btn-outline-danger me-3" type="button" onClick={() => setShowConfirmDelete(true)} disabled={loading}>
-                                    {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                                     {loading ? ' Загрузка...' : 'Удалить аватар'}
                                 </button>
                                 <ConfirmModal show={showConfirmDelete} close={() => setShowConfirmDelete(false)}
@@ -205,7 +205,7 @@ const AvatarCard = ({ guild }) => {
                                 </ConfirmModal>
                             </>}
                             <button className="btn btn-primary" type="submit" disabled={loading}>
-                                {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                                {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                                 {loading ? ' Загрузка...' : 'Сохранить'}
                             </button>
                         </div>
@@ -244,7 +244,7 @@ const MinigamesGuildPage = () => {
                 <span>Здесь можно изменить аватарку и описание гильдии</span>
             </div>
             <div className='card-body'>
-                {loading && <div className='text-center'><Spinner animation='border' variant='secondary' /></div>}
+                {loading && <div className='text-center'><Spinner variant='secondary' /></div>}
                 {error && <div className='text-center text-danger'>При загрузке произошла ошибка</div>}
                 {!loading && !error && <div className='text-center text-muted'>Эта страница доступна только лидеру гильдии</div>}
             </div>

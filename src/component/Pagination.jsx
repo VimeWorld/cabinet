@@ -36,7 +36,7 @@ export const IdPagination = ({ pagination, onChange, loading }) => {
         <li className="page-item" aria-current="page">
             <button className="page-link active" disabled>
                 {loading ?
-                    <Spinner animation="border" as="span" size="sm" /> :
+                    <Spinner as="span" size="sm" /> :
                     <i className="bi bi-three-dots" />}
             </button>
         </li>

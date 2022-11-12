@@ -100,7 +100,7 @@ const ModalSkin = ({ show, close }) => {
                     Закрыть
                 </Button>
                 <Button type="submit" variant="primary" disabled={loading}>
-                    {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                     {loading ? ' Загрузка...' : 'Изменить'}
                 </Button>
             </Modal.Footer>
@@ -188,7 +188,7 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
                     Закрыть
                 </Button>
                 <Button type="submit" variant="primary" disabled={loading}>
-                    {loading && <Spinner className="align-baseline" animation="border" as="span" size="sm" aria-hidden="true" />}
+                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                     {loading ? ' Загрузка...' : exists ? 'Изменить' : 'Купить'}
                 </Button>
             </Modal.Footer>
