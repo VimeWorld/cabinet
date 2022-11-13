@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 import Sidebar from "./Sidebar"
 
-export const InnerPage = () => {
+const InnerPage = () => {
     return <div className="container pt-5">
         <div className="row justify-content-center">
             <div className="col-lg-3 col-md-4 col-12">
@@ -13,3 +13,5 @@ export const InnerPage = () => {
         </div>
     </div>
 }
+
+export default InnerPage

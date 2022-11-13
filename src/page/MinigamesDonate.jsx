@@ -369,15 +369,11 @@ const ExchangeCoins = ({ profile }) => {
 
 const KindnessRowCard = ({ profile }) => {
     const progress = profile.donated / max
+    const expireDate = Date.parse(profile.rank_donate_expire)
 
     const donatedTooltip = <Tooltip>
         Ваш вклад: <b>{profile.donated}</b> {ruPluralize(profile.donated, ['вимер', 'вимера', 'вимеров'])}
     </Tooltip>
-
-    let currentRank
-    if (profile.rank != profile.rank_donate)
-        currentRank = ''
-    let expireDate = Date.parse(profile.rank_donate_expire)
 
     return <div className='card'>
         <div className="card-header">

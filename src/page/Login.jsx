@@ -6,7 +6,7 @@ import { Form, Spinner } from "react-bootstrap"
 import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha";
 import useApp from "../hook/useApp";
 
-export const LoginPage = () => {
+const LoginPage = () => {
     const { app, updateApp } = useApp()
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
@@ -95,3 +95,5 @@ export const LoginPage = () => {
         </div>
     </section>
 }
+
+export default LoginPage

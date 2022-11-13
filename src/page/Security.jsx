@@ -499,7 +499,7 @@ const DeleteCard = () => {
     </div>
 }
 
-export const SecurityPage = () => {
+const SecurityPage = () => {
     return <>
         <div className="row mb-4 gy-4">
             <div className="col-lg-6 col-12">
@@ -524,3 +524,5 @@ export const SecurityPage = () => {
         </div>
     </>
 }
+
+export default SecurityPage

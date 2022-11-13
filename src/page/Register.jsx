@@ -22,7 +22,7 @@ const RegisterSuccessPage = () => {
     </section>
 }
 
-export const RegisterPage = () => {
+const RegisterPage = () => {
     const {
         register,
         handleSubmit,
@@ -221,3 +221,5 @@ export const RegisterPage = () => {
         </div>
     </section>
 }
+
+export default RegisterPage

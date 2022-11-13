@@ -39,7 +39,7 @@ const PersonalInfoCard = () => {
     </div>
 }
 
-export const HomePage = () => {
+const HomePage = () => {
     return <>
         <div className="row mb-4 gy-4">
             <div className="col-lg-6 col-12">
@@ -62,3 +62,5 @@ export const HomePage = () => {
         </div>
     </>
 }
+
+export default HomePage

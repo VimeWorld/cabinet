@@ -299,7 +299,7 @@ const PayCard = () => {
     </div>
 }
 
-export const PaymentsPage = () => {
+const PaymentsPage = () => {
     return <>
         <div className="row mb-4 gy-4">
             <div className="col-lg-6 col-12">
@@ -320,3 +320,5 @@ export const PaymentsPage = () => {
         </div>
     </>
 }
+
+export default PaymentsPage
