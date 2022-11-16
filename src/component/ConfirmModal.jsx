@@ -2,7 +2,8 @@ import { Modal } from "react-bootstrap"
 
 export const ConfirmModal = ({
     show, close, onCancel, onConfirm,
-    title, children, confirmText, confirmClass = 'btn-primary'
+    title, children, confirmText, confirmClass = 'btn-primary',
+    cancelText = 'Отмена'
 }) => {
     return <Modal show={show} onHide={close}>
         <Modal.Header closeButton>
@@ -15,12 +16,12 @@ export const ConfirmModal = ({
             <button className="btn btn-secondary" onClick={() => {
                 onCancel?.()
                 close()
-            }}>Отмена</button>
+            }}>{cancelText}</button>
 
-            <button className={"btn " + confirmClass} onClick={() => {
+            {confirmText && <button className={"btn " + confirmClass} onClick={() => {
                 onConfirm?.()
                 close()
-            }}>{confirmText}</button>
+            }}>{confirmText}</button>}
         </Modal.Footer>
     </Modal>
 }

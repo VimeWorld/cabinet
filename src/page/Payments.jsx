@@ -6,7 +6,7 @@ import { PaymentHistoryCard } from "../component/PaymentHistoryCard"
 import useApp from "../hook/useApp"
 import { fetchApi } from "../lib/api"
 import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
-import { ruPluralize } from "../lib/i18n"
+import { ruPluralizeVimers } from "../lib/i18n"
 import Notifications from "../lib/notifications"
 
 const TransferCard = () => {
@@ -51,7 +51,7 @@ const TransferCard = () => {
             })
             const body = await response.json()
             if (response.ok) {
-                Notifications.success('Вы перевели ' + data.amount + ' ' + ruPluralize(data.amount, ['вимер', 'вимера', 'вимеров']) + ' игроку ' + data.target)
+                Notifications.success('Вы перевели ' + ruPluralizeVimers(data.amount) + ' игроку ' + data.target)
                 reset({ target: '', amount: '' })
                 EventBus.emit(EVENT_UPDATE_PAYMENTS)
                 fetchAuth()

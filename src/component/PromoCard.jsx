@@ -54,7 +54,7 @@ export const PromoCard = () => {
             .finally(() => setActivateLoading(false))
     }
 
-    return <div className="card" id="promo">
+    return <div className="card">
         <div className="card-header d-flex justify-content-between align-items-center">
             <div className="mb-0">
                 <h4 className="mb-0">Промо-код</h4>

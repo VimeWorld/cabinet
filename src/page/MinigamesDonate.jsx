@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import useApp from "../hook/useApp"
 import { fetchApi } from "../lib/api"
 import { EventBus, EVENT_MINIGAMES_PROFILE_UPDATED } from "../lib/eventbus"
-import { ruPluralize } from "../lib/i18n"
+import { ruPluralizeVimers } from "../lib/i18n"
 import Notifications from "../lib/notifications"
 
 const max = 5000
@@ -284,7 +284,7 @@ const ExchangeCoins = ({ profile }) => {
         }).then(r => r.json())
             .then(body => {
                 if (body.success) {
-                    Notifications.success('Вы успешно обменяли ' + data.vimers + ' ' + ruPluralize(data.vimers, ['вимер', 'вимера', 'вимеров']))
+                    Notifications.success('Вы успешно обменяли ' + ruPluralizeVimers(data.vimers))
                     EventBus.emit(EVENT_MINIGAMES_PROFILE_UPDATED, body.response)
                     fetchAuth()
                 } else if (body.response.type == "invalid_amount") {
@@ -301,7 +301,7 @@ const ExchangeCoins = ({ profile }) => {
     return <form onSubmit={handleSubmit(onSubmit)}>
         <h5 className="mb-3">Обмен вимеров на коины</h5>
 
-        <p>Сумма обменов: <b className="text-success">{profile.donated} {ruPluralize(profile.donated, ['вимер', 'вимера', 'вимеров'])}</b></p>
+        <p>Сумма обменов: <b className="text-success">{ruPluralizeVimers(profile.donated)}</b></p>
 
         <p>
             Работает система накопления.
@@ -372,7 +372,7 @@ const KindnessRowCard = ({ profile }) => {
     const expireDate = Date.parse(profile.rank_donate_expire)
 
     const donatedTooltip = <Tooltip>
-        Ваш вклад: <b>{profile.donated}</b> {ruPluralize(profile.donated, ['вимер', 'вимера', 'вимеров'])}
+        Ваш вклад: <b>{profile.donated}</b> {ruPluralizeVimers(profile.donated, false)}
     </Tooltip>
 
     return <div className='card'>
@@ -392,7 +392,7 @@ const KindnessRowCard = ({ profile }) => {
                     return null
 
                 const tooltip = <Tooltip>
-                    {curr.name} <span className="text-success">{curr.limit} {ruPluralize(curr.limit, ['вимер', 'вимера', 'вимеров'])}</span>
+                    {curr.name} <span className="text-success">{ruPluralizeVimers(curr.limit)}</span>
                     {curr.duration && <span className="text-warning"><br /> {curr.duration}</span>}
                 </Tooltip>
                 return <OverlayTrigger key={idx} overlay={tooltip}>

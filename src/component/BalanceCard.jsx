@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import useApp from "../hook/useApp"
-import { ruPluralize } from "../lib/i18n"
+import { ruPluralizeVimers } from "../lib/i18n"
 
 export const BalanceCard = ({ pay }) => {
     const { app } = useApp()
@@ -19,7 +19,7 @@ export const BalanceCard = ({ pay }) => {
         </div>
         <div className="card-body">
             <h4 className="text-success text-center">
-                {app.user.cash.toFixed(2) + ' ' + ruPluralize(Math.ceil(app.user.cash), ['вимер', 'вимера', 'вимеров'])}
+                {app.user.cash.toFixed(2) + ' ' + ruPluralizeVimers(Math.ceil(app.user.cash), false)}
             </h4>
         </div>
     </div>

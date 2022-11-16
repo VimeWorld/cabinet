@@ -10,6 +10,13 @@ function ruGetNounPluralForm(a: number) {
     }
 }
 
-export const ruPluralize = (count: number, words: string[3]) => {
-    return words[ruGetNounPluralForm(count)]
+export function ruPluralize(count: number, words: string[], useNumber: boolean = true) {
+    const form = words[ruGetNounPluralForm(count)]
+    if (useNumber)
+        return count + ' ' + form
+    return form
+}
+
+export function ruPluralizeVimers(count: number, useNumber: boolean = true) {
+    return ruPluralize(count, ['вимер', 'вимера', 'вимеров'], useNumber)
 }

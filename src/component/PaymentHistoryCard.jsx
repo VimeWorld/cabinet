@@ -9,7 +9,7 @@ const paymentDescription = (p) => {
         return 'Пополнение через Unitpay'
     switch (p.alias) {
         case "unban":
-            return p.data ? <>Покупка разбана на сервере: <b>{p.data.server}</b></> : 'Покупка разбана'
+            return p.data ? <>Снятие бана на сервере: <b>{p.data.server}</b></> : 'Снятие бана'
         case "transfer":
             if (p.amount < 0)
                 return <>Перевод игроку <b>{p.data}</b></>
@@ -78,7 +78,7 @@ export const PaymentHistoryCard = () => {
         return EventBus.on(EVENT_UPDATE_PAYMENTS, () => pages.load())
     }, [pages.id, pages.items])
 
-    return <div className="card" id="promo">
+    return <div className="card">
         <div className="card-header d-flex justify-content-between align-items-center">
             <div className="mb-0">
                 <h4 className="mb-0">История переводов</h4>

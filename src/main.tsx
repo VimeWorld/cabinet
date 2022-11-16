@@ -18,6 +18,7 @@ import PaymentsPage from './page/Payments'
 import SecurityPage from './page/Security'
 import MinigamesGuildPage from './page/MinigamesGuild'
 import MinigamesDonatePage from './page/MinigamesDonate'
+import BansPage from './page/Bans'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -34,6 +35,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <Route path='/' element={<HomePage />} />
               <Route path='/payments' element={<PaymentsPage />} />
               <Route path='/security' element={<SecurityPage />} />
+              <Route path='/bans' element={<BansPage />} />
               <Route path='/minigames/donate' element={<MinigamesDonatePage />} />
               <Route path='/minigames/guild' element={<MinigamesGuildPage />} />
             </Route>

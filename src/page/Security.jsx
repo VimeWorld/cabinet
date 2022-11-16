@@ -116,7 +116,7 @@ const EmailCard = () => {
     return <div className="card">
         <div className="card-header">
             <h4 className="mb-0">Email</h4>
-            <span>Изменить Email можно только через Поддержку</span>
+            <span>Изменить Email можно только через <a href="https://vk.me/vimeworld">Поддержку</a></span>
         </div>
         <div className="card-body">
             <Form.Group controlId="email">
