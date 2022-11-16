@@ -508,7 +508,7 @@ const ModalAccountDelete = ({ show, close }) => {
                 switch (body.response.type) {
                     case 'throttle':
                         close()
-                        Notifications.error('Запрос на удаление аккаунта можно посылать раз в сутки')
+                        Notifications.error('Запрос на удаление аккаунта можно делать раз в сутки')
                         break
                     case 'already_deleting':
                         close()

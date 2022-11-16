@@ -19,6 +19,7 @@ import SecurityPage from './page/Security'
 import MinigamesGuildPage from './page/MinigamesGuild'
 import MinigamesDonatePage from './page/MinigamesDonate'
 import BansPage from './page/Bans'
+import AccountDeletePage from './page/AccountDelete'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -31,6 +32,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path='/login/mfa/recovery' element={<LoginMfaRecoveryPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/recovery' element={<h1>Password recovery</h1>} />
+            <Route path='/confirm_transation' element={<h1>Confirm transaction</h1>} />
+            <Route path='/account_delete' element={<AccountDeletePage />} />
             <Route path='/' element={<InnerPage />}>
               <Route path='/' element={<HomePage />} />
               <Route path='/payments' element={<PaymentsPage />} />

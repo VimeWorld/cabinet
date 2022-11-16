@@ -13,6 +13,9 @@ export default () => {
     } else if (app.user.mfa == "needed") {
         if (!pagesWithNoMfa.includes(location.pathname))
             return <Navigate to='/login/mfa' state={{ from: location }} replace />
+    } else if (app.user.account_deleted) {
+        if (location.pathname != '/account_delete')
+            return <Navigate to='/account_delete' state={{ from: location }} replace />
     } else {
         if (pagesWithNoAuth.includes(location.pathname) || pagesWithNoMfa.includes(location.pathname)) {
             const returnPath = location.state?.from?.pathname || "/";
