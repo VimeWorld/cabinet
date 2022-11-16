@@ -25,7 +25,7 @@ const ModalSkin = ({ show, close }) => {
         const formData = new FormData()
         formData.append('file', skinFile)
         formData.append('type', skinType)
-        fetchApi('/cp/user/skin', {
+        fetchApi('/user/skin', {
             method: 'POST',
             body: formData,
         }).then(r => r.json())
@@ -125,7 +125,7 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
         setLoading(true)
         const formData = new FormData()
         formData.append('file', skinFile)
-        fetchApi('/cp/user/cape', {
+        fetchApi('/user/cape', {
             method: 'POST',
             body: formData,
         }).then(r => r.json())
@@ -205,7 +205,7 @@ export const SkinCard = () => {
     useEffect(() => {
         if (capeExists != null)
             return
-        fetchApi('/cp/user/cape')
+        fetchApi('/user/cape')
             .then(response => response.json())
             .then(body => {
                 if (body.success) {

@@ -70,7 +70,7 @@ const paymentDescription = (p) => {
 }
 
 export const PaymentHistoryCard = () => {
-    const pages = useLoadPages(id => fetchApi('/cp/payment/history?count=20&id=' + id))
+    const pages = useLoadPages(id => fetchApi('/payment/history?count=20&id=' + id))
 
     useEffect(() => {
         if (pages.id != 0 || !pages.items)

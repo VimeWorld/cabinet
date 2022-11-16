@@ -22,12 +22,12 @@ export const PromoCard = () => {
     })
     const [activateLoading, setActivateLoading] = useState(false)
 
-    const pages = useLoadPages(id => fetchApi('/cp/promo/history?count=10&id=' + id), false)
+    const pages = useLoadPages(id => fetchApi('/promo/history?count=10&id=' + id), false)
 
     const activatePromo = data => {
         if (activateLoading) return
         setActivateLoading(true)
-        fetchApi('/cp/promo/activate', {
+        fetchApi('/promo/activate', {
             method: 'POST',
             body: { promo: data.promo },
         }).then(r => r.json())

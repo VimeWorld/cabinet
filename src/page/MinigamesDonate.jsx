@@ -278,7 +278,7 @@ const ExchangeCoins = ({ profile }) => {
             return
         setLoading(true)
 
-        fetchApi('/cp/server/minigames/exchange', {
+        fetchApi('/server/minigames/exchange', {
             method: 'POST',
             body: { amount: data.vimers },
         }).then(r => r.json())
@@ -449,7 +449,7 @@ const MinigamesDonatePage = () => {
         setLoading(true)
         setError(false)
         setProfile(null)
-        fetchApi('/cp/server/minigames/profile')
+        fetchApi('/server/minigames/profile')
             .then(r => r.json())
             .then(body => {
                 if (body.success)

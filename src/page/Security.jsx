@@ -26,7 +26,7 @@ const PasswordCard = () => {
         if (loading) return
         setLoading(true)
 
-        fetchApi('/cp/settings/password', {
+        fetchApi('/settings/password', {
             method: 'POST',
             body: {
                 current_password: data.password,
@@ -157,7 +157,7 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
 
     useEffect(() => {
         if (!show) return
-        fetchApi('/cp/settings/totp/setup', { method: 'POST' })
+        fetchApi('/settings/totp/setup', { method: 'POST' })
             .then(r => r.json())
             .then(body => {
                 if (body.success) {
@@ -180,7 +180,7 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
     const onSubmit = data => {
         if (loading || !secret) return
         setLoading(true)
-        fetchApi('/cp/settings/totp/setup/confirm', {
+        fetchApi('/settings/totp/setup/confirm', {
             method: 'POST',
             body: {
                 tuuid: app.tuuid,
@@ -285,7 +285,7 @@ const ModalDisableMfa = ({ show, close, onDisable }) => {
     const onSubmit = data => {
         if (loading) return
         setLoading(true)
-        fetchApi('/cp/settings/totp/disable', {
+        fetchApi('/settings/totp/disable', {
             method: 'POST',
             body: {
                 code: data.code,
@@ -365,7 +365,7 @@ const MfaCard = () => {
         if (sessionsLoading) return
         setSessionsError(false)
         setSessionsLoading(true)
-        fetchApi('/cp/settings/totp/session/list')
+        fetchApi('/settings/totp/session/list')
             .then(r => r.json())
             .then(body => {
                 if (body.success) {
@@ -384,7 +384,7 @@ const MfaCard = () => {
     const revokeSession = (e, id) => {
         e.target.setAttribute('disabled', 'disabled')
         e.target.innerText = 'Загрузка...'
-        fetchApi('/cp/settings/totp/session/revoke', {
+        fetchApi('/settings/totp/session/revoke', {
             method: 'POST',
             body: { id },
         }).then(r => r.json())
@@ -487,14 +487,81 @@ const MfaCard = () => {
     </div>
 }
 
+const ModalAccountDelete = ({ show, close }) => {
+    const [loading, setLoading] = useState(false)
+    const [username, setUsername] = useState('')
+    const { app } = useApp()
+
+    const confirmDelete = () => {
+        if (loading) return
+        setLoading(true)
+        fetchApi('/delete/request', {
+            method: 'POST'
+        }).then(r => r.json())
+            .then(body => {
+                if (body.success) {
+                    close()
+                    Notifications.success('На вашу почту выслано письмо с подтверждением.')
+                    return
+                }
+
+                switch (body.response.type) {
+                    case 'throttle':
+                        close()
+                        Notifications.error('Запрос на удаление аккаунта можно посылать раз в сутки')
+                        break
+                    case 'already_deleting':
+                        close()
+                        Notifications.warning('Аккаунт уже удаляется')
+                        break
+                    default:
+                        Notifications.error(body.response.title)
+                }
+            })
+            .catch(() => Notifications.error('Невозможно подключиться к серверу'))
+            .finally(() => setLoading(false))
+    }
+
+    return <Modal show={show} onHide={close}>
+        <Modal.Header closeButton>
+            <Modal.Title>Удаление аккаунта</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <div className="mb-3">Введите свой ник <b>{app.user.username}</b> в поле ниже:</div>
+            <input
+                className="form-control mb-3"
+                placeholder="Ваш ник"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+            />
+            <div>На вашу почту придет письмо со ссылкой на страницу удаления аккаунта.</div>
+        </Modal.Body>
+        <Modal.Footer>
+            <Button variant="secondary" onClick={close}>
+                Закрыть
+            </Button>
+            <Button variant="danger" disabled={loading || username != app.user.username} onClick={confirmDelete}>
+                {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+                {loading ? ' Загрузка...' : 'Подтвердить'}
+            </Button>
+        </Modal.Footer>
+    </Modal>
+}
+
 const DeleteCard = () => {
+    const [modalDisableMfa, setModalDisableMfa] = useState(false)
+
     return <div className="card border border-danger">
         <div className="card-header text-danger">
             <h4 className="mb-0">Удаление аккаунта</h4>
             <span>Навсегда удаляет этот аккаунт и все связанные данные</span>
         </div>
         <div className="card-body text-center">
-            <button className="btn btn-outline-danger">Удалить аккаунт</button>
+            <button className="btn btn-outline-danger" onClick={() => setModalDisableMfa(true)}>Удалить аккаунт</button>
+            <ModalAccountDelete
+                show={modalDisableMfa}
+                close={() => setModalDisableMfa(false)}
+            />
         </div>
     </div>
 }

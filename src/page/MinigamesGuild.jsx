@@ -26,7 +26,7 @@ const InfoCard = ({ guild }) => {
         }
 
         setLoading(true)
-        fetchApi('/cp/server/minigames/guild/info', {
+        fetchApi('/server/minigames/guild/info', {
             method: 'POST',
             body: { info: content },
         }).then(r => r.json())
@@ -105,7 +105,7 @@ const AvatarCard = ({ guild }) => {
         if (loading) return
 
         setLoading(true)
-        fetchApi('/cp/server/minigames/guild/avatar', {
+        fetchApi('/server/minigames/guild/avatar', {
             method: 'DELETE',
         }).then(r => r.json())
             .then(body => {
@@ -140,7 +140,7 @@ const AvatarCard = ({ guild }) => {
         setLoading(true)
         const formData = new FormData()
         formData.append('file', avatar)
-        fetchApi('/cp/server/minigames/guild/avatar', {
+        fetchApi('/server/minigames/guild/avatar', {
             method: 'POST',
             body: formData,
         }).then(r => r.json())
@@ -225,7 +225,7 @@ const MinigamesGuildPage = () => {
         setLoading(true)
         setError(false)
         setGuild(null)
-        fetchApi('/cp/server/minigames/guild')
+        fetchApi('/server/minigames/guild')
             .then(r => r.json())
             .then(body => {
                 if (body.success)

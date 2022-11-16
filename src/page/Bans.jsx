@@ -33,7 +33,7 @@ const ServerBansCard = ({ name, url }) => {
 
     useEffect(() => loadBanlist(), [])
 
-    const unban = e => {
+    const unban = () => {
         if (!bans?.unban.possible)
             return
 
@@ -171,17 +171,17 @@ const BansPage = () => {
     return <>
         <div className="row mb-4">
             <div className="col">
-                <ServerBansCard name="MiniGames" url="/cp/server/minigames/bans" />
+                <ServerBansCard name="MiniGames" url="/server/minigames/bans" />
             </div>
         </div>
         <div className="row mb-4">
             <div className="col">
-                <ServerBansCard name="Модовых" url="/cp/server/mods/bans" />
+                <ServerBansCard name="Модовых" url="/server/mods/bans" />
             </div>
         </div>
         <div className="row mb-4">
             <div className="col">
-                <ServerBansCard name="CivCraft" url="/cp/server/civcraft/bans" />
+                <ServerBansCard name="CivCraft" url="/server/civcraft/bans" />
             </div>
         </div>
     </>

@@ -42,7 +42,7 @@ const TransferCard = () => {
         setLoading(true)
 
         try {
-            const response = await fetchApi('/cp/payment/transfer', {
+            const response = await fetchApi('/payment/transfer', {
                 method: 'POST',
                 body: {
                     target: data.target,
@@ -200,7 +200,7 @@ const PayCard = () => {
         if (loading) return
         setLoading(true)
 
-        fetchApi('/cp/payment/purchase', {
+        fetchApi('/payment/purchase', {
             method: 'POST',
             body: {
                 method: paysystem,
