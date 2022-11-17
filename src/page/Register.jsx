@@ -207,12 +207,10 @@ const RegisterPage = () => {
                 Нажатием кнопки Регистрация, вы соглашаетесь с <a className="link-secondary" href="https://vime.one/terms">Пользовательским соглашением</a>, <a className="link-secondary" href="https://vime.one/rules">Правилами сервера</a> и признаете что применяется наша <a className="link-secondary" href="https://vime.one/privacy">Политика конфиденциальности</a>.
             </small></p>
 
-            <div className="mt-2 mb-4">
-                <button className="btn btn-lg btn-primary w-100" type="submit" disabled={loading}>
-                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                    {loading ? ' Загрузка...' : 'Регистрация'}
-                </button>
-            </div>
+            <button className="btn btn-lg btn-primary w-100 mt-2 mb-4" type="submit" disabled={loading}>
+                {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+                {loading ? ' Загрузка...' : 'Регистрация'}
+            </button>
 
             <p className="text-center">Уже есть аккаунт? <Link to="/login">Войти</Link></p>
         </Form>

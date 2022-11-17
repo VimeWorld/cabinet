@@ -89,12 +89,10 @@ const RecoveryStep2Form = ({ token, username }) => {
             {errors.password2 && <Form.Control.Feedback type="invalid">{errors.password2.message}</Form.Control.Feedback>}
         </Form.Group>
 
-        <div className="mt-3 mb-4">
-            <button className="btn btn-lg btn-primary w-100" type="submit" disabled={loading}>
-                {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                {loading ? ' Загрузка...' : 'Изменить пароль'}
-            </button>
-        </div>
+        <button className="btn btn-lg btn-primary w-100 mt-3 mb-4" type="submit" disabled={loading}>
+            {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+            {loading ? ' Загрузка...' : 'Изменить пароль'}
+        </button>
     </form>
 }
 
@@ -209,12 +207,10 @@ const RecoveryPage = () => {
 
             {recaptchaComponent}
 
-            <div className="mt-2 mb-4">
-                <button className="btn btn-lg btn-primary w-100" type="submit" disabled={loading}>
-                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                    {loading ? ' Загрузка...' : 'Восстановить'}
-                </button>
-            </div>
+            <button className="btn btn-lg btn-primary w-100 mt-2 mb-4" type="submit" disabled={loading}>
+                {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+                {loading ? ' Загрузка...' : 'Восстановить'}
+            </button>
 
             <p className="text-center">Вспомнили пароль? <Link to="/login">Войти</Link></p>
         </Form>

@@ -14,6 +14,7 @@ const DeleteInProgressFragment = ({ progress }) => {
     const cancel = () => {
         if (!progress.cancel_possible) return
         if (loading) return
+        setLoading(true)
 
         fetchApi('/delete/cancel', {
             method: 'POST'
@@ -49,12 +50,10 @@ const DeleteInProgressFragment = ({ progress }) => {
             До этого времени вы можете отменить удаление.
         </p>
 
-        <div className="mt-4">
-            <button className="btn btn-lg btn-primary w-100" onClick={cancel} disabled={loading}>
-                {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                {loading ? ' Загрузка...' : 'Восстановить аккаунт'}
-            </button>
-        </div>
+        <button className="btn btn-lg btn-primary w-100 mt-4" onClick={cancel} disabled={loading}>
+            {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+            {loading ? ' Загрузка...' : 'Восстановить аккаунт'}
+        </button>
     </div>
 }
 
@@ -96,12 +95,10 @@ const DeleteConfirmFragment = ({ token }) => {
 
         <p className="text-danger">Ваш ник не будет доступен для регистрации еще <b>3 месяца</b> после удаления аккаунта.</p>
 
-        <div className="mt-3">
-            <button className="btn btn-lg btn-danger w-100" onClick={confirm} disabled={loading}>
-                {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                {loading ? ' Загрузка...' : 'Удалить аккаунт'}
-            </button>
-        </div>
+        <button className="btn btn-lg btn-danger w-100 mt-3" onClick={confirm} disabled={loading}>
+            {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+            {loading ? ' Загрузка...' : 'Удалить аккаунт'}
+        </button>
     </>
 }
 
@@ -184,10 +181,10 @@ const DeletionProgressLoader = () => {
 const AccountDeletePage = () => {
     const { app } = useApp()
 
-    return app.user.account_deleted ?
-        <DeletionProgressLoader />
-        :
-        <DeleteRequestLoader />
+    if (app.user.account_deleted)
+        return <DeletionProgressLoader />
+
+    return <DeleteRequestLoader />
 }
 
 export default AccountDeletePage

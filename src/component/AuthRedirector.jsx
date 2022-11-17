@@ -18,8 +18,9 @@ export default () => {
             return <Navigate to='/account_delete' state={{ from: location }} replace />
     } else {
         if (pagesWithNoAuth.includes(location.pathname) || pagesWithNoMfa.includes(location.pathname)) {
-            const returnPath = location.state?.from?.pathname || "/";
-            return <Navigate to={returnPath} replace />
+            if (location.state?.from)
+                return <Navigate to={location.state.from} replace />
+            return <Navigate to="/" replace />
         }
     }
     return <Outlet />

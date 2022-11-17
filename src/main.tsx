@@ -21,6 +21,7 @@ import SecurityPage from './page/Security'
 import MinigamesGuildPage from './page/MinigamesGuild'
 import MinigamesDonatePage from './page/MinigamesDonate'
 import BansPage from './page/Bans'
+import TransactionConfirmPage from './page/ConfirmTransaction'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -34,7 +35,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/recovery' element={<RecoveryPage />} />
             <Route path='/recovery/step2' element={<RecoveryStep2Page />} />
-            <Route path='/confirm_transation' element={<h1>Confirm transaction</h1>} />
+            <Route path='/confirm_transation' element={<TransactionConfirmPage />} />
             <Route path='/discord' element={<h1>Discord verification</h1>} />
             <Route path='/account_delete' element={<AccountDeletePage />} />
             <Route path='/' element={<InnerPage />}>

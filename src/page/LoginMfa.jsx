@@ -84,12 +84,10 @@ export const LoginMfaRecoveryPage = () => {
 
             {recaptchaComponent}
 
-            <div className="mt-2 mb-4">
-                <button className="btn btn-lg btn-primary w-100" type="submit" disabled={loading}>
-                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                    {loading ? ' Загрузка...' : 'Продолжить'}
-                </button>
-            </div>
+            <button className="btn btn-lg btn-primary w-100 mt-2 mb-4" type="submit" disabled={loading}>
+                {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+                {loading ? ' Загрузка...' : 'Продолжить'}
+            </button>
 
             <div className="text-center">
                 <Link to="/login/mfa">Назад</Link>
@@ -187,12 +185,10 @@ export const LoginMfaPage = () => {
 
             {recaptchaComponent}
 
-            <div className="mt-2 mb-4">
-                <button className="btn btn-lg btn-primary w-100" type="submit" disabled={loading}>
-                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                    {loading ? ' Загрузка...' : 'Продолжить'}
-                </button>
-            </div>
+            <button className="btn btn-lg btn-primary w-100 mt-2 mb-4" type="submit" disabled={loading}>
+                {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+                {loading ? ' Загрузка...' : 'Продолжить'}
+            </button>
 
             <div className="text-center">
                 <Link to="/login/mfa/recovery">Восстановление доступа</Link>

@@ -81,12 +81,10 @@ const LoginPage = () => {
 
             {recaptchaComponent}
 
-            <div className="mt-2 mb-4">
-                <button className="btn btn-lg btn-primary w-100" type="submit" disabled={loading}>
-                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                    {loading ? ' Загрузка...' : 'Вход'}
-                </button>
-            </div>
+            <button className="btn btn-lg btn-primary w-100 mt-2 mb-4" type="submit" disabled={loading}>
+                {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+                {loading ? ' Загрузка...' : 'Вход'}
+            </button>
 
             <p className="text-center">Еще нет аккаунта? <Link to="/register">Регистрация</Link></p>
         </Form>
