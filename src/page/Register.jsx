@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import Notifications from '../lib/notifications';
 import { fetchApi } from "../lib/api"
 import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha";
+import OuterPage from "../component/OuterPage";
 
 const RegisterSuccessPage = () => {
     return <section className="container vh-100">
@@ -128,98 +129,94 @@ const RegisterPage = () => {
         setCheckedLogin({ login, error })
     }
 
-    return <section className="container vh-100">
-        <div className="row justify-content-center">
-            <div className="col-md-6 col-lg-4">
-                <Form className="card w-100 p-4 my-5" onSubmit={handleSubmit(submit)}>
-                    <h3 className="mb-1 text-center">VimeWorld</h3>
-                    <h5 className="fw-normal mb-4 text-center">Регистрация аккаунта</h5>
+    return <OuterPage>
+        <Form onSubmit={handleSubmit(submit)}>
+            <h3 className="mb-1 text-center">VimeWorld</h3>
+            <h5 className="fw-normal mb-4 text-center">Регистрация аккаунта</h5>
 
-                    <Form.Group className="mb-3" controlId="login">
-                        <Form.Label>Логин</Form.Label>
-                        <Form.Control
-                            {...register('login', {
-                                required: 'Логин не может быть пустым',
-                                minLength: {
-                                    value: 3,
-                                    message: 'Логин должен быть не менее 3 символов'
-                                },
-                                maxLength: {
-                                    value: 16,
-                                    message: 'Логина должен быть не более 16 символов'
-                                },
-                                pattern: {
-                                    value: /^[0-9a-zA-Z_]{3,16}$/,
-                                    message: 'Логин может содержать только англ. буквы, цифры и _'
-                                }
-                            })}
-                            isInvalid={!!errors.login}
-                            isValid={checkedLogin.login && !checkedLogin.error && checkedLogin.login == watch('login')}
-                            onBlur={onLoginBlur}
-                        />
-                        {errors.login && <Form.Control.Feedback type="invalid">{errors.login.message}</Form.Control.Feedback>}
-                    </Form.Group>
+            <Form.Group className="mb-3" controlId="login">
+                <Form.Label>Логин</Form.Label>
+                <Form.Control
+                    {...register('login', {
+                        required: 'Логин не может быть пустым',
+                        minLength: {
+                            value: 3,
+                            message: 'Логин должен быть не менее 3 символов'
+                        },
+                        maxLength: {
+                            value: 16,
+                            message: 'Логина должен быть не более 16 символов'
+                        },
+                        pattern: {
+                            value: /^[0-9a-zA-Z_]{3,16}$/,
+                            message: 'Логин может содержать только англ. буквы, цифры и _'
+                        }
+                    })}
+                    isInvalid={!!errors.login}
+                    isValid={checkedLogin.login && !checkedLogin.error && checkedLogin.login == watch('login')}
+                    onBlur={onLoginBlur}
+                />
+                {errors.login && <Form.Control.Feedback type="invalid">{errors.login.message}</Form.Control.Feedback>}
+            </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="password">
-                        <Form.Label>Пароль</Form.Label>
-                        <Form.Control type="password" {...register('password', {
-                            required: 'Пароль не может быть пустым',
-                            minLength: {
-                                value: 6,
-                                message: 'Минимальная длина пароля 6 символов'
-                            },
-                            maxLength: {
-                                value: 50,
-                                message: 'Максимальная длина пароля 50 символов'
-                            },
-                            deps: ['password_confirm']
-                        })} isInvalid={!!errors.password} />
-                        {errors.password && <Form.Control.Feedback type="invalid">{errors.password.message}</Form.Control.Feedback>}
-                    </Form.Group>
+            <Form.Group className="mb-3" controlId="password">
+                <Form.Label>Пароль</Form.Label>
+                <Form.Control type="password" {...register('password', {
+                    required: 'Пароль не может быть пустым',
+                    minLength: {
+                        value: 6,
+                        message: 'Минимальная длина пароля 6 символов'
+                    },
+                    maxLength: {
+                        value: 50,
+                        message: 'Максимальная длина пароля 50 символов'
+                    },
+                    deps: ['password_confirm']
+                })} isInvalid={!!errors.password} />
+                {errors.password && <Form.Control.Feedback type="invalid">{errors.password.message}</Form.Control.Feedback>}
+            </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="password_confirm">
-                        <Form.Label>Повтор пароля</Form.Label>
-                        <Form.Control type="password" {...register('password_confirm', {
-                            validate: (val) => {
-                                if (watch('password') != val)
-                                    return 'Пароли должны совпадать'
-                            },
-                        })} isInvalid={!!errors.password_confirm} />
-                        {errors.password_confirm && <Form.Control.Feedback type="invalid">{errors.password_confirm.message}</Form.Control.Feedback>}
-                    </Form.Group>
+            <Form.Group className="mb-3" controlId="password_confirm">
+                <Form.Label>Повтор пароля</Form.Label>
+                <Form.Control type="password" {...register('password_confirm', {
+                    validate: (val) => {
+                        if (watch('password') != val)
+                            return 'Пароли должны совпадать'
+                    },
+                })} isInvalid={!!errors.password_confirm} />
+                {errors.password_confirm && <Form.Control.Feedback type="invalid">{errors.password_confirm.message}</Form.Control.Feedback>}
+            </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="email">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" {...register('email', {
-                            required: 'Email не может быть пустым',
-                            validate: (val) => {
-                                if (!/^[0-9a-zA-Z_\-.@]+$/.test(val))
-                                    return 'Email содержит недопустимые символы'
-                                if (!/^[0-9a-zA-Z_\-.]{1,64}@[0-9a-zA-Z_\-.]{4,190}$/.test(val))
-                                    return 'Введен некорректный Email'
-                            },
-                        })} isInvalid={!!errors.email} />
-                        {errors.email && <Form.Control.Feedback type="invalid">{errors.email.message}</Form.Control.Feedback>}
-                    </Form.Group>
+            <Form.Group className="mb-3" controlId="email">
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="email" {...register('email', {
+                    required: 'Email не может быть пустым',
+                    validate: (val) => {
+                        if (!/^[0-9a-zA-Z_\-.@]+$/.test(val))
+                            return 'Email содержит недопустимые символы'
+                        if (!/^[0-9a-zA-Z_\-.]{1,64}@[0-9a-zA-Z_\-.]{4,190}$/.test(val))
+                            return 'Введен некорректный Email'
+                    },
+                })} isInvalid={!!errors.email} />
+                {errors.email && <Form.Control.Feedback type="invalid">{errors.email.message}</Form.Control.Feedback>}
+            </Form.Group>
 
-                    {recaptchaComponent}
+            {recaptchaComponent}
 
-                    <p className="text-center text-muted text-small"><small>
-                        Нажатием кнопки Регистрация, вы соглашаетесь с <a className="link-secondary" href="https://vime.one/terms">Пользовательским соглашением</a>, <a className="link-secondary" href="https://vime.one/rules">Правилами сервера</a> и признаете что применяется наша <a className="link-secondary" href="https://vime.one/privacy">Политика конфиденциальности</a>.
-                    </small></p>
+            <p className="text-center text-muted text-small"><small>
+                Нажатием кнопки Регистрация, вы соглашаетесь с <a className="link-secondary" href="https://vime.one/terms">Пользовательским соглашением</a>, <a className="link-secondary" href="https://vime.one/rules">Правилами сервера</a> и признаете что применяется наша <a className="link-secondary" href="https://vime.one/privacy">Политика конфиденциальности</a>.
+            </small></p>
 
-                    <div className="mt-2 mb-4">
-                        <button className="btn btn-lg btn-primary w-100" type="submit" disabled={loading}>
-                            {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                            {loading ? ' Загрузка...' : 'Регистрация'}
-                        </button>
-                    </div>
-
-                    <p className="text-center">Уже есть аккаунт? <Link to="/login">Войти</Link></p>
-                </Form>
+            <div className="mt-2 mb-4">
+                <button className="btn btn-lg btn-primary w-100" type="submit" disabled={loading}>
+                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+                    {loading ? ' Загрузка...' : 'Регистрация'}
+                </button>
             </div>
-        </div>
-    </section>
+
+            <p className="text-center">Уже есть аккаунт? <Link to="/login">Войти</Link></p>
+        </Form>
+    </OuterPage>
 }
 
 export default RegisterPage

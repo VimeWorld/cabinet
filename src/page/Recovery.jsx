@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Form, Spinner } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
+import OuterPage from "../component/OuterPage"
 import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha"
 import { fetchApi } from "../lib/api"
 import Notifications from "../lib/notifications"
@@ -125,23 +126,17 @@ const RecoveryStep2Page = () => {
             .finally(() => setLoading(false))
     }, [token])
 
-    return <section className="container vh-100">
-        <div className="row justify-content-center">
-            <div className="col-md-6 col-lg-4">
-                <div className="card w-100 p-4 my-5">
-                    <h3 className="mb-1 text-center">VimeWorld</h3>
-                    <h5 className="mb-4 fw-normal text-center">Восстановление аккаунта</h5>
-                    {!loading && username && <h5 className="mb-4 mt-n3 text-center">{username}</h5>}
+    return <OuterPage>
+        <h3 className="mb-1 text-center">VimeWorld</h3>
+        <h5 className="mb-4 fw-normal text-center">Восстановление аккаунта</h5>
+        {!loading && username && <h5 className="mb-4 mt-n3 text-center">{username}</h5>}
 
-                    {loading && <div className="text-center"><Spinner size="lg" variant="secondary" /></div>}
-                    {!loading && !username && <div className="text-danger text-center">Ошибка</div>}
-                    {!loading && username && <RecoveryStep2Form token={token} username={username} />}
+        {loading && <div className="text-center"><Spinner size="lg" variant="secondary" /></div>}
+        {!loading && !username && <div className="text-danger text-center">Ошибка</div>}
+        {!loading && username && <RecoveryStep2Form token={token} username={username} />}
 
-                    <p className="text-center"><Link to="/login">Вернуться на главную</Link></p>
-                </div>
-            </div>
-        </div>
-    </section>
+        <p className="text-center"><Link to="/login">Вернуться на главную</Link></p>
+    </OuterPage>
 }
 
 const RecoveryPage = () => {
@@ -193,41 +188,37 @@ const RecoveryPage = () => {
         setLoading(false)
     }
 
-    return <section className="container vh-100">
-        <div className="row justify-content-center">
-            <div className="col-md-6 col-lg-4">
-                <Form className="card w-100 p-4 my-5" onSubmit={submit}>
-                    <h3 className="mb-1 text-center">VimeWorld</h3>
-                    <h5 className="mb-4 fw-normal text-center">Восстановление аккаунта</h5>
+    return <OuterPage>
+        <Form onSubmit={submit}>
+            <h3 className="mb-1 text-center">VimeWorld</h3>
+            <h5 className="mb-4 fw-normal text-center">Восстановление аккаунта</h5>
 
-                    <p>Вам будет выслано письмо с подтверждением, которое будет действительно в течение одного часа.</p>
+            <p>Вам будет выслано письмо с подтверждением, которое будет действительно в течение одного часа.</p>
 
-                    <Form.Group className="mb-3" controlId="login">
-                        <Form.Label>Логин</Form.Label>
-                        <Form.Control type="text" minLength="3" maxLength="20" required
-                            value={login} onChange={e => setLogin(e.target.value)} />
-                    </Form.Group>
+            <Form.Group className="mb-3" controlId="login">
+                <Form.Label>Логин</Form.Label>
+                <Form.Control type="text" minLength="3" maxLength="20" required
+                    value={login} onChange={e => setLogin(e.target.value)} />
+            </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="email">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" required
-                            value={email} onChange={e => setEmail(e.target.value)} />
-                    </Form.Group>
+            <Form.Group className="mb-3" controlId="email">
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="email" required
+                    value={email} onChange={e => setEmail(e.target.value)} />
+            </Form.Group>
 
-                    {recaptchaComponent}
+            {recaptchaComponent}
 
-                    <div className="mt-2 mb-4">
-                        <button className="btn btn-lg btn-primary w-100" type="submit" disabled={loading}>
-                            {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                            {loading ? ' Загрузка...' : 'Восстановить'}
-                        </button>
-                    </div>
-
-                    <p className="text-center">Вспомнили пароль? <Link to="/login">Войти</Link></p>
-                </Form>
+            <div className="mt-2 mb-4">
+                <button className="btn btn-lg btn-primary w-100" type="submit" disabled={loading}>
+                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+                    {loading ? ' Загрузка...' : 'Восстановить'}
+                </button>
             </div>
-        </div>
-    </section>
+
+            <p className="text-center">Вспомнили пароль? <Link to="/login">Войти</Link></p>
+        </Form>
+    </OuterPage>
 }
 
 export { RecoveryPage, RecoveryStep2Page }

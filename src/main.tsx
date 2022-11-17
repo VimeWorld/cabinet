@@ -35,6 +35,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path='/recovery' element={<RecoveryPage />} />
             <Route path='/recovery/step2' element={<RecoveryStep2Page />} />
             <Route path='/confirm_transation' element={<h1>Confirm transaction</h1>} />
+            <Route path='/discord' element={<h1>Discord verification</h1>} />
             <Route path='/account_delete' element={<AccountDeletePage />} />
             <Route path='/' element={<InnerPage />}>
               <Route path='/' element={<HomePage />} />

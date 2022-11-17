@@ -447,7 +447,7 @@ const MfaCard = () => {
                     close={() => setModalSetupMfa(false)}
                     onEnable={() => {
                         updateApp({ user: { ...app.user, mfa: 'completed' } })
-                        setSessions(null)
+                        loadSessions()
                     }}
                 />
             </div>
@@ -540,7 +540,11 @@ const ModalAccountDelete = ({ show, close }) => {
             <Button variant="secondary" onClick={close}>
                 Закрыть
             </Button>
-            <Button variant="danger" disabled={loading || username != app.user.username} onClick={confirmDelete}>
+            <Button
+                variant="danger"
+                disabled={loading || username.trim().toLowerCase() != app.user.username.toLowerCase()}
+                onClick={confirmDelete}
+            >
                 {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                 {loading ? ' Загрузка...' : 'Подтвердить'}
             </Button>

@@ -4,6 +4,7 @@ import Notifications from '../lib/notifications';
 import { fetchApi } from "../lib/api"
 import { Spinner } from "react-bootstrap"
 import useApp from "../hook/useApp";
+import OuterPage from "../component/OuterPage";
 
 const DeleteInProgressFragment = ({ progress }) => {
     const { app, updateApp } = useApp()
@@ -133,7 +134,7 @@ const DeleteRequestLoader = () => {
             .finally(() => setLoading(false))
     }, [token])
 
-    return <div className="card w-100 p-4 my-5">
+    return <OuterPage background="bg-gradient-red">
         <h3 className="mb-1 text-center">VimeWorld</h3>
         <h5 className="mb-2 fw-normal text-center text-danger">Удаление аккаунта</h5>
         <h5 className="mb-4 text-center">{app.user.username}</h5>
@@ -143,7 +144,7 @@ const DeleteRequestLoader = () => {
         {!loading && valid && <DeleteConfirmFragment token={token} />}
 
         <Link to="/" className="btn btn-link mt-3">Вернуться</Link>
-    </div>
+    </OuterPage>
 }
 
 const DeletionProgressLoader = () => {
@@ -168,7 +169,7 @@ const DeletionProgressLoader = () => {
             .finally(() => setLoading(false))
     }, [])
 
-    return <div className="card w-100 p-4 my-5">
+    return <OuterPage>
         <h3 className="mb-1 text-center">VimeWorld</h3>
         <h5 className="mb-4 fw-normal text-center text-danger">Аккаунт {app.user.username} удален</h5>
 
@@ -177,23 +178,16 @@ const DeletionProgressLoader = () => {
         {!loading && status && <DeleteInProgressFragment progress={status} />}
 
         <button className="btn btn-link mt-3" onClick={logout}>Выход</button>
-    </div>
+    </OuterPage>
 }
 
 const AccountDeletePage = () => {
     const { app } = useApp()
 
-    return <section className="container vh-100">
-        <div className="row justify-content-center">
-            <div className="col-md-6 col-lg-4">
-                {app.user.account_deleted ?
-                    <DeletionProgressLoader />
-                    :
-                    <DeleteRequestLoader />
-                }
-            </div>
-        </div>
-    </section>
+    return app.user.account_deleted ?
+        <DeletionProgressLoader />
+        :
+        <DeleteRequestLoader />
 }
 
 export default AccountDeletePage
