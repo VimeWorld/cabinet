@@ -131,7 +131,7 @@ const RegisterPage = () => {
     return <section className="container vh-100">
         <div className="row justify-content-center">
             <div className="col-md-6 col-lg-4">
-                <Form className="card w-100 p-4 mt-5" onSubmit={handleSubmit(submit)}>
+                <Form className="card w-100 p-4 my-5" onSubmit={handleSubmit(submit)}>
                     <h3 className="mb-1 text-center">VimeWorld</h3>
                     <h5 className="fw-normal mb-4 text-center">Регистрация аккаунта</h5>
 

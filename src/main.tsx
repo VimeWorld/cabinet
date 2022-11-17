@@ -7,9 +7,11 @@ import './index.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
 import NotificationBox from './component/NotificationBox'
-import { LoginMfaPage, LoginMfaRecoveryPage } from './page/LoginMfa'
 import RegisterPage from './page/Register'
 import LoginPage from './page/Login'
+import { LoginMfaPage, LoginMfaRecoveryPage } from './page/LoginMfa'
+import { RecoveryStep2Page, RecoveryPage } from './page/Recovery'
+import AccountDeletePage from './page/AccountDelete'
 import InnerPage from './component/InnerPage'
 import HomePage from './page/Home'
 import AuthRedirector from './component/AuthRedirector'
@@ -19,7 +21,6 @@ import SecurityPage from './page/Security'
 import MinigamesGuildPage from './page/MinigamesGuild'
 import MinigamesDonatePage from './page/MinigamesDonate'
 import BansPage from './page/Bans'
-import AccountDeletePage from './page/AccountDelete'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -31,7 +32,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path='/login/mfa' element={<LoginMfaPage />} />
             <Route path='/login/mfa/recovery' element={<LoginMfaRecoveryPage />} />
             <Route path='/register' element={<RegisterPage />} />
-            <Route path='/recovery' element={<h1>Password recovery</h1>} />
+            <Route path='/recovery' element={<RecoveryPage />} />
+            <Route path='/recovery/step2' element={<RecoveryStep2Page />} />
             <Route path='/confirm_transation' element={<h1>Confirm transaction</h1>} />
             <Route path='/account_delete' element={<AccountDeletePage />} />
             <Route path='/' element={<InnerPage />}>

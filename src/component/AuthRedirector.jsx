@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom"
 import useApp from "../hook/useApp"
 
-const pagesWithNoAuth = ['/login', '/register', '/recovery']
+const pagesWithNoAuth = ['/login', '/register', '/recovery', '/recovery/step2']
 const pagesWithNoMfa = ['/login/mfa', '/login/mfa/recovery']
 
 export default () => {

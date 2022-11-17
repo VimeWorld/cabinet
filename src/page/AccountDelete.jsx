@@ -5,7 +5,7 @@ import { fetchApi } from "../lib/api"
 import { Spinner } from "react-bootstrap"
 import useApp from "../hook/useApp";
 
-const DeleteInProgressCard = ({ progress }) => {
+const DeleteInProgressFragment = ({ progress }) => {
     const { app, updateApp } = useApp()
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
@@ -57,7 +57,7 @@ const DeleteInProgressCard = ({ progress }) => {
     </div>
 }
 
-const DeleteConfirmCard = ({ token }) => {
+const DeleteConfirmFragment = ({ token }) => {
     const { app, updateApp } = useApp()
     const [loading, setLoading] = useState(false)
 
@@ -140,7 +140,7 @@ const DeleteRequestLoader = () => {
 
         {loading && <div className="text-center"><Spinner size="lg" variant="secondary" /></div>}
         {!loading && !valid && <div className="text-danger text-center">Ошибка</div>}
-        {!loading && valid && <DeleteConfirmCard token={token} />}
+        {!loading && valid && <DeleteConfirmFragment token={token} />}
 
         <Link to="/" className="btn btn-link mt-3">Вернуться</Link>
     </div>
@@ -174,7 +174,7 @@ const DeletionProgressLoader = () => {
 
         {loading && <div className="text-center"><Spinner size="lg" variant="secondary" /></div>}
         {!loading && !status && <div className="text-danger text-center">Ошибка</div>}
-        {!loading && status && <DeleteInProgressCard progress={status} />}
+        {!loading && status && <DeleteInProgressFragment progress={status} />}
 
         <button className="btn btn-link mt-3" onClick={logout}>Выход</button>
     </div>
