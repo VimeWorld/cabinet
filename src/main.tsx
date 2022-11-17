@@ -15,7 +15,7 @@ import AccountDeletePage from './page/AccountDelete'
 import InnerPage from './component/InnerPage'
 import HomePage from './page/Home'
 import AuthRedirector from './component/AuthRedirector'
-import AppProvider from './component/AppProvider'
+import AppProvider, { NotFoundPage } from './component/AppProvider'
 import PaymentsPage from './page/Payments'
 import SecurityPage from './page/Security'
 import MinigamesGuildPage from './page/MinigamesGuild'
@@ -25,8 +25,8 @@ import TransactionConfirmPage from './page/ConfirmTransaction'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AppProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AppProvider>
         <Routes>
           <Route path='/' element={<AuthRedirector />}>
             <Route path='/login' element={<LoginPage />} />
@@ -46,11 +46,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <Route path='/minigames/donate' element={<MinigamesDonatePage />} />
               <Route path='/minigames/guild' element={<MinigamesGuildPage />} />
             </Route>
-            <Route path="*" element={<h1>Not found</h1>} />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
-      </BrowserRouter>
-      <NotificationBox />
-    </AppProvider>
+      </AppProvider>
+    </BrowserRouter>
+    <NotificationBox />
   </React.StrictMode>
 )

@@ -3,14 +3,18 @@ import { Link, useLocation, useResolvedPath } from "react-router-dom"
 import useApp from "../hook/useApp"
 import './Sidebar.css'
 
-const MenuItem2 = ({ to, icon, children, onClick }) => {
+const MenuItem = ({ to, icon, children, onClick }) => {
     const location = useLocation()
     const path = useResolvedPath(to)
 
     const active = !!to && path.pathname == location.pathname
 
     return <li className="nav-item">
-        <Link className={classNames("nav-link", { "active": active })} to={to} onClick={onClick}>
+        <Link
+            className={classNames("nav-link", { "active": active })}
+            to={to}
+            onClick={onClick}
+        >
             <i className={"bi " + icon} />
             {children}
         </Link>
@@ -24,16 +28,16 @@ const Sidebar = () => {
         <div>
             <div className="nav-header p-1 mb-1">Меню</div>
             <ul className="nav nav-pills flex-column mb-3">
-                <MenuItem2 to="/" icon="bi-house-door">Главная</MenuItem2>
-                <MenuItem2 to="/payments" icon="bi-credit-card">Платежи</MenuItem2>
-                <MenuItem2 to="/security" icon="bi-shield">Безопасность</MenuItem2>
-                <MenuItem2 to="/bans" icon="bi-slash-circle">Баны</MenuItem2>
-                <MenuItem2 to="" onClick={logout} icon="bi-power">Выход</MenuItem2>
+                <MenuItem to="/" icon="bi-house-door">Главная</MenuItem>
+                <MenuItem to="/payments" icon="bi-credit-card">Платежи</MenuItem>
+                <MenuItem to="/security" icon="bi-shield">Безопасность</MenuItem>
+                <MenuItem to="/bans" icon="bi-slash-circle">Баны</MenuItem>
+                <MenuItem to="" onClick={logout} icon="bi-power">Выход</MenuItem>
             </ul>
             <div className="nav-header p-1 mb-1">Minigames</div>
             <ul className="nav nav-pills flex-column">
-                <MenuItem2 to="/minigames/donate" icon="bi-cash-coin">Платные услуги</MenuItem2>
-                <MenuItem2 to="/minigames/guild" icon="bi-people">Управление гильдией</MenuItem2>
+                <MenuItem to="/minigames/donate" icon="bi-cash-coin">Платные услуги</MenuItem>
+                <MenuItem to="/minigames/guild" icon="bi-people">Управление гильдией</MenuItem>
             </ul>
         </div>
     </div>
