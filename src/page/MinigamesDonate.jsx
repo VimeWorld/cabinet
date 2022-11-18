@@ -285,6 +285,10 @@ const ExchangeCoins = ({ profile }) => {
             .then(body => {
                 if (body.success) {
                     Notifications.success('Вы успешно обменяли ' + ruPluralizeVimers(data.vimers))
+                    reset({
+                        vimers: null,
+                        coins: null,
+                    })
                     EventBus.emit(EVENT_MINIGAMES_PROFILE_UPDATED, body.response)
                     fetchAuth()
                 } else if (body.response.type == "invalid_amount") {

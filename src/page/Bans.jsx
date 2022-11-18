@@ -60,7 +60,7 @@ const ServerBansCard = ({ name, url }) => {
         <div className="card-header d-flex justify-content-between align-items-center">
             <div className="mb-0">
                 <h4 className="mb-0">Баны на {name}</h4>
-                <span>Отображаются вся история ваших банов</span>
+                <span>Отображается вся история ваших банов</span>
             </div>
             {loading && <div>
                 <Spinner variant="secondary" className="m-n2" />

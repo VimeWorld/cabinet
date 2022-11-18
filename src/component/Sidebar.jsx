@@ -3,7 +3,7 @@ import { Link, useLocation, useResolvedPath } from "react-router-dom"
 import useApp from "../hook/useApp"
 import './Sidebar.css'
 
-const MenuItem = ({ to, icon, children, onClick }) => {
+const MenuItem = ({ to, icon, children, onClick, className }) => {
     const location = useLocation()
     const path = useResolvedPath(to)
 
@@ -11,7 +11,7 @@ const MenuItem = ({ to, icon, children, onClick }) => {
 
     return <li className="nav-item">
         <Link
-            className={classNames("nav-link", { "active": active })}
+            className={classNames("nav-link", { "active": active }, className)}
             to={to}
             onClick={onClick}
         >
