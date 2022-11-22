@@ -1,10 +1,11 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom"
+import { Navigate, Outlet, ScrollRestoration, useLocation } from "react-router-dom"
 import useApp from "../hook/useApp"
+import AppProvider from "./AppProvider"
 
 const pagesWithNoAuth = ['/login', '/register', '/recovery', '/recovery/step2']
 const pagesWithNoMfa = ['/login/mfa', '/login/mfa/recovery']
 
-export default () => {
+const AuthRedirector = ({ children }) => {
     const { app } = useApp()
     const location = useLocation()
     if (!app.user) {
@@ -23,5 +24,17 @@ export default () => {
             return <Navigate to="/" replace />
         }
     }
-    return <Outlet />
+
+    return children
 }
+
+const Root = () => {
+    return <AppProvider>
+        <AuthRedirector>
+            <Outlet />
+        </AuthRedirector>
+        <ScrollRestoration />
+    </AppProvider>
+}
+
+export default Root
