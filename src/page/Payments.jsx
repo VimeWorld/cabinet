@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { BalanceCard } from "../component/BalanceCard"
 import { PaymentHistoryCard } from "../component/PaymentHistoryCard"
 import useApp from "../hook/useApp"
+import { useTitle } from "../hook/useTitle"
 import { fetchApi } from "../lib/api"
 import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
 import { ruPluralizeVimers } from "../lib/i18n"
@@ -300,6 +301,7 @@ const PayCard = () => {
 }
 
 const PaymentsPage = () => {
+    useTitle('Платежи')
     return <>
         <div className="row mb-4 gy-4">
             <div className="col-lg-6 col-12">

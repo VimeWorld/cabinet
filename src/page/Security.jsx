@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Button, Form, Modal, OverlayTrigger, Spinner, Tooltip } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import useApp from "../hook/useApp"
+import { useTitle } from "../hook/useTitle"
 import { fetchApi } from "../lib/api"
 import Notifications from "../lib/notifications"
 
@@ -571,6 +572,7 @@ const DeleteCard = () => {
 }
 
 const SecurityPage = () => {
+    useTitle('Безопасность')
     return <>
         <div className="row mb-4 gy-4">
             <div className="col-lg-6 col-12">

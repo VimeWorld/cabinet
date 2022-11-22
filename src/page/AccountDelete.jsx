@@ -5,9 +5,11 @@ import { fetchApi } from "../lib/api"
 import { Spinner } from "react-bootstrap"
 import useApp from "../hook/useApp";
 import OuterPage from "../component/OuterPage";
+import { useTitle } from "../hook/useTitle";
 
 const DeleteInProgressFragment = ({ progress }) => {
     const { app, updateApp } = useApp()
+    useTitle('Аккаунт ' + app.user.username + ' удален')
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
@@ -103,6 +105,7 @@ const DeleteConfirmFragment = ({ token }) => {
 }
 
 const DeleteRequestLoader = () => {
+    useTitle('Удаление аккаунта')
     const { app } = useApp()
     const [valid, setValid] = useState(false)
     const [loading, setLoading] = useState(true)

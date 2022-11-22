@@ -3,6 +3,7 @@ import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { ConfirmModal } from "../component/ConfirmModal"
 import useApp from "../hook/useApp"
+import { useTitle } from "../hook/useTitle"
 import { fetchApi } from "../lib/api"
 import { ruPluralizeVimers } from "../lib/i18n"
 import Notifications from "../lib/notifications"
@@ -168,6 +169,7 @@ const ServerBansCard = ({ name, url }) => {
 }
 
 const BansPage = () => {
+    useTitle('Баны')
     return <>
         <div className="row mb-4">
             <div className="col">

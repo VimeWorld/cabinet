@@ -6,8 +6,10 @@ import { Form, Spinner } from "react-bootstrap"
 import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha";
 import useApp from "../hook/useApp";
 import OuterPage from "../component/OuterPage";
+import { useTitle } from "../hook/useTitle";
 
 const LoginPage = () => {
+    useTitle('Вход в личный кабинет')
     const { app, updateApp } = useApp()
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')

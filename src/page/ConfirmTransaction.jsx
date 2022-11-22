@@ -3,6 +3,7 @@ import { Spinner } from "react-bootstrap"
 import { Link, useSearchParams } from "react-router-dom"
 import OuterPage from "../component/OuterPage"
 import useApp from "../hook/useApp"
+import { useTitle } from "../hook/useTitle"
 import { fetchApi } from "../lib/api"
 import { ruPluralizeVimers } from "../lib/i18n"
 import Notifications from "../lib/notifications"
@@ -119,6 +120,8 @@ const TransactionConfirmPage = () => {
         default:
             text = <div className="text-danger text-center">Неизвестная операция</div>
     }
+
+    useTitle('Подтверждение ' + heading)
 
     let content
     if (loading)

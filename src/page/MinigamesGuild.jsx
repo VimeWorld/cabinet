@@ -2,6 +2,7 @@ import { Editor } from '@tinymce/tinymce-react'
 import { useEffect, useRef, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { ConfirmModal } from '../component/ConfirmModal'
+import { useTitle } from '../hook/useTitle'
 import { fetchApi } from '../lib/api'
 import Notifications from '../lib/notifications'
 import infoCss from './MinigamesGuildInfo.css?raw'
@@ -220,6 +221,7 @@ const MinigamesGuildPage = () => {
     const [loading, setLoading] = useState(true)
     const [guild, setGuild] = useState(null)
     const [error, setError] = useState(false)
+    useTitle('Управление гильдией ' + (guild?.name || ''))
 
     useEffect(() => {
         setLoading(true)

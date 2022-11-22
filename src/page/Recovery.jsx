@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import OuterPage from "../component/OuterPage"
 import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha"
+import { useTitle } from "../hook/useTitle"
 import { fetchApi } from "../lib/api"
 import Notifications from "../lib/notifications"
 
@@ -97,6 +98,7 @@ const RecoveryStep2Form = ({ token, username }) => {
 }
 
 const RecoveryStep2Page = () => {
+    useTitle('Восстановление аккаунта')
     const [username, setUsername] = useState(null)
     const [loading, setLoading] = useState(true)
     const [searchParams] = useSearchParams()
@@ -138,6 +140,7 @@ const RecoveryStep2Page = () => {
 }
 
 const RecoveryPage = () => {
+    useTitle('Восстановление аккаунта')
     const [login, setLogin] = useState('')
     const [email, setEmail] = useState('')
     const [loading, setLoading] = useState(false)

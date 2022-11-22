@@ -4,6 +4,7 @@ import { AppContext } from '../hook/useApp';
 import { Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Notifications from '../lib/notifications';
+import { useTitle } from '../hook/useTitle';
 
 function Preloader() {
     return <div className="vh-100 d-flex flex-column align-items-center justify-content-center">
@@ -40,6 +41,7 @@ function AuthLoadError({ error, app }) {
 }
 
 function NotFoundPage() {
+    useTitle('404 - Страница не найдена')
     return <div className="vh-100 d-flex flex-column align-items-center justify-content-center">
         <h1 className='display-1'>404</h1>
         <h5>Страница не найдена</h5>

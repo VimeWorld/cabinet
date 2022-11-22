@@ -7,8 +7,10 @@ import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha";
 import { Link } from "react-router-dom";
 import useApp from "../hook/useApp";
 import OuterPage from "../component/OuterPage";
+import { useTitle } from "../hook/useTitle";
 
 export const LoginMfaRecoveryPage = () => {
+    useTitle('Восстановление двухэтапной аутентификации')
     const { app, updateApp, logout } = useApp()
     const {
         register,
@@ -99,6 +101,7 @@ export const LoginMfaRecoveryPage = () => {
 }
 
 export const LoginMfaPage = () => {
+    useTitle('Вход - Двухэтапная аутентификация')
     const { app, updateApp, logout } = useApp()
     const {
         register,

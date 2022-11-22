@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Form, OverlayTrigger, ProgressBar, Spinner, Tooltip } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import useApp from "../hook/useApp"
+import { useTitle } from "../hook/useTitle"
 import { fetchApi } from "../lib/api"
 import { EventBus, EVENT_MINIGAMES_PROFILE_UPDATED } from "../lib/eventbus"
 import { ruPluralizeVimers } from "../lib/i18n"
@@ -444,6 +445,7 @@ const KindnessRowCard = ({ profile }) => {
 }
 
 const MinigamesDonatePage = () => {
+    useTitle('Статус на MiniGames')
     const [loading, setLoading] = useState(true)
     const [profile, setProfile] = useState(null)
     const [error, setError] = useState(false)

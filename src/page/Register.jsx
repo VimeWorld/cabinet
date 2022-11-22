@@ -6,6 +6,7 @@ import Notifications from '../lib/notifications';
 import { fetchApi } from "../lib/api"
 import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha";
 import OuterPage from "../component/OuterPage";
+import { useTitle } from "../hook/useTitle";
 
 const RegisterSuccessPage = () => {
     return <section className="container vh-100">
@@ -40,6 +41,7 @@ const RegisterPage = () => {
         }
     })
 
+    useTitle('Регистрация')
     const [checkedLogin, setCheckedLogin] = useState({
         login: '',
         error: '',

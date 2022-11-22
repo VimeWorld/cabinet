@@ -3,6 +3,7 @@ import { BalanceCard } from "../component/BalanceCard"
 import { PromoCard } from "../component/PromoCard"
 import { SkinCard } from "../component/SkinCard"
 import useApp from "../hook/useApp"
+import { useTitle } from "../hook/useTitle"
 
 const PersonalInfoCard = () => {
     const { app } = useApp()
@@ -40,6 +41,8 @@ const PersonalInfoCard = () => {
 }
 
 const HomePage = () => {
+    const { app } = useApp()
+    useTitle(app.user.username)
     return <>
         <div className="row mb-4 gy-4">
             <div className="col-lg-6 col-12">
