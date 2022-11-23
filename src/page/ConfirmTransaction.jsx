@@ -146,8 +146,7 @@ const TransactionConfirmPage = () => {
         </>
 
     return <OuterPage>
-        <h3 className="mb-1 text-center">VimeWorld</h3>
-        <h5 className="mb-4 fw-normal text-center">Подтверждение {heading}</h5>
+        <h4 className="mb-4 text-center">Подтверждение {heading}</h4>
 
         {content}
 

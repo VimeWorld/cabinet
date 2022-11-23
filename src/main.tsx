@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Routes, ScrollRestoration } from 'react-router-dom'
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 
 import './bootstrap.scss'
 import './index.css'
@@ -11,17 +11,17 @@ import RegisterPage from './page/Register'
 import LoginPage from './page/Login'
 import { LoginMfaPage, LoginMfaRecoveryPage } from './page/LoginMfa'
 import { RecoveryStep2Page, RecoveryPage } from './page/Recovery'
-import AccountDeletePage from './page/AccountDelete'
 import InnerPage from './component/InnerPage'
 import HomePage from './page/Home'
 import Root from './component/Root'
-import AppProvider, { NotFoundPage } from './component/AppProvider'
+import { NotFoundPage } from './component/AppProvider'
 import PaymentsPage from './page/Payments'
 import SecurityPage from './page/Security'
 import MinigamesGuildPage from './page/MinigamesGuild'
 import MinigamesDonatePage from './page/MinigamesDonate'
 import BansPage from './page/Bans'
 import TransactionConfirmPage from './page/ConfirmTransaction'
+import { AccountDeletedStatePage, AccountDeleteRequestPage } from './page/AccountDelete'
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<Root />} >
@@ -33,7 +33,8 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='/recovery/step2' element={<RecoveryStep2Page />} />
     <Route path='/confirm_transation' element={<TransactionConfirmPage />} />
     <Route path='/discord' element={<h1>Discord verification</h1>} />
-    <Route path='/account_delete' element={<AccountDeletePage />} />
+    <Route path='/account_delete' element={<AccountDeleteRequestPage />} />
+    <Route path='/account_deleted' element={<AccountDeletedStatePage />} />
     <Route path='/' element={<InnerPage />}>
       <Route path='/' element={<HomePage />} />
       <Route path='/payments' element={<PaymentsPage />} />

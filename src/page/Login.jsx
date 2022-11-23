@@ -65,8 +65,7 @@ const LoginPage = () => {
 
     return <OuterPage>
         <Form onSubmit={submit}>
-            <h3 className="mb-1 text-center">VimeWorld</h3>
-            <h5 className="fw-normal mb-4 text-center">Вход в аккаунт</h5>
+            <h4 className="mb-4 text-center">Вход в аккаунт</h4>
 
             <Form.Group className="mb-3" controlId="login">
                 <Form.Label>Логин</Form.Label>

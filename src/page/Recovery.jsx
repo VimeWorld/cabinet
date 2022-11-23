@@ -127,8 +127,7 @@ const RecoveryStep2Page = () => {
     }, [token])
 
     return <OuterPage>
-        <h3 className="mb-1 text-center">VimeWorld</h3>
-        <h5 className="mb-4 fw-normal text-center">Восстановление аккаунта</h5>
+        <h4 className="mb-4 text-center">Восстановление аккаунта</h4>
         {!loading && username && <h5 className="mb-4 mt-n3 text-center">{username}</h5>}
 
         {loading && <div className="text-center"><Spinner size="lg" variant="secondary" /></div>}
@@ -191,8 +190,7 @@ const RecoveryPage = () => {
 
     return <OuterPage>
         <Form onSubmit={submit}>
-            <h3 className="mb-1 text-center">VimeWorld</h3>
-            <h5 className="mb-4 fw-normal text-center">Восстановление аккаунта</h5>
+            <h4 className="mb-4 text-center">Восстановление аккаунта</h4>
 
             <p>Вам будет выслано письмо с подтверждением, которое будет действительно в течение одного часа.</p>
 

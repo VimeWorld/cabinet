@@ -2,14 +2,14 @@
   --bs-border-color-translucent: rgba(0, 0, 0, 0.1);
 }
 
-.bg-gradient-blue { 
+.bg-gradient-blue {
   background-color: #0093e9;
   background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
 }
 
-.bg-gradient-red { 
-  background-color: #FF9A8B;
-  background-image: linear-gradient(160deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%);  
+.bg-gradient-red {
+  background-color: #ff9a8b;
+  background-image: linear-gradient(160deg, #ff9a8b 0%, #ff6a88 55%, #ff99ac 100%);
 }
 
 .card {

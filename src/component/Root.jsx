@@ -15,8 +15,8 @@ const AuthRedirector = ({ children }) => {
         if (!pagesWithNoMfa.includes(location.pathname))
             return <Navigate to='/login/mfa' state={{ from: location }} replace />
     } else if (app.user.account_deleted) {
-        if (location.pathname != '/account_delete')
-            return <Navigate to='/account_delete' state={{ from: location }} replace />
+        if (location.pathname != '/account_deleted')
+            return <Navigate to='/account_deleted' state={{ from: location }} replace />
     } else {
         if (pagesWithNoAuth.includes(location.pathname) || pagesWithNoMfa.includes(location.pathname)) {
             if (location.state?.from)

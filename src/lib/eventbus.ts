@@ -1,5 +1,5 @@
-type Handler = (data?: any) => void
-type EventType = string | symbol
+export type Handler = (data?: any) => void
+export type EventType = string | symbol
 
 const _events: {
     [key: EventType]: Handler[];

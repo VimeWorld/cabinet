@@ -9,19 +9,12 @@ import OuterPage from "../component/OuterPage";
 import { useTitle } from "../hook/useTitle";
 
 const RegisterSuccessPage = () => {
-    return <section className="container vh-100">
-        <div className="row justify-content-center">
-            <div className="col-md-6 col-lg-4">
-                <div className="card w-100 p-4 mt-5">
-                    <h3 className="mb-1 text-center">VimeWorld</h3>
-                    <h5 className="fw-normal mb-4 text-center">Спасибо за регистрацию!</h5>
+    return <OuterPage>
+        <h4 className="mb-4 text-center">Спасибо за регистрацию!</h4>
 
-                    <p>Теперь вы можете <Link to="/login">войти</Link> в свой аккаунт.</p>
-                    <Link to="/login" className="btn btn-lg btn-primary w-100">Вход</Link>
-                </div>
-            </div>
-        </div>
-    </section>
+        <p>Теперь вы можете <Link to="/login">войти</Link> в свой аккаунт.</p>
+        <Link to="/login" className="btn btn-lg btn-primary w-100">Вход</Link>
+    </OuterPage>
 }
 
 const RegisterPage = () => {
@@ -133,8 +126,7 @@ const RegisterPage = () => {
 
     return <OuterPage>
         <Form onSubmit={handleSubmit(submit)}>
-            <h3 className="mb-1 text-center">VimeWorld</h3>
-            <h5 className="fw-normal mb-4 text-center">Регистрация аккаунта</h5>
+            <h4 className="mb-4 text-center">Регистрация аккаунта</h4>
 
             <Form.Group className="mb-3" controlId="login">
                 <Form.Label>Логин</Form.Label>

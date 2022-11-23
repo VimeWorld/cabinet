@@ -11,7 +11,6 @@ const DeleteInProgressFragment = ({ progress }) => {
     const { app, updateApp } = useApp()
     useTitle('Аккаунт ' + app.user.username + ' удален')
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
 
     const cancel = () => {
         if (!progress.cancel_possible) return
@@ -29,7 +28,6 @@ const DeleteInProgressFragment = ({ progress }) => {
                             account_deleted: false,
                         }
                     })
-                    navigate("/")
                     Notifications.success('Аккаунт восстановлен')
                 } else if (body.response.type == 'too_late') {
                     Notifications.error('Уже слишком поздно отменять удаление')
@@ -104,7 +102,7 @@ const DeleteConfirmFragment = ({ token }) => {
     </>
 }
 
-const DeleteRequestLoader = () => {
+const AccountDeleteRequestPage = () => {
     useTitle('Удаление аккаунта')
     const { app } = useApp()
     const [valid, setValid] = useState(false)
@@ -114,6 +112,11 @@ const DeleteRequestLoader = () => {
     const token = searchParams.get('token')
 
     useEffect(() => {
+        if (!token) {
+            navigate('/', { replace: true })
+            return
+        }
+
         setLoading(true)
         fetchApi('/delete/request?token=' + token)
             .then(r => r.json())
@@ -134,9 +137,11 @@ const DeleteRequestLoader = () => {
             .finally(() => setLoading(false))
     }, [token])
 
+    if (!token)
+        return <></>
+
     return <OuterPage background="bg-gradient-red">
-        <h3 className="mb-1 text-center">VimeWorld</h3>
-        <h5 className="mb-2 fw-normal text-center text-danger">Удаление аккаунта</h5>
+        <h4 className="mb-2 text-center text-danger">Удаление аккаунта</h4>
         <h5 className="mb-4 text-center">{app.user.username}</h5>
 
         {loading && <div className="text-center"><Spinner size="lg" variant="secondary" /></div>}
@@ -147,12 +152,18 @@ const DeleteRequestLoader = () => {
     </OuterPage>
 }
 
-const DeletionProgressLoader = () => {
+const AccountDeletedStatePage = () => {
     const { app, logout } = useApp()
     const [status, setStatus] = useState(null)
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
 
     useEffect(() => {
+        if (!app.user.account_deleted) {
+            navigate('/', { replace: true })
+            return
+        }
+
         setLoading(true)
         fetchApi('/delete/status')
             .then(r => r.json())
@@ -167,11 +178,13 @@ const DeletionProgressLoader = () => {
             })
             .catch(() => Notifications.error('Невозможно подключиться к серверу'))
             .finally(() => setLoading(false))
-    }, [])
+    }, [app])
+
+    if (!app.user.account_deleted)
+        return <></>
 
     return <OuterPage>
-        <h3 className="mb-1 text-center">VimeWorld</h3>
-        <h5 className="mb-4 fw-normal text-center text-danger">Аккаунт {app.user.username} удален</h5>
+        <h5 className="mb-4 text-center text-danger">Аккаунт {app.user.username} удален</h5>
 
         {loading && <div className="text-center"><Spinner size="lg" variant="secondary" /></div>}
         {!loading && !status && <div className="text-danger text-center">Ошибка</div>}
@@ -181,13 +194,4 @@ const DeletionProgressLoader = () => {
     </OuterPage>
 }
 
-const AccountDeletePage = () => {
-    const { app } = useApp()
-
-    if (app.user.account_deleted)
-        return <DeletionProgressLoader />
-
-    return <DeleteRequestLoader />
-}
-
-export default AccountDeletePage
+export { AccountDeletedStatePage, AccountDeleteRequestPage }
