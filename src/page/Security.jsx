@@ -496,7 +496,7 @@ const ModalAccountDelete = ({ show, close }) => {
     const confirmDelete = () => {
         if (loading) return
         setLoading(true)
-        fetchApi('/delete/request', {
+        fetchApi('/user/delete/request', {
             method: 'POST'
         }).then(r => r.json())
             .then(body => {

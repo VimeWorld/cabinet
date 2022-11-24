@@ -17,7 +17,7 @@ const DeleteInProgressFragment = ({ progress }) => {
         if (loading) return
         setLoading(true)
 
-        fetchApi('/delete/cancel', {
+        fetchApi('/user/delete/cancel', {
             method: 'POST'
         }).then(r => r.json())
             .then(body => {
@@ -65,7 +65,7 @@ const DeleteConfirmFragment = ({ token }) => {
         if (loading) return
 
         setLoading(true)
-        fetchApi('/delete/confirm', {
+        fetchApi('/user/delete/confirm', {
             method: 'POST',
             body: { token }
         }).then(r => r.json())
@@ -118,7 +118,7 @@ const AccountDeleteRequestPage = () => {
         }
 
         setLoading(true)
-        fetchApi('/delete/request?token=' + token)
+        fetchApi('/user/delete/request?token=' + token)
             .then(r => r.json())
             .then(body => {
                 if (body.success) {
@@ -165,7 +165,7 @@ const AccountDeletedStatePage = () => {
         }
 
         setLoading(true)
-        fetchApi('/delete/status')
+        fetchApi('/user/delete/status')
             .then(r => r.json())
             .then(body => {
                 if (body.success) {
