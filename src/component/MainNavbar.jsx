@@ -26,7 +26,12 @@ const MainNavbar = () => {
     return <Navbar bg="white" expand="md" className="shadow-sm">
         <Container>
             <SidebarToggleButton />
-            <Navbar.Brand href="https://vimeworld.com" className="p-0 me-0 me-md-2">VimeWorld</Navbar.Brand>
+            <Navbar.Brand
+                href="https://vimeworld.com"
+                className="p-0 me-0 me-md-4 fs-4 fw-bold"
+            >
+                VimeWorld
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="main-nav-offcanvas" className="border-0">
                 <i className="bi bi-three-dots" style={{ fontSize: "130%" }} />
             </Navbar.Toggle>

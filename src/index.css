@@ -3,6 +3,15 @@
   --card-bg-color: #fff;
 }
 
+.navbar-brand {
+  transition: color 0.25s ease-in-out;
+  color: #444;
+}
+
+.navbar-brand:hover {
+  color: var(--bs-primary);
+}
+
 .bg-gradient-blue {
   background-color: #0093e9;
   background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
