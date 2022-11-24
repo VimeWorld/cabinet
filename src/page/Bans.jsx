@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap"
+import { OverlayTrigger, Spinner, Tab, Tabs, Tooltip } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { ConfirmModal } from "../component/ConfirmModal"
 import useApp from "../hook/useApp"
@@ -57,18 +57,8 @@ const ServerBansCard = ({ name, url }) => {
             .catch(() => Notifications.error("Ошибка подключения к серверу"))
     }
 
-    return <div className="card">
-        <div className="card-header d-flex justify-content-between align-items-center">
-            <div className="mb-0">
-                <h4 className="mb-0">Баны на {name}</h4>
-                <span>Отображается вся история ваших банов</span>
-            </div>
-            {loading && <div>
-                <Spinner variant="secondary" className="m-n2" />
-            </div>}
-        </div>
-
-        {bans?.unban.possible && <div className="card-body">
+    return <>
+        {bans?.unban.possible && <div className="card-body pt-0">
             <div>
                 <span className="text-danger">У вас есть активные баны. </span>
                 Вы можете их снять за <b className="text-success">{ruPluralizeVimers(bans.unban.price)}</b>.
@@ -165,28 +155,36 @@ const ServerBansCard = ({ name, url }) => {
                 </tbody>
             </table>
         </div>
-    </div>
+    </>
 }
 
 const BansPage = () => {
     useTitle('Баны')
-    return <>
-        <div className="row mb-4">
-            <div className="col">
+    return <div className="card mb-4">
+        <div className="card-header d-flex justify-content-between align-items-center">
+            <div className="mb-0">
+                <h4 className="mb-0">Баны</h4>
+                <span>Отображается вся история ваших банов</span>
+            </div>
+        </div>
+        <Tabs
+            id="ban-server-tabs"
+            className="card-body gap-3"
+            variant="pills"
+            mountOnEnter={true}
+            fill
+        >
+            <Tab eventKey="mg" title="MiniGames" tabClassName="border">
                 <ServerBansCard name="MiniGames" url="/server/minigames/bans" />
-            </div>
-        </div>
-        <div className="row mb-4">
-            <div className="col">
+            </Tab>
+            <Tab eventKey="mods" title="Модовые" tabClassName="border">
                 <ServerBansCard name="Модовых" url="/server/mods/bans" />
-            </div>
-        </div>
-        <div className="row mb-4">
-            <div className="col">
+            </Tab>
+            <Tab eventKey="civ" title="CivCraft" tabClassName="border">
                 <ServerBansCard name="CivCraft" url="/server/civcraft/bans" />
-            </div>
-        </div>
-    </>
+            </Tab>
+        </Tabs>
+    </div>
 }
 
 export default BansPage
