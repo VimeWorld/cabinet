@@ -1,5 +1,6 @@
+import classNames from "classnames"
 import { useEffect, useState } from "react"
-import { Button, Form, Modal, OverlayTrigger, Spinner, Tooltip } from "react-bootstrap"
+import { Button, Form, Modal, Spinner } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import useApp from "../hook/useApp"
 import { useTitle } from "../hook/useTitle"
@@ -124,18 +125,6 @@ const EmailCard = () => {
                 <Form.Label>Текущий Email</Form.Label>
                 <Form.Control disabled value={app.user.email} />
             </Form.Group>
-        </div>
-    </div>
-}
-
-const AuthSessionsCard = () => {
-    return <div className="card">
-        <div className="card-header">
-            <h4 className="mb-0">Активные сессии</h4>
-            <span>Места, с которых выполнен вход</span>
-        </div>
-        <div className="card-body text-center">
-            <button className="btn btn-outline-primary">Посмотреть</button>
         </div>
     </div>
 }
@@ -354,137 +343,47 @@ const ModalDisableMfa = ({ show, close, onDisable }) => {
 const MfaCard = () => {
     const { app, updateApp } = useApp()
 
-    // null - loading, false - not active, [...] - data
-    const [sessions, setSessions] = useState(null)
-    const [sessionsError, setSessionsError] = useState(false)
-    const [sessionsLoading, setSessionsLoading] = useState(false)
-
     const [modalDisableMfa, setModalDisableMfa] = useState(false)
     const [modalSetupMfa, setModalSetupMfa] = useState(false)
 
-    const loadSessions = () => {
-        if (sessionsLoading) return
-        setSessionsError(false)
-        setSessionsLoading(true)
-        fetchApi('/settings/totp/session/list')
-            .then(r => r.json())
-            .then(body => {
-                if (body.success) {
-                    setSessions(body.response.sessions)
-                } else if (body.response.type == "not_active") {
-                    setSessions(false)
-                } else {
-                    setSessionsError(true)
-                }
-            }).catch(() => setSessionsError(true))
-            .finally(() => setSessionsLoading(false))
-    }
-
-    useEffect(loadSessions, [])
-
-    const revokeSession = (e, id) => {
-        e.target.setAttribute('disabled', 'disabled')
-        e.target.innerText = 'Загрузка...'
-        fetchApi('/settings/totp/session/revoke', {
-            method: 'POST',
-            body: { id },
-        }).then(r => r.json())
-            .then(body => {
-                if (body.success) {
-                    setSessions(sessions.filter(s => s.id != id))
-                    Notifications.success('Сессия успешно завершена')
-                } else if (body.response.type == "not_active") {
-                    setSessions(false)
-                    Notifications.warning('Двухэтапная аутентификация не включена')
-                } else {
-                    Notifications.error(body.response.title)
-                }
-            })
-            .catch(() => Notifications.error('Невозможно подключиться к серверу'))
-            .finally(() => {
-                e.target.removeAttribute('disabled')
-                e.target.innerText = 'Завершить'
-            })
-    }
-
     return <div className="card">
-        <div className="card-header d-lg-flex justify-content-between align-items-center">
-            <div>
-                <h4 className="mb-0">Двухэтапная аутентификация</h4>
-                <span>Дополнительная защита вашего аккаунта</span>
-            </div>
-            {sessions &&
-                <div className="mt-3 mt-lg-0">
-                    <button className="btn btn-outline-danger" onClick={() => setModalDisableMfa(true)}>Отключить</button>
-                    <ModalDisableMfa
-                        show={modalDisableMfa}
-                        close={() => setModalDisableMfa(false)}
-                        onDisable={() => {
-                            updateApp({ user: { ...app.user, mfa: 'disabled' } })
-                            setSessions(false)
-                        }}
-                    />
-                </div>
-            }
+        <div className={classNames("card-header text-white", {
+            'bg-gradient-red': app.user.mfa == 'disabled',
+            'bg-gradient-green': app.user.mfa == 'completed',
+        })}>
+            <h4 className="mb-0">Двухэтапная аутентификация</h4>
+            <span>Дополнительная защита вашего аккаунта</span>
         </div>
 
-        {sessionsLoading &&
-            <div className="card-body">
-                <div className="d-flex justify-content-center">
-                    <Spinner variant="secondary" />
-                </div>
-            </div>}
+        <div className="card-body">
+            <p className="">Помимо пароля, для входа также будет требоваться одноразовый код из приложения.</p>
 
-        {sessionsError && <div className="card-body text-danger text-center">
-            <p>При загрузке произошла ошибка</p>
-            <button className="btn btn-outline-secondary" onClick={loadSessions}>Попробовать снова</button>
-        </div>}
+            {app.user.mfa == 'disabled' && <>
+                <p className="mb-0 d-flex justify-content-between align-items-center">
+                    <span className="text-danger"><i className="bi bi-x-lg" /> Отключена</span>
+                    <button className="btn btn-primary" onClick={() => setModalSetupMfa(true)}>Включить</button>
+                    <ModalSetupMfa
+                        show={modalSetupMfa}
+                        close={() => setModalSetupMfa(false)}
+                        onEnable={() => {
+                            updateApp({ user: { ...app.user, mfa: 'completed' } })
+                        }}
+                    />
+                </p>
+            </>}
 
-        {sessions === false && <div className="card-body">
-            <div className="d-flex justify-content-center">
-                <button className="btn btn-primary" onClick={() => setModalSetupMfa(true)}>Установить</button>
-                <ModalSetupMfa
-                    show={modalSetupMfa}
-                    close={() => setModalSetupMfa(false)}
-                    onEnable={() => {
-                        updateApp({ user: { ...app.user, mfa: 'completed' } })
-                        loadSessions()
+            {app.user.mfa == 'completed' && <div className="d-flex justify-content-between align-items-center">
+                <span className="text-success"><i className="bi bi-check-lg" /> Активна</span>
+                <button className="btn btn-outline-danger" onClick={() => setModalDisableMfa(true)}>Отключить</button>
+                <ModalDisableMfa
+                    show={modalDisableMfa}
+                    close={() => setModalDisableMfa(false)}
+                    onDisable={() => {
+                        updateApp({ user: { ...app.user, mfa: 'disabled' } })
                     }}
                 />
-            </div>
-        </div>}
-
-        {sessions && <>
-            <div className="card-table table-responsive">
-                <table className="table">
-                    <thead className="table-light">
-                        <tr>
-                            <th scope="col" className="border-bottom-0">Имя</th>
-                            <th scope="col" className="border-bottom-0">Активность</th>
-                            <th scope="col" className="border-bottom-0">IP</th>
-                            <th scope="col" className="border-bottom-0">Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sessions.map(s => {
-                            let current = ''
-                            if (s.id == app.tuuid)
-                                current = <OverlayTrigger overlay={<Tooltip>Текущая сессия</Tooltip>}>
-                                    <i className="bi bi-info-circle ms-2 text-primary"></i>
-                                </OverlayTrigger>
-                            return <tr key={s.id}>
-                                <td className="align-middle">{s.name}{current}</td>
-                                <td className="fit">{new Date(Date.parse(s.last_use)).toLocaleString()}</td>
-                                <td className="fit">{s.ip}</td>
-                                <td className="fit"><button className="btn btn-sm btn-outline-danger" onClick={e => revokeSession(e, s.id)}>Завершить</button></td>
-                            </tr>
-                        })}
-
-                        {sessions.length == 0 && <tr><td className="text-center" colSpan="4">Сохраненных сессий нет</td></tr>}
-                    </tbody>
-                </table>
-            </div>
-        </>}
+            </div>}
+        </div>
     </div>
 }
 
@@ -581,13 +480,8 @@ const SecurityPage = () => {
             <div className="col-lg-6 col-12">
                 <EmailCard />
                 <div className="mt-4">
-                    <AuthSessionsCard />
+                    <MfaCard />
                 </div>
-            </div>
-        </div>
-        <div className="row mb-4">
-            <div className="col">
-                <MfaCard />
             </div>
         </div>
         <div className="row mb-4">
