@@ -13,6 +13,8 @@ let defaultOptions: NotificationOptions = {
     type: 'info',
 };
 
+type Message = JSX.Element | string
+
 interface NotificationOptions {
     ttl?: number
     type?: 'info' | 'success' | 'error' | 'warning' | 'primary'
@@ -20,11 +22,11 @@ interface NotificationOptions {
 
 interface Notification extends NotificationOptions {
     id: string
-    message: string
+    message: Message
 }
 
 const Notifications = {
-    add(message: string, options: NotificationOptions = {}): Notification {
+    add(message: Message, options: NotificationOptions = {}): Notification {
         let notify = {
             id: genNextId(),
             message,
@@ -35,25 +37,25 @@ const Notifications = {
         EventBus.emit(EVENT_NOTIFICATIONS_CHANGED, list)
         return notify
     },
-    error(message: string, options: NotificationOptions = {}): Notification {
+    error(message: Message, options: NotificationOptions = {}): Notification {
         return this.add(message, {
             type: 'error',
             ...options,
         })
     },
-    success(message: string, options: NotificationOptions = {}): Notification {
+    success(message: Message, options: NotificationOptions = {}): Notification {
         return this.add(message, {
             type: 'success',
             ...options,
         })
     },
-    info(message: string, options: NotificationOptions = {}): Notification {
+    info(message: Message, options: NotificationOptions = {}): Notification {
         return this.add(message, {
             type: 'info',
             ...options,
         })
     },
-    warning(message: string, options: NotificationOptions = {}): Notification {
+    warning(message: Message, options: NotificationOptions = {}): Notification {
         return this.add(message, {
             type: 'warning',
             ...options,

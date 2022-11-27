@@ -33,7 +33,9 @@ export const PromoCard = () => {
         }).then(r => r.json())
             .then(body => {
                 if (body.success) {
-                    Notifications.success('Промо-код успешно активирован: ' + body.response.info)
+                    Notifications.success(<>
+                        Промо-код успешно активирован: {<span dangerouslySetInnerHTML={{ __html: body.response.info }} />}
+                    </>)
                     reset({ promo: '' })
                     if (pages.id == 0) pages.load()
                     if (body.response.action == 'vimer') fetchAuth()
@@ -118,7 +120,7 @@ export const PromoCard = () => {
                             return <tr key={p.id}>
                                 <td className="fit text-muted"><code>{p.code}</code></td>
                                 <td className="fit">{new Date(Date.parse(p.date)).toLocaleString()}</td>
-                                <td>{p.info}</td>
+                                <td dangerouslySetInnerHTML={{ __html: p.info }}></td>
                             </tr>
                         })}
                     </tbody>
