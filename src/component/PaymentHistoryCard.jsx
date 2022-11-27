@@ -100,10 +100,14 @@ export const PaymentHistoryCard = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {pages.loading && !pages.items && <tr><td className="placeholder-glow" colSpan="4">
-                        <span className="placeholder bg-secondary col-1"></span>
-                        <span className="placeholder bg-secondary col-10 ms-2"></span>
-                    </td></tr>}
+                    {pages.loading && !pages.items && [1, 2, 3].map(e => {
+                        return <tr key={e}>
+                            <td className="placeholder-glow" colSpan="4">
+                                <span className="placeholder bg-secondary col-1"></span>
+                                <span className="placeholder bg-secondary col-10 ms-2"></span>
+                            </td>
+                        </tr>
+                    })}
 
                     {pages.error && !pages.loading && <tr><td className="text-center text-danger" colSpan="4">
                         <p>При загрузке произошла ошибка</p>
