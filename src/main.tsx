@@ -55,3 +55,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <NotificationBox />
   </React.StrictMode>
 )
+
+if (import.meta.env.PROD) {
+  console.log('%cОстановитесь!', 'color: red; font-size: 55px; font-weight: bold; font-family: system-ui, "Segoe UI", Helvetica, sans-serif; text-shadow: 1px 1px black, -1px 1px black, -1px -1px black, 1px -1px black;');
+  console.log('%cЭта функция браузера предназначена для разработчиков. Если кто-то сказал вам скопировать и вставить что-то здесь, чтобы включить функцию VimeWorld или «взломать» чей-то аккаунт, это мошенники. Выполнив эти действия, вы предоставите им доступ к своему аккаунту VimeWorld.', 'font-size: 20px; font-family: system-ui, "Segoe UI", Helvetica, sans-serif;');
+}
