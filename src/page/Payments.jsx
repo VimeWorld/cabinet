@@ -58,9 +58,13 @@ const TransferCard = () => {
                 fetchAuth()
             } else {
                 switch (body.response.type) {
-                    case "username_target":
+                    case "invalid_target":
                         setError('target', { type: 'custom', message: 'Такого игрока не существует' }, { shouldFocus: true })
                         setCheckedLogin({ login, error: 'Такого игрока не существует' })
+                        break
+                    case "invalid_target_self":
+                        setError('target', { type: 'custom', message: 'Вы не можете переводить себе' }, { shouldFocus: true })
+                        setCheckedLogin({ login, error: 'Вы не можете переводить себе' })
                         break
                     case "invalid_amount":
                         setError('amount', { type: 'custom', message: 'Некорректное количество' })
