@@ -211,14 +211,13 @@ const PayCard = () => {
             .then(body => {
                 if (body.success) {
                     if (body.response.method == 'url') {
-                        window.open(body.response.data, '_blank').focus()
+                        window.location.href = body.response.data
                     } else if (body.response.method == 'post') {
                         const data = body.response.data
                         const form = document.createElement('form')
                         form.style.visibility = 'hidden'
                         form.method = 'POST'
                         form.action = data.url
-                        form.target = "_blank"
                         for (let key in data.params) {
                             const input = document.createElement('input')
                             input.name = key
