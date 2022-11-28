@@ -89,6 +89,12 @@ const TransferCard = () => {
             return
         if (checkedLogin.login == login && !checkedLogin.error)
             return
+        if (login.toLowerCase() == app.user.username.toLowerCase()) {
+            let error = 'Вы не можете переводить себе'
+            setError('target', { type: 'custom', message: error })
+            setCheckedLogin({ login, error })
+            return
+        }
 
         let error = ''
         try {
