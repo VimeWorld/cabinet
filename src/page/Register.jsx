@@ -203,7 +203,7 @@ const RegisterPage = () => {
             {recaptchaComponent}
 
             <p className="text-center text-muted text-small"><small>
-                Нажатием кнопки Регистрация, вы соглашаетесь с <a className="link-secondary" href="https://vime.one/terms">Пользовательским соглашением</a>, <a className="link-secondary" href="https://vime.one/rules">Правилами сервера</a> и признаете что применяется наша <a className="link-secondary" href="https://vime.one/privacy">Политика конфиденциальности</a>.
+                Нажатием кнопки Регистрация, вы соглашаетесь с <a className="link-secondary" href="https://vime.one/terms">Пользовательским соглашением</a>, <a className="link-secondary" href="https://vime.one/rules">Правилами сервера</a> и признаете, что применяется наша <a className="link-secondary" href="https://vime.one/privacy">Политика конфиденциальности</a>.
             </small></p>
 
             <button className="btn btn-lg btn-primary w-100 mt-2 mb-4" type="submit" disabled={loading}>
