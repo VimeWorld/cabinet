@@ -13,6 +13,7 @@ const PasswordCard = () => {
         handleSubmit,
         watch,
         setError,
+        reset,
         formState: { errors },
     } = useForm({
         mode: 'onChange',
@@ -38,6 +39,7 @@ const PasswordCard = () => {
             .then(body => {
                 if (body.success) {
                     Notifications.success('Пароль успешно изменен')
+                    reset()
                     return
                 }
 
@@ -134,6 +136,7 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
         register,
         handleSubmit,
         setError,
+        reset,
         formState: { errors },
     } = useForm({
         defaultValues: {
@@ -152,6 +155,7 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
             .then(body => {
                 if (body.success) {
                     setSecret(body.response.secret)
+                    reset()
                     return
                 }
                 switch (body.response.type) {
@@ -180,6 +184,7 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
             .then(body => {
                 if (body.success) {
                     close()
+                    reset()
                     onEnable?.()
                     Notifications.success('Двухэтапная аутентификация успешно включена')
                     return
@@ -264,6 +269,7 @@ const ModalDisableMfa = ({ show, close, onDisable }) => {
         register,
         handleSubmit,
         setError,
+        reset,
         formState: { errors },
     } = useForm({
         defaultValues: {
@@ -283,6 +289,7 @@ const ModalDisableMfa = ({ show, close, onDisable }) => {
         }).then(r => r.json())
             .then(body => {
                 if (body.success) {
+                    reset()
                     close()
                     onDisable?.()
                     Notifications.success('Двухэтапная аутентификация успешно отключена')
@@ -295,6 +302,7 @@ const ModalDisableMfa = ({ show, close, onDisable }) => {
                         break
                     case 'not_active':
                         close()
+                        reset()
                         onDisable?.()
                         Notifications.warning('Двухэтапная аутентификация не включена')
                         break

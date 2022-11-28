@@ -36,7 +36,7 @@ export const PromoCard = () => {
                     Notifications.success(<>
                         Промо-код успешно активирован: {<span dangerouslySetInnerHTML={{ __html: body.response.info }} />}
                     </>)
-                    reset({ promo: '' })
+                    reset()
                     if (pages.id == 0) pages.load()
                     if (body.response.action == 'vimer') fetchAuth()
                     return
