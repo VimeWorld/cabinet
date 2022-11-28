@@ -94,7 +94,7 @@ const ranks = {
     },
     "organizer": {
         name: "Организатор",
-        rich: <b className="text-success">Организатор</b>,
+        rich: <b className="text-primary">Организатор</b>,
     },
 }
 
