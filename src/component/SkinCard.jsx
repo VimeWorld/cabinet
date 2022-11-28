@@ -2,10 +2,15 @@ import { useEffect, useRef, useState } from "react"
 import { Button, Modal, OverlayTrigger, Spinner, Tooltip } from "react-bootstrap"
 import useApp from "../hook/useApp"
 import { fetchApi } from "../lib/api"
+import { EventBus, EVENT_LOGOUT } from "../lib/eventbus"
 import Notifications from "../lib/notifications"
 
 const maxSizeKb = 50
 let capeExistsCache = null
+
+EventBus.on(EVENT_LOGOUT, () => {
+    capeExistsCache = null
+})
 
 const ModalSkin = ({ show, close }) => {
     const file = useRef()

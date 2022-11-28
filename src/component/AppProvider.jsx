@@ -5,6 +5,7 @@ import { Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Notifications from '../lib/notifications';
 import { useTitle } from '../hook/useTitle';
+import { EventBus, EVENT_LOGOUT } from '../lib/eventbus';
 
 function Preloader() {
     return <div className="vh-100 d-flex flex-column align-items-center justify-content-center">
@@ -77,6 +78,7 @@ function AppProvider({ children }) {
             token: undefined,
             user: undefined,
         })
+        EventBus.emit(EVENT_LOGOUT)
     }
 
     const fetchAuth = options => {

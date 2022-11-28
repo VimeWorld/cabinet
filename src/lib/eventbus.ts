@@ -33,3 +33,4 @@ export const EventBus = {
 export const EVENT_UPDATE_PAYMENTS = Symbol('payments.update')
 export const EVENT_NOTIFICATIONS_CHANGED = Symbol('notifications.changed')
 export const EVENT_MINIGAMES_PROFILE_UPDATED = Symbol('minigames.updateprofile')
+export const EVENT_LOGOUT = Symbol('logout')
