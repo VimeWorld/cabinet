@@ -108,11 +108,16 @@ const RegisterPage = () => {
 
         let error = ''
         try {
-            const response = await fetchApi('/user?name=' + login)
+            const response = await fetchApi('/user?' + new URLSearchParams({
+                register: '1',
+                name: login,
+            }).toString())
             if (response.ok) {
                 const body = await response.json()
                 if (body.response.exists)
                     error = 'Игрок с таким логином уже зарегистрирован'
+                else if (!body.response.available)
+                    error = 'Этот логин недоступен для регистрации'
             } else {
                 error = 'Ошибка сервера, невозможно проверить доступность логина'
             }
