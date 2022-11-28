@@ -38,12 +38,16 @@ const MenuItem = ({ to, icon, children, onClick, className }) => {
     const path = useResolvedPath(to)
 
     const active = !!to && path.pathname == location.pathname
+    const click = () => {
+        EventBus.emit(KeyShowToggle, false)
+        onClick?.()
+    }
 
     return <li className="nav-item">
         <Link
             className={classNames("nav-link", { "active": active }, className)}
             to={to}
-            onClick={onClick}
+            onClick={click}
         >
             <i className={"bi " + icon} />
             {children}
@@ -63,7 +67,7 @@ const Sidebar = () => {
         }
     }, [])
 
-    return <div className="sidebar-card rounded-3 shadow-sm p-4 mb-5 d-none d-md-block">
+    return <div className="bg-white rounded-3 shadow-sm p-4 mb-5 d-none d-md-block">
         <Offcanvas
             id="sidebar-offcanvas"
             aria-labelledby="sidebar-offcanvas-label"
@@ -80,7 +84,7 @@ const Sidebar = () => {
                 </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-                <div className="sidebar">
+                <div className="sidebar w-100">
                     <div className="nav-header p-1 mb-1">Меню</div>
                     <ul className="nav nav-pills flex-column mb-3">
                         <MenuItem to="/" icon="bi-house-door">Главная</MenuItem>

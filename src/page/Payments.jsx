@@ -264,6 +264,7 @@ const PayCard = () => {
                         placeholder="Количество"
                         required
                         min="1"
+                        max="500000"
                     />
                     <button className="btn btn-primary ms-3" type="submit" disabled={loading}>
                         {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}

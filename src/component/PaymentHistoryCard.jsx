@@ -38,6 +38,10 @@ const paymentDescription = (p) => {
             if (p.data.name)
                 return <>Покупка предмета <b className="text-warning">{p.data.name}</b> на <b>Prison</b></>
             return <>Покупка предмета на <b>Prison</b></>
+        case "sky_item":
+            if (p.data.name)
+                return <>Покупка предмета <b className="text-warning">{p.data.name}</b> на <b>SkyBlock</b></>
+            return <>Покупка предмета на <b>SkyBlock</b></>
         case "mod_item":
             return <>{p.data.name} на сервере <b>{p.data.server}</b></>
         case "hold":
@@ -93,7 +97,6 @@ export const PaymentHistoryCard = () => {
             <table className="table table-payments">
                 <thead className="table-light">
                     <tr>
-                        <th scope="col" className="border-bottom-0">#</th>
                         <th scope="col" className="border-bottom-0">Дата</th>
                         <th scope="col" className="border-bottom-0">Сумма</th>
                         <th scope="col" style={{ minWidth: 300 }} className="border-bottom-0">Информация</th>
@@ -102,7 +105,7 @@ export const PaymentHistoryCard = () => {
                 <tbody>
                     {pages.loading && !pages.items && [1, 2, 3].map(e => {
                         return <tr key={e}>
-                            <td className="placeholder-glow" colSpan="4">
+                            <td className="placeholder-glow" colSpan="3">
                                 <span className="placeholder bg-secondary col-1"></span>
                                 <span className="placeholder bg-secondary col-10 ms-2"></span>
                             </td>
@@ -123,7 +126,6 @@ export const PaymentHistoryCard = () => {
                             ? <b className="text-success">+{p.amount}</b>
                             : <b className="text-danger">{p.amount}</b>
                         return <tr key={p.id}>
-                            <td className="fit text-muted">{p.id}</td>
                             <td className="fit">{new Date(Date.parse(p.date)).toLocaleString()}</td>
                             <td className="fit">{amount}</td>
                             <td className="description">{paymentDescription(p)}</td>
