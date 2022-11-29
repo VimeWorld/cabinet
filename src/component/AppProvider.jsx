@@ -56,6 +56,7 @@ function NotFoundPage() {
 function AppProvider({ children }) {
     const [app, setApp] = useState(() => {
         return {
+            skinModified: 0,
             tuuid: getTuuid(),
             token: getToken(),
         }
@@ -66,8 +67,19 @@ function AppProvider({ children }) {
     const updateApp = (newVal) => {
         setApp((old) => {
             const clone = { ...old, ...newVal }
+
+            if (newVal.skinModified)
+                sessionStorage.setItem('skin:' + clone.user.username, newVal.skinModified + '')
+
+            if (old.user != clone.user) {
+                // Начальная загрузка даты обновления скина
+                if (!old.user && clone.user && !clone.skinModified)
+                    clone.skinModified = parseInt(sessionStorage.getItem('skin:' + clone.user.username) || '0')
+            }
+
             if (old.token != clone.token)
                 setToken(clone.token)
+
             return clone
         })
     }

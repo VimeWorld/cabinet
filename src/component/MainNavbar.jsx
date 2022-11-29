@@ -6,6 +6,7 @@ const UserBox = () => {
     const { app, logout } = useApp()
     if (!app.user)
         return null;
+    const anticache = app.skinModified ? '?_=' + app.skinModified : ''
     return <Nav>
         <NavDropdown id="userDropdown" title={<span>
             <img
@@ -13,7 +14,7 @@ const UserBox = () => {
                 height="26"
                 className="m-n1"
                 alt={app.user.username}
-                src={`https://skin.vimeworld.com/helm/3d/${app.user.username}/26.png`}
+                src={`https://skin.vimeworld.com/helm/3d/${app.user.username}/26.png${anticache}`}
             />
             <span className="ms-2">{app.user.username}</span>
         </span>}>

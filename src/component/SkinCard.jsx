@@ -13,6 +13,7 @@ EventBus.on(EVENT_LOGOUT, () => {
 })
 
 const ModalSkin = ({ show, close }) => {
+    const { updateApp } = useApp()
     const file = useRef()
     const [skinType, setSkinType] = useState('steve')
     const [loading, setLoading] = useState(false)
@@ -36,6 +37,7 @@ const ModalSkin = ({ show, close }) => {
         }).then(r => r.json())
             .then(body => {
                 if (body.success) {
+                    updateApp({ skinModified: Date.now() })
                     Notifications.success('Скин успешно изменен')
                     close()
                 } else {
@@ -114,7 +116,7 @@ const ModalSkin = ({ show, close }) => {
 }
 
 const ModalCape = ({ show, close, exists, onChanged }) => {
-    const { fetchAuth } = useApp()
+    const { fetchAuth, updateApp } = useApp()
     const file = useRef()
     const [loading, setLoading] = useState(false)
 
@@ -137,6 +139,7 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
             .then(body => {
                 if (body.success) {
                     if (!exists) {
+                        updateApp({ skinModified: Date.now() })
                         Notifications.success('Плащ успешно установлен')
                         capeExistsCache = true
                         fetchAuth()
@@ -222,6 +225,7 @@ export const SkinCard = () => {
     }, [capeExists])
 
     const capeStyle = { width: 150, height: 240 }
+    const anticache = app.skinModified ? '?_=' + app.skinModified : ''
 
     return <div className="card">
         <div className="card-header">
@@ -231,14 +235,14 @@ export const SkinCard = () => {
         <div className="card-body">
             <div className="row">
                 <div className="col d-flex align-items-center justify-content-center flex-column">
-                    <img src={`https://skin.vimeworld.com/body/${app.user.username}.png`} style={{ width: 160, height: 320 }} />
+                    <img src={`https://skin.vimeworld.com/body/${app.user.username}.png${anticache}`} style={{ width: 160, height: 320 }} />
                     <button className="btn btn-outline-primary mt-3" onClick={() => setShowModalSkin(true)}>Изменить</button>
                 </div>
                 <div className="col d-flex align-items-center justify-content-center flex-column">
                     <div className="flex-grow-1 d-flex align-items-center justify-items-center">
                         {capeExists === null && <div className="placeholder-glow" style={capeStyle}><span className="placeholder bg-secondary h-100 w-100"></span></div>}
                         {capeExists === false && <img src="/assets/image/no_cloak.jpg" style={capeStyle} />}
-                        {capeExists === true && <img src={`https://skin.vimeworld.com/cape/${app.user.username}.png`} style={capeStyle} />}
+                        {capeExists === true && <img src={`https://skin.vimeworld.com/cape/${app.user.username}.png${anticache}`} style={capeStyle} />}
                     </div>
                     <button
                         className="flex-shrink-1 btn btn-outline-primary mt-3"
