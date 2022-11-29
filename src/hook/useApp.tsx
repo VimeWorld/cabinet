@@ -13,7 +13,6 @@ interface AppContextContainerType {
 }
 
 interface AppContextType {
-    token?: string;
     tuuid?: string;
     skinModified: number;
     user?: UserType;

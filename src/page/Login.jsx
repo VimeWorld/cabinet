@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import Notifications from '../lib/notifications';
-import { fetchApi } from "../lib/api"
+import { fetchApi, setToken } from "../lib/api"
 import { Form, Spinner } from "react-bootstrap"
 import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha";
 import useApp from "../hook/useApp";
@@ -37,8 +37,8 @@ const LoginPage = () => {
             })
             const body = await response.json()
             if (response.ok) {
+                setToken(body.response.token)
                 updateApp({
-                    token: body.response.token,
                     user: body.response.auth,
                 })
             } else {

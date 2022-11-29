@@ -58,10 +58,9 @@ function AppProvider({ children }) {
         return {
             skinModified: 0,
             tuuid: getTuuid(),
-            token: getToken(),
         }
     })
-    const [loading, setLoading] = useState(!!app.token)
+    const [loading, setLoading] = useState(!!getToken())
     const [error, setError] = useState(null)
 
     const updateApp = (newVal) => {
@@ -77,17 +76,14 @@ function AppProvider({ children }) {
                     clone.skinModified = parseInt(sessionStorage.getItem('skin:' + clone.user.username) || '0')
             }
 
-            if (old.token != clone.token)
-                setToken(clone.token)
-
             return clone
         })
     }
 
     const logout = async () => {
         await fetchApi('/logout', { method: 'POST' })
+        setToken(undefined)
         updateApp({
-            token: undefined,
             user: undefined,
         })
         EventBus.emit(EVENT_LOGOUT)
@@ -99,15 +95,14 @@ function AppProvider({ children }) {
             .then(body => {
                 if (body.success) {
                     updateApp({
-                        token: app.token,
                         user: body.response,
                     })
                     setError(null)
                     options?.success?.()
                 } else if (body.error) {
                     if (body.response.type == 'unauthorized') {
+                        setToken(undefined)
                         updateApp({
-                            token: undefined,
                             user: undefined,
                         })
                         setError(null)
@@ -127,7 +122,7 @@ function AppProvider({ children }) {
     }
 
     useEffect(() => {
-        if (app.token) {
+        if (getToken()) {
             fetchAuth({
                 success: () => setLoading(false),
                 error: () => setLoading(false),
