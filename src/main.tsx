@@ -32,7 +32,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='/register' element={<RegisterPage />} />
     <Route path='/recovery' element={<RecoveryPage />} />
     <Route path='/recovery/step2' element={<RecoveryStep2Page />} />
-    <Route path='/confirm_transation' element={<TransactionConfirmPage />} />
+    <Route path='/confirm_transaction' element={<TransactionConfirmPage />} />
     <Route path='/discord' element={<DiscordLinkPage />} />
     <Route path='/account_delete' element={<AccountDeleteRequestPage />} />
     <Route path='/account_deleted' element={<AccountDeletedStatePage />} />

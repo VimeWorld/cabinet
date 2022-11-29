@@ -410,7 +410,7 @@ const KindnessRowCard = ({ profile }) => {
                 <div className="col-lg-6 col-12">
                     <p>
                         Текущий статус: {ranks[profile.rank] ? ranks[profile.rank].rich || ranks[profile.rank].name : profile.rank}
-                        {profile.rank_donate && profile.rank_donate == profile.rank && expireDate && <>
+                        {profile.rank_donate && profile.rank_donate == profile.rank && expireDate > 0 && <>
                             <br />
                             Действует до: {new Date(expireDate).toLocaleString()}
                         </>}
