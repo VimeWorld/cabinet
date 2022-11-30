@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import useApp from "../hook/useApp";
 import OuterPage from "../component/OuterPage";
 import { useTitle } from "../hook/useTitle";
+import { ruPluralize } from "../lib/i18n";
 
 export const LoginMfaRecoveryPage = () => {
     useTitle('Восстановление двухэтапной аутентификации')
@@ -51,7 +52,13 @@ export const LoginMfaRecoveryPage = () => {
                         setError('code', { type: 'custom', message: 'Введен неправильный код' }, { shouldFocus: true })
                         break
                     case "throttle":
-                        Notifications.warning('Слишком много попыток, попробуйте позже')
+                        let retryAfter = response.headers.get('Retry-After')
+                        if (retryAfter) {
+                            let minutes = Math.ceil(parseInt(retryAfter) / 60)
+                            Notifications.warning('Слишком много попыток, повторите снова через ' + ruPluralize(minutes, ['минуту', 'минуты', 'минут']))
+                        } else {
+                            Notifications.warning('Слишком много попыток, попробуйте позже')
+                        }
                         break
                     case "captcha":
                         Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.')
@@ -115,7 +122,6 @@ export const LoginMfaPage = () => {
     })
 
     const [loading, setLoading] = useState(false)
-    const { recaptchaComponent, getRecaptchaValue } = useInvisibleRecaptcha()
 
     const onSubmit = async (data) => {
         if (loading)
@@ -123,12 +129,10 @@ export const LoginMfaPage = () => {
 
         setLoading(true)
         try {
-            const recaptchaValue = await getRecaptchaValue()
             const response = await fetchApi('/login/totp', {
                 method: 'POST',
                 body: {
                     code: data.code,
-                    recaptcha_response: recaptchaValue,
                 }
             })
             const body = await response.json()
@@ -142,7 +146,13 @@ export const LoginMfaPage = () => {
                         setError('code', { type: 'custom', message: 'Введен неправильный код' }, { shouldFocus: true })
                         break
                     case "throttle":
-                        Notifications.warning('Слишком много попыток, попробуйте позже')
+                        let retryAfter = response.headers.get('Retry-After')
+                        if (retryAfter) {
+                            let minutes = Math.ceil(parseInt(retryAfter) / 60)
+                            Notifications.warning('Слишком много попыток, повторите снова через ' + ruPluralize(minutes, ['минуту', 'минуты', 'минут']))
+                        } else {
+                            Notifications.warning('Слишком много попыток, попробуйте позже')
+                        }
                         break
                     case "captcha":
                         Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.')
@@ -178,8 +188,6 @@ export const LoginMfaPage = () => {
                 />
                 {errors.code && <Form.Control.Feedback type="invalid">{errors.code.message}</Form.Control.Feedback>}
             </Form.Group>
-
-            {recaptchaComponent}
 
             <button className="btn btn-lg btn-primary w-100 mt-2 mb-4" type="submit" disabled={loading}>
                 {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}

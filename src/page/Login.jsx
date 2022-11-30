@@ -3,18 +3,17 @@ import { Link } from "react-router-dom"
 import Notifications from '../lib/notifications';
 import { fetchApi, setToken } from "../lib/api"
 import { Form, Spinner } from "react-bootstrap"
-import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha";
 import useApp from "../hook/useApp";
 import OuterPage from "../component/OuterPage";
 import { useTitle } from "../hook/useTitle";
+import { ruPluralize } from "../lib/i18n";
 
 const LoginPage = () => {
     useTitle('Вход в личный кабинет')
-    const { app, updateApp } = useApp()
+    const { updateApp } = useApp()
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
-    const { recaptchaComponent, getRecaptchaValue } = useInvisibleRecaptcha()
 
     const submit = async (e) => {
         if (loading)
@@ -25,13 +24,11 @@ const LoginPage = () => {
         setLoading(true)
 
         try {
-            const recaptchaValue = await getRecaptchaValue()
             const response = await fetchApi('/login', {
                 method: 'POST',
                 body: {
                     username: login,
                     password,
-                    recaptcha_response: recaptchaValue,
                 }
             })
             const body = await response.json()
@@ -46,7 +43,13 @@ const LoginPage = () => {
                         Notifications.error('Некорректный логин или пароль')
                         break
                     case "throttle":
-                        Notifications.warning('Слишком много попыток, попробуйте позже')
+                        let retryAfter = response.headers.get('Retry-After')
+                        if (retryAfter) {
+                            let minutes = Math.ceil(parseInt(retryAfter) / 60)
+                            Notifications.warning('Слишком много попыток, повторите снова через ' + ruPluralize(minutes, ['минуту', 'минуты', 'минут']))
+                        } else {
+                            Notifications.warning('Слишком много попыток, попробуйте позже')
+                        }
                         break
                     case "captcha":
                         Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.')
@@ -78,8 +81,6 @@ const LoginPage = () => {
                 <Form.Control type="password" required
                     value={password} onChange={e => setPassword(e.target.value)} />
             </Form.Group>
-
-            {recaptchaComponent}
 
             <button className="btn btn-lg btn-primary w-100 mt-2 mb-4" type="submit" disabled={loading}>
                 {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
