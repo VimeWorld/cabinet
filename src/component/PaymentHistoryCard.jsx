@@ -17,8 +17,7 @@ const paymentDescription = (p) => {
                 return <>Перевод от игрока <b>{p.data}</b></>
         case "serv":
             return <>Покупка услуги <b>{p.data.name}</b></>
-        case "shop":
-        case "block_shop":
+        case "blocks":
             return <>Покупка блоков на сервере <b>{p.data.server}</b></>
         case "perm":
             return <>Покупка привилегий на сервере <b>{p.data.server}</b></>
