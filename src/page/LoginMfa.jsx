@@ -111,7 +111,6 @@ export const LoginMfaPage = () => {
         mode: 'onChange',
         defaultValues: {
             code: null,
-            save: false,
         }
     })
 
@@ -129,7 +128,6 @@ export const LoginMfaPage = () => {
                 method: 'POST',
                 body: {
                     code: data.code,
-                    save_session: data.save,
                     recaptcha_response: recaptchaValue,
                 }
             })
@@ -179,10 +177,6 @@ export const LoginMfaPage = () => {
                     placeholder="XXXXXX"
                 />
                 {errors.code && <Form.Control.Feedback type="invalid">{errors.code.message}</Form.Control.Feedback>}
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="save">
-                <Form.Check {...register('save')} label="Запомнить устройство" />
             </Form.Group>
 
             {recaptchaComponent}
