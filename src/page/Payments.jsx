@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { Form, Spinner } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import { BalanceCard } from "../component/BalanceCard"
@@ -181,6 +181,7 @@ const paysystems = [
         img: <img src="/assets/image/paysystem/fondy.svg" height="32px" />,
         logos: ['visa', 'mastercard', 'googlepay'],
         filter: user => user.client_country != 'RU',
+        filterMsg: 'Недоступно в РФ',
     },
     {
         id: 'interkassa',
@@ -194,17 +195,46 @@ const paysystems = [
         img: <img src="/assets/image/paysystem/unitpay.svg" height="32px" />,
         logos: ['iomoney', 'mir'],
         filter: user => user.client_country == 'RU',
+        filterMsg: 'Доступно только для РФ',
     },
 ]
+
+const PaysystemListElement = ({ paysystem, checked, onChange, filterMsg = false }) => {
+    return <li className="list-group-item px-0 py-3">
+        <div className="form-check">
+            <input
+                type="radio"
+                id={paysystem.id}
+                name="paysystem"
+                className="form-check-input"
+                checked={checked}
+                onChange={onChange}
+            />
+            <label className="form-check-label w-100" htmlFor={paysystem.id}>
+                <div className="d-flex justify-content-between align-items-center">
+                    {paysystem.img}
+                    {filterMsg && <span className="badge bg-light text-muted">{paysystem.filterMsg}</span>}
+                </div>
+                <div>{paysystem.description}</div>
+            </label>
+        </div>
+    </li>
+}
 
 const PayCard = () => {
     const { app } = useApp()
     const [amount, setAmount] = useState('')
     const [loading, setLoading] = useState(false)
+    const [showHidden, setShowHidden] = useState(false)
 
-    const filteredPaysystems = paysystems.filter(p => !p.filter || p.filter(app.user))
-    const filteredLogos = new Set([].concat(...filteredPaysystems.map(p => p.logos)))
-    const [paysystem, setPaysystem] = useState(filteredPaysystems[0].id)
+    const [psVisible, logoList, psHidden] = useMemo(() => {
+        const psVisible = paysystems.filter(p => !p.filter || p.filter(app.user))
+        const logoList = new Set([].concat(...psVisible.map(p => p.logos)))
+        const psHidden = paysystems.filter(p => !psVisible.find(p0 => p0.id == p.id))
+        return [psVisible, logoList, psHidden]
+    })
+    console.log(psVisible)
+    const [paysystem, setPaysystem] = useState(psVisible[0].id)
 
     const onSubmit = e => {
         e.preventDefault()
@@ -262,7 +292,7 @@ const PayCard = () => {
             <span>Вы можете пополнить свой счет на любое количество вимеров</span>
         </div>
         <div className="card-body">
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} className="mb-3">
                 <div className="d-flex mb-3">
                     <input
                         className="form-control"
@@ -280,29 +310,45 @@ const PayCard = () => {
                         {!loading && 'Пополнить'}
                     </button>
                 </div>
-                <ul className="list-group list-group-flush mb-3">
-                    {filteredPaysystems.map(e => {
-                        return <li key={e.id} className="list-group-item px-0 py-3">
-                            <div className="form-check">
-                                <input
-                                    type="radio"
-                                    id={e.id}
-                                    name="paysystem"
-                                    className="form-check-input"
-                                    checked={paysystem == e.id}
-                                    onChange={() => setPaysystem(e.id)}
-                                />
-                                <label className="form-check-label w-100" htmlFor={e.id}>
-                                    {e.img}
-                                    <span className="d-block">{e.description}</span>
-                                </label>
-                            </div>
-                        </li>
+                <ul className="list-group list-group-flush">
+                    {psVisible.map(e => {
+                        return <PaysystemListElement
+                            key={e.id}
+                            paysystem={e}
+                            checked={paysystem == e.id}
+                            onChange={() => setPaysystem(e.id)}
+                        />
+                    })}
+
+                    {showHidden && psHidden.length > 0 && psHidden.map(e => {
+                        return <PaysystemListElement
+                            key={e.id}
+                            paysystem={e}
+                            checked={paysystem == e.id}
+                            onChange={() => setPaysystem(e.id)}
+                            filterMsg={true}
+                        />
                     })}
                 </ul>
+
+                {psHidden.length > 0 && <div
+                    role="button"
+                    className="text-muted text-center"
+                    onClick={e => {
+                        setShowHidden(!showHidden);
+                        e.preventDefault();
+                        return false;
+                    }}
+                >
+                    {showHidden
+                        ? <>Скрыть недоступные<i className="ms-1 bi bi-chevron-up" /></>
+                        : <>Показать недоступные<i className="ms-1 bi bi-chevron-down" /></>
+                    }
+                </div>}
+
             </form>
             <div className="text-center opacity-25">
-                {Array.from(filteredLogos).map(e => {
+                {Array.from(logoList).map(e => {
                     return <span key={e}>{logos[e]}</span>
                 })}
             </div>
