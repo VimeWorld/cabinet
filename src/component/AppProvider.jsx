@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { fetchApi, getToken, setToken, getTuuid } from '../lib/api';
+import { fetchApi, getToken, setToken } from '../lib/api';
 import { AppContext } from '../hook/useApp';
 import { Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -57,7 +57,6 @@ function AppProvider({ children }) {
     const [app, setApp] = useState(() => {
         return {
             skinModified: 0,
-            tuuid: getTuuid(),
         }
     })
     const [loading, setLoading] = useState(!!getToken())

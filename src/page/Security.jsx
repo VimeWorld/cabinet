@@ -177,7 +177,6 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
         fetchApi('/settings/totp/setup/confirm', {
             method: 'POST',
             body: {
-                tuuid: app.tuuid,
                 code: data.code,
             }
         }).then(r => r.json())

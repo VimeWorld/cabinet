@@ -31,7 +31,6 @@ const LoginPage = () => {
                 body: {
                     username: login,
                     password,
-                    tuuid: app.tuuid,
                     recaptcha_response: recaptchaValue,
                 }
             })

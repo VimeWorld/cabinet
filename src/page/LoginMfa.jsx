@@ -129,7 +129,6 @@ export const LoginMfaPage = () => {
                 method: 'POST',
                 body: {
                     code: data.code,
-                    tuuid: app.tuuid,
                     save_session: data.save,
                     recaptcha_response: recaptchaValue,
                 }
