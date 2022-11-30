@@ -195,7 +195,7 @@ const paysystems = [
         img: <img src="/assets/image/paysystem/unitpay.svg" height="32px" />,
         logos: ['iomoney', 'mir'],
         filter: user => user.client_country == 'RU',
-        filterMsg: 'Доступно только для РФ',
+        filterMsg: 'Только для РФ',
     },
 ]
 
@@ -233,7 +233,6 @@ const PayCard = () => {
         const psHidden = paysystems.filter(p => !psVisible.find(p0 => p0.id == p.id))
         return [psVisible, logoList, psHidden]
     })
-    console.log(psVisible)
     const [paysystem, setPaysystem] = useState(psVisible[0].id)
 
     const onSubmit = e => {

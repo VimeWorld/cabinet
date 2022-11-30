@@ -240,10 +240,12 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
                                         required: true,
                                         pattern: /^[0-9]{6}$/,
                                     })}
-                                    type="number"
-                                    isInvalid={!!errors.code}
+                                    autoFocus={true}
+                                    inputMode="numeric"
+                                    pattern="[0-9]{6}"
                                     autoComplete="off"
-                                    placeholder="6 цифр"
+                                    placeholder="XXXXXX"
+                                    isInvalid={!!errors.code}
                                 />
                                 {errors.code && <Form.Control.Feedback type="invalid">{errors.code.message}</Form.Control.Feedback>}
                             </Form.Group>
@@ -327,10 +329,12 @@ const ModalDisableMfa = ({ show, close, onDisable }) => {
                             required: true,
                             pattern: /^[0-9]{6}$/,
                         })}
-                        type="number"
-                        isInvalid={!!errors.code}
+                        autoFocus={true}
+                        inputMode="numeric"
+                        pattern="[0-9]{6}"
                         autoComplete="off"
-                        placeholder="6 цифр"
+                        placeholder="XXXXXX"
+                        isInvalid={!!errors.code}
                     />
                     {errors.code && <Form.Control.Feedback type="invalid">{errors.code.message}</Form.Control.Feedback>}
                 </Form.Group>

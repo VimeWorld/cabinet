@@ -172,10 +172,12 @@ export const LoginMfaPage = () => {
                         required: true,
                         pattern: /^[0-9]{6}$/,
                     })}
-                    type="number"
+                    autoFocus={true}
+                    inputMode="numeric"
+                    pattern="[0-9]{6}"
                     isInvalid={!!errors.code}
                     autoComplete="off"
-                    placeholder="6 цифр"
+                    placeholder="XXXXXX"
                 />
                 {errors.code && <Form.Control.Feedback type="invalid">{errors.code.message}</Form.Control.Feedback>}
             </Form.Group>
