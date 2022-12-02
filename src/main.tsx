@@ -23,6 +23,7 @@ import BansPage from './page/Bans'
 import TransactionConfirmPage from './page/ConfirmTransaction'
 import { AccountDeletedStatePage, AccountDeleteRequestPage } from './page/AccountDelete'
 import DiscordLinkPage from './page/Discord'
+import OauthAuthorizePage from './page/OauthAutrorize'
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<Root />} >
@@ -36,6 +37,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='/discord' element={<DiscordLinkPage />} />
     <Route path='/account_delete' element={<AccountDeleteRequestPage />} />
     <Route path='/account_deleted' element={<AccountDeletedStatePage />} />
+    <Route path='/oauth/authorize' element={<OauthAuthorizePage />} />
     <Route path='/' element={<InnerPage />}>
       <Route path='/' element={<HomePage />} />
       <Route path='/payments' element={<PaymentsPage />} />
