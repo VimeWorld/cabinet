@@ -182,7 +182,7 @@ const AvatarCard = ({ guild }) => {
             <form onSubmit={setAvatar}>
                 <div className='d-block d-sm-flex d-md-block d-lg-flex'>
                     <div className='flex-shrink-1 d-flex align-items-center justify-content-center flex-column'>
-                        <img src={guild.avatar || 'https://vimeworld.com/images/guild.png'} width="140" height="140" />
+                        <img src={guild.avatar || 'https://vimeworld.com/images/guild.png'} width="140" height="140" className="rounded" />
                     </div>
                     <div className='flex-grow-1 ms-sm-4 ms-md-0 ms-lg-4 d-flex align-items-center justify-content-center flex-column'>
                         <div className='flex-grow-1 w-100 py-3'>
