@@ -49,6 +49,9 @@ const ConsentScreen = ({ data }) => {
     let denyUrl = searchParams.get("redirect_uri") + "?error=access_denied"
     if (searchParams.has('state'))
         denyUrl += '&state=' + encodeURIComponent(searchParams.get('state'))
+    let logo = <i className="bi bi-motherboard" style={{ fontSize: "80px", lineHeight: "80px", color: "#bad9f2" }} />
+    if (data.client.logo)
+        logo = <img width="80" height="80" className="rounded" src={data.client.logo} />
 
     const approve = () => {
         if (loading) return
@@ -86,6 +89,12 @@ const ConsentScreen = ({ data }) => {
     }, [searchParams])
 
     return <>
+        <div className="mb-3 d-flex justify-content-between align-items-center" style={{ height: 80 }}>
+            <img width="80" height="80" src={`https://skin.vimeworld.com/helm/3d/${app.user.username}/80.png`} />
+            <i className="bi bi-arrow-left-right fs-2" style={{ color: "#ccc" }} />
+            {logo}
+        </div>
+
         <div className="mb-4">
             <h4 className="fw-normal text-center mb-0">{data.client.name}</h4>
             {data.client.url && <div className="text-center">{data.client.url}</div>}
