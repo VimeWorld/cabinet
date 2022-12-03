@@ -14,22 +14,24 @@ const saveApproves = (save) => {
     localStorage.setItem('oauth_consent', JSON.stringify(save))
 }
 
-const saveApprove = (client_id, scope) => {
+const saveApprove = (userid, client_id, scope) => {
     const key = client_id + "$$$" + scope
+    const userstore = 'approved_' + userid
     let save = loadApproves()
-    if (save.approved && save.approved.includes(key))
+    if (save[userstore] && save[userstore].includes(key))
         return
-    if (save.approved)
-        save.approved.push(key)
+    if (save[userstore])
+        save[userstore].push(key)
     else
-        save.approved = [key]
+        save[userstore] = [key]
     saveApproves(save)
 }
 
-const isApproved = (client_id, scope) => {
+const isApproved = (userid, client_id, scope) => {
     const key = client_id + "$$$" + scope
+    const userstore = 'approved_' + userid
     let save = loadApproves()
-    return save.approved && save.approved.includes(key)
+    return save[userstore] && save[userstore].includes(key)
 }
 
 const ConsentScreen = ({ data }) => {
@@ -51,7 +53,7 @@ const ConsentScreen = ({ data }) => {
     const approve = () => {
         if (loading) return
         setLoading(true)
-        saveApprove(searchParams.get('client_id'), searchParams.get('scope'))
+        saveApprove(app.user.id, searchParams.get('client_id'), searchParams.get('scope'))
 
         fetchApi('/oauth/approve', {
             method: 'POST',
@@ -79,7 +81,7 @@ const ConsentScreen = ({ data }) => {
     }
 
     useEffect(() => {
-        if (isApproved(searchParams.get('client_id'), searchParams.get('scope')))
+        if (isApproved(app.user.id, searchParams.get('client_id'), searchParams.get('scope')))
             approve()
     }, [searchParams])
 
@@ -95,10 +97,6 @@ const ConsentScreen = ({ data }) => {
             {scope.map(s => {
                 if (s == 'userinfo')
                     return <li key={s}><b>Ваш ник</b>: {app.user.username}</li>
-                if (s == 'api_id')
-                    return <li key={s}>Ваш ID на MiniGames</li>
-                if (s == 'site_id')
-                    return <li key={s}>Ваш ID на проекте</li>
 
                 return <li key={s}>{s}</li>
             })}
