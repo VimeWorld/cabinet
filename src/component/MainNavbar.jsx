@@ -111,13 +111,10 @@ const MainNavbar = () => {
                     </Nav>
 
                     <hr class="d-lg-none text-white-50"></hr>
-                    
+
                     <ThemeSelector />
 
-                    <div className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-                        <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-                        <hr className="d-lg-none my-2 text-white-50" />
-                    </div>
+                    <NavDivider />
 
                     <UserBox />
 
