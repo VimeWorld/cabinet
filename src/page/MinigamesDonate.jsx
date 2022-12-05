@@ -105,7 +105,7 @@ const TableRankComparison = () => {
     const checkOn = <i className="bi bi-check-circle-fill text-success"></i>
 
     return <table className="table">
-        <thead className="table-light">
+        <thead className="bg-tertiary">
             <tr>
                 <th style={{ minWidth: 200 }}></th>
                 <th width="120px" style={{ color: "#00BE00" }}>VIP</th>
@@ -210,11 +210,11 @@ const TableRankComparison = () => {
                             <div><span style={{ color: "#3f3f3f" }} className="bg-secondary">&8</span> - темно-серый</div>
                             <div><span style={{ color: "#3f3ffe" }}>&9</span> - синий</div>
                             <div><span style={{ color: "#3ffe3f" }}>&a</span> - салатовый</div>
-                            <div><span style={{ color: "#3ffefe" }}>&b</span> - голубой</div>
+                            <div><span style={{ color: "#3ffefe" }} className="bg-dark">&b</span> - голубой</div>
                             <div><span style={{ color: "#fe3f3f" }}>&c</span> - красный</div>
                             <div><span style={{ color: "#fe3ffe" }}>&d</span> - розовый</div>
-                            <div><span style={{ color: "#fefe3f" }}>&e</span> - желтый</div>
-                            <div><span style={{ color: "#ffffff" }}>&f</span> - белый</div>
+                            <div><span style={{ color: "#fefe3f" }} className="bg-dark">&e</span> - желтый</div>
+                            <div><span style={{ color: "#ffffff" }} className="bg-dark">&f</span> - белый</div>
                         </div>
                     </Tooltip>}>
                         <i className="bi bi-info-circle ms-2 text-primary"></i>

@@ -67,7 +67,7 @@ const Sidebar = () => {
         }
     }, [])
 
-    return <div className="bg-white rounded-3 shadow-sm p-4 mb-5 d-none d-md-block">
+    return <div className="bg-body rounded-3 shadow-sm p-4 mb-5 d-none d-md-block">
         <Offcanvas
             id="sidebar-offcanvas"
             aria-labelledby="sidebar-offcanvas-label"

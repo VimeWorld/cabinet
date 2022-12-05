@@ -1,11 +1,21 @@
-:root {
-  --bs-border-color-translucent: rgba(0, 0, 0, 0.1);
-  --card-bg-color: #fff;
+body {
+  background-color: #f5f4f8;
 }
+[data-bs-theme="dark"] body {
+  background-color: #121212;
+}
+
+/* Какой-то прикол
+[data-bs-theme="dark"] .form-control {
+  background-color: var(--bs-body-bg);
+}*/
 
 .navbar-brand {
   transition: color 0.25s ease-in-out;
   color: #444;
+}
+[data-bs-theme="dark"] .navbar-brand {
+  color: var(--bs-emphasis-color);
 }
 
 .navbar-brand:hover {
@@ -27,16 +37,18 @@
   background-color: #93e9b4;
   background-image: linear-gradient(160deg, #93e9b4 0%, #4fd879 56%, #b5ff7e 100%);
 }
+.bg-tertiary {
+  background-color: var(--bs-tertiary-bg);
+}
 
 .card {
-  --bs-card-bg: var(--card-bg-color);
   --bs-card-cap-bg: initial;
   --bs-card-cap-padding-y: 1rem;
   --bs-card-cap-padding-x: 1.5rem;
   --bs-card-spacer-y: 1.5rem;
   --bs-card-spacer-x: 1.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(var(--bs-body-color-rgb), 0.075) !important;
   border: 0;
-  box-shadow: var(--bs-card-box-shadow);
 }
 
 .card-table,

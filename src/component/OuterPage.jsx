@@ -1,4 +1,16 @@
-const OuterPage = ({ children, background = 'bg-gradient-blue' }) => {
+import useApp from "../hook/useApp"
+
+const OuterPage = ({ children, variant = 'blue' }) => {
+    const { app } = useApp()
+
+    let border = ''
+    let background = ''
+    if (app.theme === 'dark') {
+        border = 'border border-' + (variant == 'red' ? 'danger' : 'primary')
+    } else {
+        background = variant == 'red' ? 'bg-gradient-red' : 'bg-gradient-blue'
+    }
+
     return <section className={background}>
         <div className="container min-vh-100">
             <div className="row justify-content-center">
@@ -8,7 +20,7 @@ const OuterPage = ({ children, background = 'bg-gradient-blue' }) => {
                             VimeWorld
                         </a>
                     </div>
-                    <div className="card w-100 p-4 mt-4 mb-5">
+                    <div className={"card w-100 p-4 mt-4 mb-5 " + border}>
                         {children}
                     </div>
                 </div>

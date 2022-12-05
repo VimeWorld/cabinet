@@ -7,6 +7,13 @@ import Notifications from '../lib/notifications';
 import { useTitle } from '../hook/useTitle';
 import { EventBus, EVENT_LOGOUT } from '../lib/eventbus';
 
+const getPreferredTheme = (selected) => {
+    if (selected)
+        return selected
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
 function Preloader() {
     return <div className="vh-100 d-flex flex-column align-items-center justify-content-center">
         <Spinner variant='secondary' animation="grow" />
@@ -55,7 +62,10 @@ function NotFoundPage() {
 
 function AppProvider({ children }) {
     const [app, setApp] = useState(() => {
+        const savedTheme = localStorage.getItem('theme')
         return {
+            savedTheme: savedTheme,
+            theme: getPreferredTheme(savedTheme),
             skinModified: 0,
         }
     })
@@ -65,6 +75,14 @@ function AppProvider({ children }) {
     const updateApp = (newVal) => {
         setApp((old) => {
             const clone = { ...old, ...newVal }
+
+            if (old.savedTheme != clone.savedTheme) {
+                if (clone.savedTheme)
+                    localStorage.setItem('theme', clone.savedTheme)
+                else
+                    localStorage.removeItem('theme')
+                clone.theme = getPreferredTheme(clone.savedTheme)
+            }
 
             if (newVal.skinModified)
                 sessionStorage.setItem('skin:' + clone.user.username, newVal.skinModified + '')
@@ -127,7 +145,22 @@ function AppProvider({ children }) {
                 error: () => setLoading(false),
             })
         }
+
+        const mediaHandler = () => {
+            updateApp({
+                theme: getPreferredTheme(app.savedTheme),
+            })
+        }
+        const media = window.matchMedia('(prefers-color-scheme: dark)')
+        media.addEventListener('change', mediaHandler)
+        return () => {
+            media.removeEventListener('change', mediaHandler)
+        }
     }, [])
+
+    useEffect(() => {
+        document.documentElement.setAttribute('data-bs-theme', app.theme)
+    }, [app.theme])
 
     const value = { app, updateApp, logout, fetchAuth }
 

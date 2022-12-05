@@ -140,7 +140,7 @@ const AccountDeleteRequestPage = () => {
     if (!token)
         return <></>
 
-    return <OuterPage background="bg-gradient-red">
+    return <OuterPage variant="red">
         <h4 className="mb-2 text-center text-danger">Удаление аккаунта</h4>
         <h5 className="mb-4 text-center">{app.user.username}</h5>
 

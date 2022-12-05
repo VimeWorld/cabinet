@@ -13,6 +13,8 @@ interface AppContextContainerType {
 }
 
 interface AppContextType {
+    savedTheme: 'light' | 'dark' | null,
+    theme: string,
     skinModified: number;
     user?: UserType;
 }

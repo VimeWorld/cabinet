@@ -2,12 +2,14 @@ import { Editor } from '@tinymce/tinymce-react'
 import { useEffect, useRef, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { ConfirmModal } from '../component/ConfirmModal'
+import useApp from '../hook/useApp'
 import { useTitle } from '../hook/useTitle'
 import { fetchApi } from '../lib/api'
 import Notifications from '../lib/notifications'
 import infoCss from './MinigamesGuildInfo.css?raw'
 
 const InfoCard = ({ guild }) => {
+    const { app } = useApp()
     const editorRef = useRef(null)
     const [loading, setLoading] = useState(false)
 
@@ -53,6 +55,15 @@ const InfoCard = ({ guild }) => {
             .finally(() => setLoading(false))
     }
 
+    let textColor = app.theme === 'dark' ? '#ccc' : '#555';
+    let bgColor = app.theme === 'dark' ? '#212529' : '#fff';
+    let innerCss = infoCss + `
+    body{
+        color: ${textColor};
+        background-color: ${bgColor};
+    }
+    `
+
     return <div className='card'>
         <div className="card-header">
             <h4 className="mb-0">Описание гильдии <span className='text-info'>{guild.name}</span></h4>
@@ -84,8 +95,10 @@ const InfoCard = ({ guild }) => {
                     'p': 'color,text-align',
                     'div': 'color,text-align',
                 },
-                content_style: infoCss,
+                content_style: innerCss,
                 placeholder: 'Информация о гильдии, например Discord или группа в ВК',
+                skin: app.theme === 'dark' ? 'oxide-dark' : 'oxide',
+                content_css: app.theme === 'dark' ? 'dark' : '',
             }}
         />
         <div className='card-body text-end'>

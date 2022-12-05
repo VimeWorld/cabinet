@@ -94,7 +94,7 @@ export const PaymentHistoryCard = () => {
 
         <div className="card-table table-responsive">
             <table className="table table-payments">
-                <thead className="table-light">
+                <thead className="bg-tertiary">
                     <tr>
                         <th scope="col" className="border-bottom-0">Дата</th>
                         <th scope="col" className="border-bottom-0">Сумма</th>

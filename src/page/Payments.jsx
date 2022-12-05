@@ -171,14 +171,15 @@ const logos = {
     mastercard: <img className="px-3" height="32px" src="/assets/image/paysystem/mastercard-securecode.png" />,
     googlepay: <img height="58px" src="/assets/image/paysystem/google-pay-mark_800.svg" />,
     iomoney: <img className="px-3" height="32px" src="/assets/image/paysystem/iomoney.svg" />,
-    mir: <img className="px-3" height="32px" src="/assets/image/paysystem/mir.png" />,
+    mir: <img className="px-3" height="32px" src="/assets/image/paysystem/mir.svg" />,
 }
 
 const paysystems = [
     {
         id: 'fondy',
         description: '(Visa / Mastercard / Google Pay / Apple Pay)',
-        img: <img src="/assets/image/paysystem/fondy.svg" height="32px" />,
+        imgLight: <img src="/assets/image/paysystem/fondy-main-light.svg" height="32px" />,
+        imgDark: <img src="/assets/image/paysystem/fondy-main-dark.svg" height="32px" />,
         logos: ['visa', 'mastercard', 'googlepay'],
         filter: user => user.client_country != 'RU',
         filterMsg: 'Недоступно в РФ',
@@ -186,13 +187,15 @@ const paysystems = [
     {
         id: 'interkassa',
         description: '(Криптовалюты, Perfect Money, AdvCash)',
-        img: <img src="/assets/image/paysystem/interkassa.png" height="32px" />,
+        imgLight: <img src="/assets/image/paysystem/interkassa-light.png" height="32px" />,
+        imgDark: <img src="/assets/image/paysystem/interkassa-dark.png" height="32px" />,
         logos: [],
     },
     {
         id: 'unitpay',
         description: '(Yandex Pay)',
         img: <img src="/assets/image/paysystem/unitpay.svg" height="32px" />,
+        imgDark: <img src="/assets/image/paysystem/unitpay-dark.svg" height="32px" />,
         logos: ['iomoney', 'mir'],
         filter: user => user.client_country == 'RU',
         filterMsg: 'Только для РФ',
@@ -200,6 +203,13 @@ const paysystems = [
 ]
 
 const PaysystemListElement = ({ paysystem, checked, onChange, filterMsg = false }) => {
+    const { app } = useApp()
+    let img = paysystem.img || paysystem.imgLight || paysystem.imgDark
+    if (app.theme === 'light' && paysystem.imgLight)
+        img = paysystem.imgLight
+    if (app.theme === 'dark' && paysystem.imgDark)
+        img = paysystem.imgDark
+
     return <li className="list-group-item px-0 py-3">
         <div className="form-check">
             <input
@@ -212,8 +222,8 @@ const PaysystemListElement = ({ paysystem, checked, onChange, filterMsg = false 
             />
             <label className="form-check-label w-100" htmlFor={paysystem.id}>
                 <div className="d-flex justify-content-between align-items-center">
-                    {paysystem.img}
-                    {filterMsg && <span className="badge bg-light text-muted">{paysystem.filterMsg}</span>}
+                    {img}
+                    {filterMsg && <span className="badge bg-tertiary text-muted">{paysystem.filterMsg}</span>}
                 </div>
                 <div>{paysystem.description}</div>
             </label>

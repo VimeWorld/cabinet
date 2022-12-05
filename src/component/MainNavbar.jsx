@@ -1,6 +1,62 @@
+import classNames from "classnames";
 import { Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap"
 import useApp from "../hook/useApp"
 import { SidebarToggleButton } from "./Sidebar";
+
+const NavDivider = () => {
+    return <div className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+        <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+        <hr className="d-lg-none my-2 text-white-50" />
+    </div>
+}
+
+const themes = {
+    'light': {
+        name: 'Светлая',
+        icon: 'sun-fill',
+    },
+    'dark': {
+        name: 'Темная',
+        icon: 'moon-stars-fill',
+    },
+    'auto': {
+        name: 'Авто',
+        icon: 'circle-half',
+    }
+}
+
+const ThemeSelector = () => {
+    const { app, updateApp } = useApp()
+    let selected = app.savedTheme || 'auto'
+
+    return <Nav>
+        <NavDropdown id="themeSelector" align="end" title={<span>
+            <i className={`my-1 bi bi-${themes[selected].icon}`} />
+            <span class="d-lg-none ms-2">Сменить тему</span>
+        </span>}>
+            {Object.entries(themes).map(([id, t]) => {
+                const active = id == selected
+                let iconClass = `me-2 bi bi-${t.icon}`
+                if (!active)
+                    iconClass += ' opacity-50'
+                return <NavDropdown.Item
+                    key={id}
+                    onClick={() => {
+                        let savid = id
+                        if (savid == 'auto')
+                            savid = null;
+                        updateApp({ savedTheme: savid })
+                    }}
+                    className={classNames("d-flex align-items-center", { active })}
+                >
+                    <i className={iconClass} />
+                    {t.name}
+                    {active && <i className="bi bi-check2 ms-auto d-block" />}
+                </NavDropdown.Item>
+            })}
+        </NavDropdown>
+    </Nav>
+}
 
 const UserBox = () => {
     const { app, logout } = useApp()
@@ -24,7 +80,7 @@ const UserBox = () => {
 }
 
 const MainNavbar = () => {
-    return <Navbar bg="white" expand="md" className="shadow-sm">
+    return <Navbar bg="body" expand="md" className="shadow-sm">
         <Container>
             <SidebarToggleButton />
             <Navbar.Brand
@@ -53,7 +109,18 @@ const MainNavbar = () => {
                         <Nav.Link href="https://forum.vimeworld.com">Форум</Nav.Link>
                         <Nav.Link href="https://forum.vimeworld.com/forum/139-%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8/">Новости</Nav.Link>
                     </Nav>
+
+                    <hr class="d-lg-none text-white-50"></hr>
+                    
+                    <ThemeSelector />
+
+                    <div className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                        <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                        <hr className="d-lg-none my-2 text-white-50" />
+                    </div>
+
                     <UserBox />
+
                 </Offcanvas.Body>
             </Navbar.Offcanvas>
         </Container>

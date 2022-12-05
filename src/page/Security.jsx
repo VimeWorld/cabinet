@@ -226,7 +226,11 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
                     </div>}
                     {secret && <>
                         <div className="col-12 col-sm-6 text-center">
-                            <img width="200px" height="200px" src={"https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=" + encodeURIComponent(otpurl)} />
+                            <img
+                                className="rounded"
+                                width="200px"
+                                height="200px"
+                                src={"https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=" + encodeURIComponent(otpurl)} />
                         </div>
                         <div className="col-12 col-sm-6 d-flex flex-column align-items-middle justify-content-center">
                             <div className="mb-sm-4">
@@ -357,10 +361,14 @@ const MfaCard = () => {
     const [modalDisableMfa, setModalDisableMfa] = useState(false)
     const [modalSetupMfa, setModalSetupMfa] = useState(false)
 
-    return <div className="card">
-        <div className={classNames("card-header text-white", {
-            'bg-gradient-red': app.user.mfa == 'disabled',
-            'bg-gradient-green': app.user.mfa == 'completed',
+    return <div className={classNames('card', {
+        'border border-warning': app.theme === 'dark' && app.user.mfa == 'disabled',
+        'border border-success': app.theme === 'dark' && app.user.mfa == 'completed',
+    })}>
+        <div className={classNames("card-header", {
+            'text-white': app.theme === 'light',
+            'bg-gradient-red': app.theme === 'light' && app.user.mfa == 'disabled',
+            'bg-gradient-green': app.theme === 'light' && app.user.mfa == 'completed',
         })}>
             <h4 className="mb-0">Двухэтапная аутентификация</h4>
             <span>Дополнительная защита вашего аккаунта</span>
@@ -468,7 +476,7 @@ const DeleteCard = () => {
 
     return <div className="card border border-danger">
         <div className="card-header text-danger">
-            <h4 className="mb-0">Удаление аккаунта</h4>
+            <h4 className="mb-0 text-danger">Удаление аккаунта</h4>
             <span>Навсегда удаляет этот аккаунт и все связанные данные</span>
         </div>
         <div className="card-body text-center">

@@ -49,7 +49,7 @@ const ConsentScreen = ({ data }) => {
     let denyUrl = searchParams.get("redirect_uri") + "?error=access_denied"
     if (searchParams.has('state'))
         denyUrl += '&state=' + encodeURIComponent(searchParams.get('state'))
-    let logo = <i className="bi bi-motherboard" style={{ fontSize: "80px", lineHeight: "80px", color: "#bad9f2" }} />
+    let logo = <i className="bi bi-motherboard" style={{ fontSize: "80px", lineHeight: "80px", color: "rgb(122 193 250 / 50%)" }} />
     if (data.client.logo)
         logo = <img width="80" height="80" className="rounded" src={data.client.logo} />
 
@@ -91,7 +91,7 @@ const ConsentScreen = ({ data }) => {
     return <>
         <div className="mb-3 d-flex justify-content-between align-items-center" style={{ height: 80 }}>
             <img width="80" height="80" src={`https://skin.vimeworld.com/helm/3d/${app.user.username}/80.png`} />
-            <i className="bi bi-arrow-left-right fs-2" style={{ color: "#ccc" }} />
+            <i className="bi bi-arrow-left-right fs-2 opacity-25" />
             {logo}
         </div>
 
