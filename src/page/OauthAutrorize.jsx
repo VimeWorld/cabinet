@@ -64,6 +64,10 @@ const ConsentScreen = ({ data }) => {
         }).then(r => r.json())
             .then(body => {
                 if (body.success) {
+                    if (body.response.oauth_error) {
+                        Notifications.error(body.response.oauth_error.error)
+                        return
+                    }
                     window.location.href = body.response.redirect
                     return
                 }
@@ -134,6 +138,21 @@ const OauthAuthorizePage = () => {
             .then(r => r.json())
             .then(body => {
                 if (body.success) {
+                    if (body.response.oauth_redirect) {
+                        window.location.href = body.response.oauth_redirect
+                        return
+                    }
+                    if (body.response.oauth_error) {
+                        let err = body.response.oauth_error
+                        if (err.error == 'invalid_client')
+                            setError('Клиента с таким client_id не существует')
+                        else if (err.error == 'invalid_redirect_uri')
+                            setError('Некорректный адрес редиректа для этого клиента')
+                        else
+                            setError('Ошибка oauth: ' + JSON.stringify(err))
+                        return
+                    }
+
                     setData(body.response)
                 } else if (body.response.type == 'bad_request') {
                     setError('Некорректный запрос на авторизацию')
