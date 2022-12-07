@@ -18,6 +18,8 @@
     "react-google-recaptcha": "^2.1.0",
     "react-hook-form": "^7.39.3",
     "react-router-dom": "^6.4.3",
+    "react-skinview3d": "^5.0.0",
+    "skinview3d": "^3.0.0-alpha.1",
     "tinymce": "^6.2.0"
   },
   "devDependencies": {

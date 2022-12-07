@@ -1,7 +1,7 @@
-import { useState } from "react"
+import React, { Suspense, useState } from "react"
 import { BalanceCard } from "../component/BalanceCard"
 import { PromoCard } from "../component/PromoCard"
-import { SkinCard } from "../component/SkinCard"
+import SkinCard from "../component/SkinCard"
 import useApp from "../hook/useApp"
 import { useTitle } from "../hook/useTitle"
 
@@ -47,14 +47,12 @@ const HomePage = () => {
         <div className="row mb-4 gy-4">
             <div className="col-lg-6 col-12">
                 <PersonalInfoCard />
+                <div className="mt-4">
+                    <BalanceCard pay />
+                </div>
             </div>
 
             <div className="col-lg-6 col-12">
-                <BalanceCard pay />
-            </div>
-        </div>
-        <div className="row mb-4">
-            <div className="col">
                 <SkinCard />
             </div>
         </div>

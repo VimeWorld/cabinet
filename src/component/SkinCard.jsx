@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from "react"
+import { lazy, Suspense, useEffect, useRef, useState } from "react"
 import { Button, Modal, OverlayTrigger, Spinner, Tooltip } from "react-bootstrap"
 import useApp from "../hook/useApp"
 import { fetchApi } from "../lib/api"
 import { EventBus, EVENT_LOGOUT } from "../lib/eventbus"
 import Notifications from "../lib/notifications"
+
+const SkinViewer3d = lazy(() => import("./SkinViewer3d"))
 
 const maxSizeKb = 50
 let capeExistsCache = null
@@ -204,11 +206,13 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
     </Modal>
 }
 
-export const SkinCard = () => {
+const SkinCard = () => {
     const { app } = useApp()
     const [capeExists, setCapeExists] = useState(capeExistsCache)
     const [showModalCape, setShowModalCape] = useState(false)
     const [showModalSkin, setShowModalSkin] = useState(false)
+
+    const cardRef = useRef()
 
     useEffect(() => {
         if (capeExists != null)
@@ -224,7 +228,6 @@ export const SkinCard = () => {
             .catch(console.log)
     }, [capeExists])
 
-    const capeStyle = { width: 150, height: 240 }
     const anticache = app.skinModified ? '?_=' + app.skinModified : ''
 
     return <div className="card">
@@ -232,25 +235,32 @@ export const SkinCard = () => {
             <h4 className="mb-0">Скин и плащ</h4>
             <span>Здесь вы можете изменить свой скин на всех серверах VimeWorld</span>
         </div>
-        <div className="card-body">
-            <div className="row">
-                <div className="col d-flex align-items-center justify-content-center flex-column">
-                    <img src={`https://skin.vimeworld.com/body/${app.user.username}.png${anticache}`} style={{ width: 160, height: 320 }} />
-                    <button className="btn btn-outline-primary mt-3" onClick={() => setShowModalSkin(true)}>Изменить</button>
+        <div ref={cardRef} className="card-body">
+            <Suspense fallback={
+                <div className="d-flex justify-content-center align-items-center" style={{ height: 255 }}>
+                    <Spinner size="lg" variant="secondary" />
                 </div>
-                <div className="col d-flex align-items-center justify-content-center flex-column">
-                    <div className="flex-grow-1 d-flex align-items-center justify-items-center">
-                        {capeExists === null && <div className="placeholder-glow" style={capeStyle}><span className="placeholder bg-secondary h-100 w-100"></span></div>}
-                        {capeExists === false && <img src="/assets/image/no_cloak.jpg" style={capeStyle} />}
-                        {capeExists === true && <img src={`https://skin.vimeworld.com/cape/${app.user.username}.png${anticache}`} style={capeStyle} />}
-                    </div>
-                    <button
-                        className="flex-shrink-1 btn btn-outline-primary mt-3"
-                        onClick={() => setShowModalCape(true)}
-                        disabled={capeExists === null}>
-                        {capeExists === null ? 'Загрузка...' : capeExists ? 'Изменить' : 'Купить'}
-                    </button>
-                </div>
+            }>
+                <SkinViewer3d
+                    skin={`https://mc.vimeworld.com/launcher/skins/${app.user.username}.png${anticache}`}
+                    cape={capeExists && `https://mc.vimeworld.com/launcher/cloaks/${app.user.username}.png${anticache}`}
+                    height={250}
+                    parent={cardRef}
+                />
+            </Suspense>
+            <div className="d-flex justify-content-center gap-3">
+                <button
+                    className="btn btn-outline-primary"
+                    onClick={() => setShowModalSkin(true)}>
+                    Изменить скин
+                </button>
+
+                <button
+                    className="btn btn-outline-primary"
+                    onClick={() => setShowModalCape(true)}
+                    disabled={capeExists === null}>
+                    {capeExists === null ? 'Загрузка...' : capeExists ? 'Изменить плащ' : 'Купить плащ'}
+                </button>
             </div>
             <ModalCape
                 show={showModalCape}
@@ -265,3 +275,5 @@ export const SkinCard = () => {
         </div>
     </div>
 }
+
+export default SkinCard
