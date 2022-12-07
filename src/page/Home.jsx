@@ -1,7 +1,7 @@
-import React, { Suspense, useState } from "react"
+import { useState } from "react"
 import { BalanceCard } from "../component/BalanceCard"
 import { PromoCard } from "../component/PromoCard"
-import SkinCard from "../component/SkinCard"
+import SkinCard from "../component/skin/SkinCard"
 import useApp from "../hook/useApp"
 import { useTitle } from "../hook/useTitle"
 

@@ -1,9 +1,9 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react"
 import { Button, Modal, OverlayTrigger, Spinner, Tooltip } from "react-bootstrap"
-import useApp from "../hook/useApp"
-import { fetchApi } from "../lib/api"
-import { EventBus, EVENT_LOGOUT } from "../lib/eventbus"
-import Notifications from "../lib/notifications"
+import useApp from "../../hook/useApp"
+import { fetchApi } from "../../lib/api"
+import { EventBus, EVENT_LOGOUT } from "../../lib/eventbus"
+import Notifications from "../../lib/notifications"
 
 const SkinViewer3d = lazy(() => import("./SkinViewer3d"))
 
