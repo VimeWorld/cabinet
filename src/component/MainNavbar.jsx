@@ -32,7 +32,7 @@ const ThemeSelector = () => {
     return <Nav>
         <NavDropdown id="themeSelector" align="end" title={<span>
             <i className={`my-1 bi bi-${themes[selected].icon}`} />
-            <span class="d-lg-none ms-2">Сменить тему</span>
+            <span className="d-lg-none ms-2">Сменить тему</span>
         </span>}>
             {Object.entries(themes).map(([id, t]) => {
                 const active = id == selected
@@ -110,7 +110,7 @@ const MainNavbar = () => {
                         <Nav.Link href="https://forum.vimeworld.com/forum/139-%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8/">Новости</Nav.Link>
                     </Nav>
 
-                    <hr class="d-lg-none text-white-50"></hr>
+                    <hr className="d-lg-none text-white-50"></hr>
 
                     <ThemeSelector />
 
