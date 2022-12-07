@@ -4,7 +4,7 @@ import useApp from "../hook/useApp"
 import { SidebarToggleButton } from "./Sidebar";
 
 const NavDivider = () => {
-    return <div className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+    return <div className="nav-item py-2 py-lg-1 col-lg-auto">
         <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
         <hr className="d-lg-none my-2 text-white-50" />
     </div>
