@@ -4,9 +4,9 @@ import useApp from "../hook/useApp"
 import { SidebarToggleButton } from "./Sidebar";
 
 const NavDivider = () => {
-    return <div className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-        <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-        <hr className="d-lg-none my-2 text-white-50" />
+    return <div className="nav-item py-2 py-md-1">
+        <div className="vr d-none d-md-flex h-100 mx-md-2"></div>
+        <hr className="d-md-none my-2 opacity-25" />
     </div>
 }
 
@@ -32,7 +32,7 @@ const ThemeSelector = () => {
     return <Nav>
         <NavDropdown id="themeSelector" align="end" title={<span>
             <i className={`my-1 bi bi-${themes[selected].icon}`} />
-            <span className="d-lg-none ms-2">Сменить тему</span>
+            <span className="d-md-none ms-2">Сменить тему</span>
         </span>}>
             {Object.entries(themes).map(([id, t]) => {
                 const active = id == selected
@@ -110,7 +110,7 @@ const MainNavbar = () => {
                         <Nav.Link href="https://forum.vimeworld.com/forum/139-%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8/">Новости</Nav.Link>
                     </Nav>
 
-                    <hr className="d-lg-none text-white-50"></hr>
+                    <hr className="d-md-none opacity-25" />
 
                     <ThemeSelector />
 
