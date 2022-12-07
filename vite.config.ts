@@ -4,6 +4,15 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://cp.vimeworld.com/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      }
+    }
+  },
   plugins: [
     react(),
     viteStaticCopy({
@@ -18,6 +27,6 @@ export default defineConfig({
         },
       ],
       flatten: false,
-    })
+    }),
   ]
 })
