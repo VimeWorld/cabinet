@@ -22,8 +22,8 @@ const PersonalInfoCard = () => {
 
     return <div className="card">
         <div className="card-header">
-             <h4 className="mb-0">Ваши данные</h4>
-             <span>Информация об аккаунте</span>
+            <h4 className="mb-0">Ваши данные</h4>
+            <span>Информация об аккаунте</span>
         </div>
         <div className="card-body">
             <dl className="row mb-0">
