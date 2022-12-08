@@ -322,7 +322,6 @@ const ExchangeCoins = ({ profile }) => {
                         onChange: () => {
                             setValue('coins', watch("vimers") * exchangeRate, { shouldValidate: true })
                         },
-
                         validate: val => {
                             if (isNaN(val))
                                 return false
