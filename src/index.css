@@ -1,8 +1,10 @@
 body {
-  background-color: #f5f4f8;
+    background-color: #f5f4f8;
+    line-height: normal;
 }
+
 [data-bs-theme="dark"] body {
-  background-color: #121212;
+    background-color: #121212;
 }
 
 /* Какой-то прикол
@@ -11,67 +13,71 @@ body {
 }*/
 
 .navbar-brand {
-  transition: color 0.25s ease-in-out;
-  color: #444;
+    transition: color 0.25s ease-in-out;
+    color: #444;
 }
+
 [data-bs-theme="dark"] .navbar-brand {
-  color: var(--bs-emphasis-color);
+    color: var(--bs-emphasis-color);
 }
 
 .navbar-brand:hover {
-  color: var(--bs-primary);
+    color: var(--bs-primary);
 }
 
 /* 
 * Source: https://www.grabient.com/
 */
 .bg-gradient-blue {
-  background-color: #0093e9;
-  background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
+    background-color: #0093e9;
+    background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
 }
+
 .bg-gradient-red {
-  background-color: #ff9a8b;
-  background-image: linear-gradient(160deg, #ff9a8b 0%, #ff6a88 55%, #ff99ac 100%);
+    background-color: #ff9a8b;
+    background-image: linear-gradient(160deg, #ff9a8b 0%, #ff6a88 55%, #ff99ac 100%);
 }
+
 .bg-gradient-green {
-  background-color: #93e9b4;
-  background-image: linear-gradient(160deg, #93e9b4 0%, #4fd879 56%, #b5ff7e 100%);
+    background-color: #93e9b4;
+    background-image: linear-gradient(160deg, #93e9b4 0%, #4fd879 56%, #b5ff7e 100%);
 }
+
 .bg-tertiary {
-  background-color: var(--bs-tertiary-bg);
+    background-color: var(--bs-tertiary-bg);
 }
 
 .card {
-  --bs-card-cap-bg: initial;
-  --bs-card-cap-padding-y: 1rem;
-  --bs-card-cap-padding-x: 1.5rem;
-  --bs-card-spacer-y: 1.5rem;
-  --bs-card-spacer-x: 1.5rem;
-  box-shadow: 0 0.125rem 0.25rem rgba(var(--bs-body-color-rgb), 0.075) !important;
-  border: 0;
+    --bs-card-cap-bg: initial;
+    --bs-card-cap-padding-y: 1rem;
+    --bs-card-cap-padding-x: 1.5rem;
+    --bs-card-spacer-y: 1.5rem;
+    --bs-card-spacer-x: 1.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(var(--bs-body-color-rgb), 0.075) !important;
+    border: 0;
 }
 
 .card-table,
 .card-table table {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .card-table td:first-child,
 .card-table th:first-child {
-  padding-left: var(--bs-card-cap-padding-x);
+    padding-left: var(--bs-card-cap-padding-x);
 }
 
 .card-table td:last-child,
 .card-table th:last-child {
-  padding-right: var(--bs-card-cap-padding-x);
+    padding-right: var(--bs-card-cap-padding-x);
 }
 
 .table-payments .description b {
-  font-weight: 600;
-  color: var(--bs-info);
+    font-weight: 600;
+    color: var(--bs-info);
 }
 
 td.fit {
-  white-space: nowrap;
-  vertical-align: middle;
+    white-space: nowrap;
+    vertical-align: middle;
 }

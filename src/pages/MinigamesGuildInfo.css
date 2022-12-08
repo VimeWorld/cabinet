@@ -1,0 +1,43 @@
+body {
+    margin-bottom: 1em;
+}
+a {
+    color: #1bf;
+    text-decoration: none;
+    -webkit-transition: all 0.35s ease-out;
+    -moz-transition: all 0.35s ease-out;
+    -ms-transition: all 0.35s ease-out;
+    -o-transition: all 0.35s ease-out;
+    transition: all 0.35s ease-out;
+}
+a:hover {
+    color: #09d;
+}
+b {
+    font-weight: 700;
+}
+ul {
+    padding-left: 30px;
+    list-style: disc;
+}
+li {
+    margin-bottom: 0px;
+}
+h1 {
+    font-size: 2.25rem;
+}
+h2 {
+    font-size: 2rem;
+}
+h3 {
+    font-size: 1.75rem;
+}
+h4 {
+    font-size: 1.5rem;
+}
+h5 {
+    font-size: 1.25rem;
+}
+h6 {
+    font-size: 1rem;
+}

@@ -1,44 +1,42 @@
-let cachedToken = localStorage.getItem('at') || ''
+let cachedToken = localStorage.getItem('at') || '';
 
 interface ApiRequestInit extends Omit<RequestInit, 'headers'> {
-    headers?: Record<string, string>;
+  headers?: Record<string, string>;
 }
 
 function setHeader(options: ApiRequestInit, name: string, value: string) {
-    options.headers = options.headers || {}
-    options.headers[name] = value
+  options.headers = options.headers || {};
+  options.headers[name] = value;
 }
 
 // https://stackoverflow.com/a/8511350/6620659
 function isObject(val: any): boolean {
-    return typeof val === 'object' &&
-        !Array.isArray(val) &&
-        val !== null
+  return typeof val === 'object' && !Array.isArray(val) && val !== null;
 }
 
-export const fetchApi = async (path: string, options: ApiRequestInit = {}) => {
-    if (cachedToken)
-        setHeader(options, 'Authorization', 'Bearer ' + cachedToken)
+export const fetchApi = async (
+  path: string,
+  options?: { method: string; body: { amount: any; target: any } }
+) => {
+  if (cachedToken) setHeader(options, 'Authorization', 'Bearer ' + cachedToken);
 
-    if (isObject(options.body) && !(options.body instanceof FormData)) {
-        options.body = JSON.stringify(options.body)
-        setHeader(options, 'Content-Type', 'application/json')
-    }
+  if (isObject(options.body) && !(options.body instanceof FormData)) {
+    options.body = JSON.stringify(options.body);
+    setHeader(options, 'Content-Type', 'application/json');
+  }
 
-    setHeader(options, 'Accept', 'application/json')
+  setHeader(options, 'Accept', 'application/json');
 
-    const url = import.meta.env.VITE_API_ENDPOINT + path
-    return fetch(url, options)
-}
+  const url = import.meta.env.VITE_API_ENDPOINT + path;
+  return fetch(url, options);
+};
 
 export const setToken = (token?: string) => {
-    cachedToken = token || ''
-    if (token)
-        localStorage.setItem('at', token)
-    else
-        localStorage.removeItem('at')
-}
+  cachedToken = token || '';
+  if (token) localStorage.setItem('at', token);
+  else localStorage.removeItem('at');
+};
 
 export const getToken = (): string => {
-    return cachedToken
-}
+  return cachedToken;
+};
