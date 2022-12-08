@@ -107,7 +107,7 @@ const TableRankComparison = () => {
     return <table className="table">
         <thead className="bg-tertiary">
             <tr>
-                <th style={{ minWidth: 200 }}></th>
+                <th style={{ minWidth: 100 }}></th>
                 <th width="120px" style={{ color: "#00BE00" }}>VIP</th>
                 <th width="120px" style={{ color: "#00DADA" }}>Premium</th>
                 <th width="120px" style={{ color: "#FFBA2D" }}>Holy</th>

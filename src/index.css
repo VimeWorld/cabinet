@@ -75,3 +75,14 @@ td.fit {
   white-space: nowrap;
   vertical-align: middle;
 }
+@media (max-width: 1200px){
+  .table{
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 350px) {
+  #vimers,
+  #coins{
+    font-size: 0.7rem;
+  }
+}
