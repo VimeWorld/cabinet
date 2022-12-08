@@ -326,7 +326,7 @@ const ExchangeCoins = ({ profile }) => {
                             if (isNaN(val))
                                 return false
                             if (!Number.isInteger(val))
-                                return 'Сумма в вимерах должна быть целой'
+                                return 'Количество вимеров должны быть целым'
                             if (val < 1)
                                 return 'Минимум 1 вимер'
                             if (val > app.user.cash)
@@ -336,6 +336,7 @@ const ExchangeCoins = ({ profile }) => {
                     placeholder="Вимеров"
                     autoComplete="off"
                     type="number"
+                    min="0"
                     isInvalid={!!errors.vimers}
                 />
             </Form.Group>
@@ -358,6 +359,7 @@ const ExchangeCoins = ({ profile }) => {
                     placeholder="Коинов"
                     autoComplete="off"
                     type="number"
+                    min="0"
                     isInvalid={!!errors.coins}
                 />
             </Form.Group>

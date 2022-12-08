@@ -113,7 +113,7 @@ const ServerBansCard = ({ name, url }) => {
                     </td></tr>}
 
                     {bans?.bans.length == 0 && <tr><td className="text-center text-muted" colSpan="5">
-                        У вас не было ни одного бана, святой вы человек...
+                        У вас не было ни одного бана, святой Вы человек...
                     </td></tr>}
 
                     {bans?.bans.map(b => {
