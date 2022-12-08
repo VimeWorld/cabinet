@@ -150,6 +150,7 @@ const TransferCard = () => {
                         })}
                         autoComplete="off"
                         type="number"
+                        min="1"
                         placeholder="Количество"
                         isInvalid={!!errors.amount}
                     />
