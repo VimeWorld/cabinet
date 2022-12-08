@@ -80,6 +80,11 @@ td.fit {
     font-size: 0.8rem;
   }
 }
+@media (max-width: 1200px){
+  .description{
+    font-size: 0.7rem;
+  }
+}
 @media (max-width: 350px) {
   #vimers,
   #coins{
