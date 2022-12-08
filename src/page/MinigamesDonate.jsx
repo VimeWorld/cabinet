@@ -322,6 +322,7 @@ const ExchangeCoins = ({ profile }) => {
                         onChange: () => {
                             setValue('coins', watch("vimers") * exchangeRate, { shouldValidate: true })
                         },
+
                         validate: val => {
                             if (isNaN(val))
                                 return false
@@ -336,6 +337,7 @@ const ExchangeCoins = ({ profile }) => {
                     placeholder="Вимеров"
                     autoComplete="off"
                     type="number"
+                    min="0"
                     isInvalid={!!errors.vimers}
                 />
             </Form.Group>
@@ -358,6 +360,7 @@ const ExchangeCoins = ({ profile }) => {
                     placeholder="Коинов"
                     autoComplete="off"
                     type="number"
+                    min="0"
                     isInvalid={!!errors.coins}
                 />
             </Form.Group>
