@@ -326,7 +326,7 @@ const ExchangeCoins = ({ profile }) => {
                             if (isNaN(val))
                                 return false
                             if (!Number.isInteger(val))
-                                return 'Количество вимеров должны быть целым'
+                                return 'Количество вимеров должно быть целым'
                             if (val < 1)
                                 return 'Минимум 1 вимер'
                             if (val > app.user.cash)
