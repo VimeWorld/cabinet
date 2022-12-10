@@ -26,7 +26,10 @@ const SkinViewer3d = ({ skin, cape, parent, height }) => {
     useEffect(() => {
         // https://stackoverflow.com/a/50463054/6620659
         fetch(skin)
-            .then(response => response.blob())
+            // response.ok по сути ломает следующий метод с ошибкой
+            // Failed to execute 'readAsDataURL' on 'FileReader': parameter 1 is not of type 'Blob'
+            // но нам это подходит, при ошибке просто ставим скин стива
+            .then(response => response.ok && response.blob())
             .then(blob => {
                 const reader = new FileReader()
                 reader.onload = function () {
