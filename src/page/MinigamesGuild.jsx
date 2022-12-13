@@ -74,7 +74,7 @@ const InfoCard = ({ guild }) => {
                 editor.getContainer().style.border = 'none'
                 editorRef.current = editor
             }}
-            tinymceScriptSrc={'/assets/tinymce/tinymce.min.js'}
+            tinymceScriptSrc={'https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.3.1/tinymce.min.js'}
             initialValue={guild.web_info}
             init={{
                 menubar: false,
@@ -84,6 +84,7 @@ const InfoCard = ({ guild }) => {
                 paste_data_images: false,
                 link_assume_external_targets: 'https',
                 language: 'ru',
+                language_url: 'https://cdn.jsdelivr.net/npm/tinymce-i18n@22.12.4/langs6/ru.js',
                 plugins: [
                     'autolink', 'lists', 'link', 'image', 'searchreplace', 'code', 'help', 'autoresize'
                 ],
