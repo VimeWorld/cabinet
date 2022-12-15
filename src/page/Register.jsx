@@ -193,7 +193,7 @@ const RegisterPage = () => {
                     validate: (val) => {
                         if (!/^[0-9a-zA-Z_\-.@]+$/.test(val))
                             return 'Email содержит недопустимые символы'
-                        if (!/^[0-9a-zA-Z_\-.]{1,64}@[0-9a-zA-Z_\-]{1,90}\.[0-9a-zA-Z_\-.]{2,90}$/.test(val))
+                        if (!/^[0-9a-zA-Z_\-]+(?:\.[0-9a-zA-Z_\-]+)*@[0-9a-z\-]+(?:\.[0-9a-z\-]+)+$/.test(val))
                             return 'Введен некорректный Email'
                     },
                 })} isInvalid={!!errors.email} />
