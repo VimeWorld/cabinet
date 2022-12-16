@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { Fragment, useMemo, useState } from "react"
 import { Form, Spinner } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import { BalanceCard } from "../component/BalanceCard"
@@ -168,11 +168,25 @@ const TransferCard = () => {
 }
 
 const logos = {
-    visa: <img className="px-3" height="32px" src="/assets/image/paysystem/Visa_Brandmark_Blue_RGB_2021.png" />,
-    mastercard: <img className="px-3" height="32px" src="/assets/image/paysystem/mastercard-securecode.png" />,
-    googlepay: <img height="58px" src="/assets/image/paysystem/google-pay-mark_800.svg" />,
-    iomoney: <img className="px-3" height="32px" src="/assets/image/paysystem/iomoney.svg" />,
-    mir: <img className="px-3" height="32px" src="/assets/image/paysystem/mir.svg" />,
+    visa: {
+        img: <img height="32px" src="/assets/image/paysystem/Visa_Brandmark_Blue_RGB_2021.png" />
+    },
+    mastercard: {
+        img: <img height="32px" src="/assets/image/paysystem/mastercard-securecode.png" />
+    },
+    googlepay: {
+        img: <img height="32px" src="/assets/image/paysystem/google-pay.svg" />
+    },
+    iomoney: {
+        img: <img height="32px" src="/assets/image/paysystem/iomoney.svg" />
+    },
+    mir: {
+        img: <img height="32px" src="/assets/image/paysystem/mir.svg" />
+    },
+    sbp: {
+        light: <img height="32px" src="/assets/image/paysystem/sbp-light.svg" />,
+        dark: <img height="32px" src="/assets/image/paysystem/sbp-dark.svg" />,
+    }
 }
 
 const paysystems = [
@@ -197,14 +211,15 @@ const paysystems = [
         description: '(Yandex Pay)',
         img: <img src="/assets/image/paysystem/unitpay.svg" height="32px" />,
         imgDark: <img src="/assets/image/paysystem/unitpay-dark.svg" height="32px" />,
-        logos: ['iomoney', 'mir'],
+        logos: ['visa', 'mastercard', 'mir', 'sbp'],
         filter: user => user.client_country == 'RU',
         filterMsg: 'Только для РФ',
     },
 ]
 
-const PaysystemListElement = ({ paysystem, checked, onChange, filterMsg = false }) => {
+const PaysystemListElement = ({ paysystem, checked, onChange }) => {
     const { app } = useApp()
+    const filterMsg = paysystem.filter && !paysystem.filter(app)
     let img = paysystem.img || paysystem.imgLight || paysystem.imgDark
     if (app.theme === 'light' && paysystem.imgLight)
         img = paysystem.imgLight
@@ -238,12 +253,15 @@ const PayCard = () => {
     const [loading, setLoading] = useState(false)
     const [showHidden, setShowHidden] = useState(false)
 
-    const [psVisible, logoList, psHidden] = useMemo(() => {
+    const [psVisible, logoList, hasHidden] = useMemo(() => {
         const psVisible = paysystems.filter(p => !p.filter || p.filter(app.user))
+        const hasHidden = paysystems.length != psVisible.length
+        if (showHidden)
+            paysystems.filter(p => !psVisible.find(p0 => p0.id == p.id))
+                .forEach(p => psVisible.push(p))
         const logoList = new Set([].concat(...psVisible.map(p => p.logos)))
-        const psHidden = paysystems.filter(p => !psVisible.find(p0 => p0.id == p.id))
-        return [psVisible, logoList, psHidden]
-    })
+        return [psVisible, logoList, hasHidden]
+    }, [showHidden])
     const [paysystem, setPaysystem] = useState(psVisible[0].id)
 
     const onSubmit = e => {
@@ -329,19 +347,9 @@ const PayCard = () => {
                             onChange={() => setPaysystem(e.id)}
                         />
                     })}
-
-                    {showHidden && psHidden.length > 0 && psHidden.map(e => {
-                        return <PaysystemListElement
-                            key={e.id}
-                            paysystem={e}
-                            checked={paysystem == e.id}
-                            onChange={() => setPaysystem(e.id)}
-                            filterMsg={true}
-                        />
-                    })}
                 </ul>
 
-                {psHidden.length > 0 && <div
+                {hasHidden && <div
                     role="button"
                     className="text-muted text-center"
                     onClick={e => {
@@ -357,9 +365,15 @@ const PayCard = () => {
                 </div>}
 
             </form>
-            <div className="text-center opacity-25">
+            <div style={{ opacity: 0.3 }} className="d-flex flex-wrap justify-content-center gap-3">
                 {Array.from(logoList).map(e => {
-                    return <span key={e}>{logos[e]}</span>
+                    const logo = logos[e]
+                    let img = logo.img || logo.light || logo.dark
+                    if (app.theme === 'light' && logo.light)
+                        img = logo.light
+                    if (app.theme === 'dark' && logo.dark)
+                        img = logo.dark
+                    return <Fragment key={e}>{img}</Fragment>
                 })}
             </div>
         </div>
