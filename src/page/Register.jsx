@@ -2,11 +2,11 @@ import { useState } from "react"
 import { Form, Spinner } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
-import Notifications from '../lib/notifications';
+import Notifications from '../lib/notifications'
 import { fetchApi } from "../lib/api"
-import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha";
-import OuterPage from "../component/OuterPage";
-import { useTitle } from "../hook/useTitle";
+import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha"
+import OuterPage from "../component/OuterPage"
+import { useTitle } from "../hook/useTitle"
 
 const RegisterSuccessPage = () => {
     return <OuterPage>
@@ -75,7 +75,7 @@ const RegisterPage = () => {
                 switch (body.response.type) {
                     case "username_exists":
                         setError('login', { type: 'custom', message: 'Игрок с таким логином уже зарегистрирован' }, { shouldFocus: true })
-                        setCheckedLogin({ login, error: 'Игрок с таким логином уже зарегистрирован' })
+                        setCheckedLogin({ login: data.login, error: 'Игрок с таким логином уже зарегистрирован' })
                         break
                     case "invalid_username":
                         setError('login', { type: 'custom', message: 'Недопустимый логин' }, { shouldFocus: true })
@@ -193,7 +193,7 @@ const RegisterPage = () => {
                     validate: (val) => {
                         if (!/^[0-9a-zA-Z_\-.@]+$/.test(val))
                             return 'Email содержит недопустимые символы'
-                        if (!/^[0-9a-zA-Z_\-]+(?:\.[0-9a-zA-Z_\-]+)*@[0-9a-z\-]+(?:\.[0-9a-z\-]+)+$/.test(val))
+                        if (!/^[0-9a-zA-Z_-]+(?:\.[0-9a-zA-Z_-]+)*@[0-9a-z-]+(?:\.[0-9a-z-]+)+$/.test(val))
                             return 'Введен некорректный Email'
                     },
                 })} isInvalid={!!errors.email} />

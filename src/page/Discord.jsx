@@ -50,7 +50,7 @@ const CheckCode = ({ code, resetCode }) => {
 const RequestPage = () => {
     return <>
         <p>Эта страница существует для привязки вашего аккаунта к серверу VimeWorld в Discord.</p>
-        <p>Инвайт: <a href="https://discord.gg/vimeworld" target="_blank">https://discord.gg/vimeworld</a></p>
+        <p>Инвайт: <a href="https://discord.gg/vimeworld" target="_blank" rel="noreferrer">https://discord.gg/vimeworld</a></p>
         <p>Нам нужно определить кто вы такой в Discord, для этого нажмите на кнопку ниже:</p>
 
         <a

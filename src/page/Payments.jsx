@@ -60,11 +60,11 @@ const TransferCard = () => {
                 switch (body.response.type) {
                     case "invalid_target":
                         setError('target', { type: 'custom', message: 'Такого игрока не существует' }, { shouldFocus: true })
-                        setCheckedLogin({ login, error: 'Такого игрока не существует' })
+                        setCheckedLogin({ login: data.target, error: 'Такого игрока не существует' })
                         break
                     case "invalid_target_self":
                         setError('target', { type: 'custom', message: 'Вы не можете переводить себе' }, { shouldFocus: true })
-                        setCheckedLogin({ login, error: 'Вы не можете переводить себе' })
+                        setCheckedLogin({ login: data.target, error: 'Вы не можете переводить себе' })
                         break
                     case "invalid_amount":
                         setError('amount', { type: 'custom', message: 'Некорректное количество' })
@@ -303,7 +303,6 @@ const PayCard = () => {
                             break
                         default:
                             Notifications.error('Ошибка сервера, попробуйте позже')
-
                     }
                 }
             })
@@ -350,9 +349,9 @@ const PayCard = () => {
                     role="button"
                     className="text-muted text-center"
                     onClick={e => {
-                        setShowHidden(!showHidden);
-                        e.preventDefault();
-                        return false;
+                        setShowHidden(!showHidden)
+                        e.preventDefault()
+                        return false
                     }}
                 >
                     {showHidden

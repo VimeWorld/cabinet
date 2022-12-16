@@ -3,15 +3,15 @@ import { EventBus, EVENT_NOTIFICATIONS_CHANGED } from "./eventbus"
 let list: any[] = []
 
 let idCounter = 0
-let genNextId = () => {
+const genNextId = () => {
     idCounter++
     return "" + idCounter
 }
 
-let defaultOptions: NotificationOptions = {
+const defaultOptions: NotificationOptions = {
     ttl: 5000,
     type: 'info',
-};
+}
 
 type Message = JSX.Element | string
 
@@ -27,12 +27,12 @@ interface Notification extends NotificationOptions {
 
 const Notifications = {
     add(message: Message, options: NotificationOptions = {}): Notification {
-        let notify = {
+        const notify = {
             id: genNextId(),
             message,
             ...defaultOptions,
             ...options,
-        };
+        }
         list.push(notify)
         EventBus.emit(EVENT_NOTIFICATIONS_CHANGED, list)
         return notify
@@ -62,7 +62,7 @@ const Notifications = {
         })
     },
     remove(notify: Notification) {
-        let len = list.length
+        const len = list.length
         list = list.filter(n => n.id !== notify.id)
         if (list.length !== len)
             EventBus.emit(EVENT_NOTIFICATIONS_CHANGED, list)

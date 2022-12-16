@@ -8,7 +8,7 @@ import './Sidebar.css'
 
 const KeyShowToggle = Symbol('sidebar.show')
 const KeyExists = Symbol('sidebar.exists')
-let sidebarExists = false;
+let sidebarExists = false
 
 const SidebarToggleButton = () => {
     const [show, setShow] = useSharedState(KeyShowToggle, false)

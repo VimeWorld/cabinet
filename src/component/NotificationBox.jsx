@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { CloseButton, Toast, ToastContainer } from 'react-bootstrap';
-import { EventBus, EVENT_NOTIFICATIONS_CHANGED } from '../lib/eventbus';
-import Notifications from '../lib/notifications';
+import { useEffect, useState } from 'react'
+import { CloseButton, Toast, ToastContainer } from 'react-bootstrap'
+import { EventBus, EVENT_NOTIFICATIONS_CHANGED } from '../lib/eventbus'
+import Notifications from '../lib/notifications'
 
 const NotificationComponent = ({ notify }) => {
     // Стейт нужен для рабочей анимации. Если создать тост сразу видимым, то не будет анимации появления

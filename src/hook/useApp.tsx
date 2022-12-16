@@ -1,8 +1,8 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext } from "react"
 
 interface FetchAuthOptionsType {
     success?: () => void;
-    error?: (error: any) => void;
+    error?: (error?: Error) => void;
 }
 
 interface AppContextContainerType {

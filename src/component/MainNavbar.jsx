@@ -1,7 +1,7 @@
-import classNames from "classnames";
+import classNames from "classnames"
 import { Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap"
 import useApp from "../hook/useApp"
-import { SidebarToggleButton } from "./Sidebar";
+import { SidebarToggleButton } from "./Sidebar"
 
 const NavDivider = () => {
     return <div className="nav-item py-2 py-md-1">
@@ -44,7 +44,7 @@ const ThemeSelector = () => {
                     onClick={() => {
                         let savid = id
                         if (savid == 'auto')
-                            savid = null;
+                            savid = null
                         updateApp({ savedTheme: savid })
                     }}
                     className={classNames("d-flex align-items-center", { active })}
@@ -61,7 +61,7 @@ const ThemeSelector = () => {
 const UserBox = () => {
     const { app, logout } = useApp()
     if (!app.user)
-        return null;
+        return null
     const anticache = app.skinModified ? '?_=' + app.skinModified : ''
     return <Nav>
         <NavDropdown id="userDropdown" title={<span>

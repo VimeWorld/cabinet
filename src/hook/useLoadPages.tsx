@@ -1,17 +1,28 @@
 import { useEffect, useRef, useState } from "react"
 import { IdPagination } from "../component/Pagination"
 
-const hasPages = (pagination: any) => {
-    return pagination && (pagination.prev.length > 0 || pagination.next.length > 0)
+interface Pagination {
+    has_more: boolean;
+    next: number[];
+    prev: number[];
+}
+
+interface PaginationResponse {
+    pagination: Pagination;
+    items: object[];
+}
+
+const hasPages = (pagination: Pagination | undefined) => {
+    return !!pagination && (pagination.prev.length > 0 || pagination.next.length > 0)
 }
 
 const useLoadPages = (
     request: (id: number) => Promise<Response>,
-    autoload: boolean = true,
+    autoload = true,
 ) => {
     const loadRequested = useRef(autoload)
     const [id, setId] = useState(0)
-    const [data, setData] = useState<any>(null)
+    const [data, setData] = useState<PaginationResponse | null>(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 

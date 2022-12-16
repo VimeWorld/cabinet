@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { fetchApi, getToken, setToken } from '../lib/api';
-import { AppContext } from '../hook/useApp';
-import { Spinner } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import Notifications from '../lib/notifications';
-import { useTitle } from '../hook/useTitle';
-import { EventBus, EVENT_LOGOUT } from '../lib/eventbus';
+import { fetchApi, getToken, setToken } from '../lib/api'
+import { AppContext } from '../hook/useApp'
+import { Spinner } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import Notifications from '../lib/notifications'
+import { useTitle } from '../hook/useTitle'
+import { EventBus, EVENT_LOGOUT } from '../lib/eventbus'
 
 const getPreferredTheme = (selected) => {
     if (selected)

@@ -201,8 +201,8 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
             .finally(() => setLoading(false))
     }
 
-    const android = <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Android</a>
-    const iphone = <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605" target="_blank">iPhone</a>
+    const android = <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank" rel="noreferrer">Android</a>
+    const iphone = <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605" target="_blank" rel="noreferrer">iPhone</a>
     const otpurl = 'otpauth://totp/VimeWorld:' + app.user.username + '?issuer=VimeWorld&secret=' + secret
 
     return <Modal show={show} onHide={close} size="lg">

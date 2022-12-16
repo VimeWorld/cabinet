@@ -10,7 +10,7 @@ function setHeader(options: ApiRequestInit, name: string, value: string) {
 }
 
 // https://stackoverflow.com/a/8511350/6620659
-function isObject(val: any): boolean {
+function isObject(val: unknown): boolean {
     return typeof val === 'object' &&
         !Array.isArray(val) &&
         val !== null

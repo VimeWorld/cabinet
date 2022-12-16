@@ -1,14 +1,14 @@
 import { useState } from "react"
 import { Form, Spinner } from "react-bootstrap"
 import { useForm } from "react-hook-form"
-import Notifications from '../lib/notifications';
+import Notifications from '../lib/notifications'
 import { fetchApi } from "../lib/api"
-import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha";
-import { Link } from "react-router-dom";
-import useApp from "../hook/useApp";
-import OuterPage from "../component/OuterPage";
-import { useTitle } from "../hook/useTitle";
-import { ruPluralize } from "../lib/i18n";
+import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha"
+import { Link } from "react-router-dom"
+import useApp from "../hook/useApp"
+import OuterPage from "../component/OuterPage"
+import { useTitle } from "../hook/useTitle"
+import { ruPluralize } from "../lib/i18n"
 
 export const LoginMfaRecoveryPage = () => {
     useTitle('Восстановление двухэтапной аутентификации')
@@ -51,15 +51,16 @@ export const LoginMfaRecoveryPage = () => {
                     case "invalid_code":
                         setError('code', { type: 'custom', message: 'Введен неправильный код' }, { shouldFocus: true })
                         break
-                    case "throttle":
-                        let retryAfter = response.headers.get('Retry-After')
+                    case "throttle": {
+                        const retryAfter = response.headers.get('Retry-After')
                         if (retryAfter) {
-                            let minutes = Math.ceil(parseInt(retryAfter) / 60)
+                            const minutes = Math.ceil(parseInt(retryAfter) / 60)
                             Notifications.warning('Слишком много попыток, повторите снова через ' + ruPluralize(minutes, ['минуту', 'минуты', 'минут']))
                         } else {
                             Notifications.warning('Слишком много попыток, попробуйте позже')
                         }
                         break
+                    }
                     case "captcha":
                         Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.')
                         break
@@ -145,15 +146,16 @@ export const LoginMfaPage = () => {
                     case "invalid_code":
                         setError('code', { type: 'custom', message: 'Введен неправильный код' }, { shouldFocus: true })
                         break
-                    case "throttle":
-                        let retryAfter = response.headers.get('Retry-After')
+                    case "throttle": {
+                        const retryAfter = response.headers.get('Retry-After')
                         if (retryAfter) {
-                            let minutes = Math.ceil(parseInt(retryAfter) / 60)
+                            const minutes = Math.ceil(parseInt(retryAfter) / 60)
                             Notifications.warning('Слишком много попыток, повторите снова через ' + ruPluralize(minutes, ['минуту', 'минуты', 'минут']))
                         } else {
                             Notifications.warning('Слишком много попыток, попробуйте позже')
                         }
                         break
+                    }
                     case "captcha":
                         Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.')
                         break

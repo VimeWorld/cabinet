@@ -1,16 +1,16 @@
 .sidebar .nav {
-    --bs-nav-link-color: var(--bs-body-color);
-    margin-left: -0.5rem;
+  --bs-nav-link-color: var(--bs-body-color);
+  margin-left: -0.5rem;
 }
 
 .sidebar .nav-header {
-    font-size: 80%;
-    text-transform: uppercase;
-    font-weight: 500;
-    letter-spacing: 1px;
-    color: var(--bs-gray-500);
+  font-size: 80%;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--bs-gray-500);
 }
 
 .sidebar i {
-    margin-right: 0.5rem;
+  margin-right: 0.5rem;
 }

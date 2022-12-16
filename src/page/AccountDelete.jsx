@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
-import Notifications from '../lib/notifications';
+import Notifications from '../lib/notifications'
 import { fetchApi } from "../lib/api"
 import { Spinner } from "react-bootstrap"
-import useApp from "../hook/useApp";
-import OuterPage from "../component/OuterPage";
-import { useTitle } from "../hook/useTitle";
+import useApp from "../hook/useApp"
+import OuterPage from "../component/OuterPage"
+import { useTitle } from "../hook/useTitle"
 
 const DeleteInProgressFragment = ({ progress }) => {
     const { app, updateApp } = useApp()

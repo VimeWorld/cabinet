@@ -33,7 +33,7 @@ const SkinViewer3d = ({ skin, cape, parent, height }) => {
     const [skinData, setSkinData] = useState(null)
 
     useEffect(() => {
-        const handleResize = e => {
+        const handleResize = () => {
             setSvWidth(getWidth(parent.current))
         }
         handleResize()
@@ -56,7 +56,7 @@ const SkinViewer3d = ({ skin, cape, parent, height }) => {
                 }
                 reader.readAsDataURL(blob)
             })
-            .catch(e => setSkinData(steve))
+            .catch(() => setSkinData(steve))
     }, [skin])
 
     return <ErrorBoundary

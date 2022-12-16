@@ -51,12 +51,12 @@ const InfoCard = ({ guild }) => {
                     }
                 }
             })
-            .catch(e => Notifications.error('Невозможно подключиться к серверу'))
+            .catch(() => Notifications.error('Невозможно подключиться к серверу'))
             .finally(() => setLoading(false))
     }
 
-    let textColor = app.theme === 'dark' ? '#ccc' : '#555';
-    let bgColor = app.theme === 'dark' ? '#212529' : '#fff';
+    let textColor = app.theme === 'dark' ? '#ccc' : '#555'
+    let bgColor = app.theme === 'dark' ? '#212529' : '#fff'
     let innerCss = infoCss + `
     body{
         color: ${textColor};
