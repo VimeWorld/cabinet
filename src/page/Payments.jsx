@@ -167,64 +167,59 @@ const TransferCard = () => {
     </div>
 }
 
+const ThemedPaysystemImage = ({ img, dark, light, ...props }) => {
+    const { app } = useApp()
+
+    if (app.theme === 'light' && light) img = light
+    if (app.theme === 'dark' && dark) img = dark
+
+    if (!props.height)
+        props.height = "32px"
+
+    return <img src={`/assets/image/paysystem/${img}`} {...props} />
+}
+
 const logos = {
-    visa: {
-        img: <img height="32px" src="/assets/image/paysystem/Visa_Brandmark_Blue_RGB_2021.png" />
-    },
-    mastercard: {
-        img: <img height="32px" src="/assets/image/paysystem/mastercard-securecode.png" />
-    },
-    googlepay: {
-        img: <img height="32px" src="/assets/image/paysystem/google-pay.svg" />
-    },
-    iomoney: {
-        img: <img height="32px" src="/assets/image/paysystem/iomoney.svg" />
-    },
-    mir: {
-        img: <img height="32px" src="/assets/image/paysystem/mir.svg" />
-    },
-    sbp: {
-        light: <img height="32px" src="/assets/image/paysystem/sbp-light.svg" />,
-        dark: <img height="32px" src="/assets/image/paysystem/sbp-dark.svg" />,
-    }
+    visa: <ThemedPaysystemImage img="Visa_Brandmark_Blue_RGB_2021.png" />,
+    mastercard: <ThemedPaysystemImage img="mastercard-securecode.png" />,
+    googlepay: <ThemedPaysystemImage img="google-pay.svg" />,
+    iomoney: <ThemedPaysystemImage img="iomoney.svg" />,
+    mir: <ThemedPaysystemImage img="mir.svg" />,
+    sbp: <ThemedPaysystemImage img="sbp-light.svg" dark="sbp-dark.svg" />,
 }
 
 const paysystems = [
     {
         id: 'fondy',
         description: '(Visa / Mastercard / Google Pay / Apple Pay)',
-        imgLight: <img src="/assets/image/paysystem/fondy-main-light.svg" height="32px" />,
-        imgDark: <img src="/assets/image/paysystem/fondy-main-dark.svg" height="32px" />,
+        img: <ThemedPaysystemImage img="fondy-main-light.svg" dark="fondy-main-dark.svg" />,
         logos: ['visa', 'mastercard', 'googlepay'],
-        filter: user => user.client_country != 'RU',
-        filterMsg: 'Недоступно в РФ',
+        filter: {
+            test: user => user.client_country != 'RU',
+            message: 'Недоступно в РФ',
+        },
     },
     {
         id: 'interkassa',
         description: '(Криптовалюты, Perfect Money, AdvCash)',
-        imgLight: <img src="/assets/image/paysystem/interkassa-light.png" height="32px" />,
-        imgDark: <img src="/assets/image/paysystem/interkassa-dark.png" height="32px" />,
+        img: <ThemedPaysystemImage img="interkassa-light.png" dark="interkassa-dark.png" />,
         logos: [],
     },
     {
         id: 'unitpay',
         description: '(Yandex Pay)',
-        img: <img src="/assets/image/paysystem/unitpay.svg" height="32px" />,
-        imgDark: <img src="/assets/image/paysystem/unitpay-dark.svg" height="32px" />,
+        img: <ThemedPaysystemImage img="unitpay.svg" dark="unitpay-dark.svg" />,
         logos: ['visa', 'mastercard', 'mir', 'sbp'],
-        filter: user => user.client_country == 'RU',
-        filterMsg: 'Только для РФ',
+        filter: {
+            test: user => user.client_country == 'RU',
+            message: 'Только для РФ',
+        },
     },
 ]
 
 const PaysystemListElement = ({ paysystem, checked, onChange }) => {
     const { app } = useApp()
-    const filterMsg = paysystem.filter && !paysystem.filter(app)
-    let img = paysystem.img || paysystem.imgLight || paysystem.imgDark
-    if (app.theme === 'light' && paysystem.imgLight)
-        img = paysystem.imgLight
-    if (app.theme === 'dark' && paysystem.imgDark)
-        img = paysystem.imgDark
+    const filtered = paysystem.filter && !paysystem.filter.test(app)
 
     return <li className="list-group-item px-0 py-3">
         <div className="form-check">
@@ -238,8 +233,10 @@ const PaysystemListElement = ({ paysystem, checked, onChange }) => {
             />
             <label className="form-check-label w-100" htmlFor={paysystem.id}>
                 <div className="d-flex justify-content-between align-items-center">
-                    {img}
-                    {filterMsg && <span className="badge bg-tertiary text-muted">{paysystem.filterMsg}</span>}
+                    {paysystem.img}
+                    {filtered && <span className="badge bg-tertiary text-muted">
+                        {paysystem.filter.message}
+                    </span>}
                 </div>
                 <div>{paysystem.description}</div>
             </label>
@@ -254,7 +251,7 @@ const PayCard = () => {
     const [showHidden, setShowHidden] = useState(false)
 
     const [psVisible, logoList, hasHidden] = useMemo(() => {
-        const psVisible = paysystems.filter(p => !p.filter || p.filter(app.user))
+        const psVisible = paysystems.filter(p => !p.filter || p.filter.test(app.user))
         const hasHidden = paysystems.length != psVisible.length
         if (showHidden)
             paysystems.filter(p => !psVisible.find(p0 => p0.id == p.id))
@@ -367,13 +364,7 @@ const PayCard = () => {
             </form>
             <div style={{ opacity: 0.3 }} className="d-flex flex-wrap justify-content-center gap-3">
                 {Array.from(logoList).map(e => {
-                    const logo = logos[e]
-                    let img = logo.img || logo.light || logo.dark
-                    if (app.theme === 'light' && logo.light)
-                        img = logo.light
-                    if (app.theme === 'dark' && logo.dark)
-                        img = logo.dark
-                    return <Fragment key={e}>{img}</Fragment>
+                    return <Fragment key={e}>{logos[e]}</Fragment>
                 })}
             </div>
         </div>
