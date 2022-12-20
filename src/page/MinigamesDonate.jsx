@@ -84,11 +84,11 @@ const ranks = {
         name: "Строитель",
         rich: <b className="text-success">Строитель</b>,
     },
-    "maplead": {
+    "builderLead": {
         name: "Главный строитель",
         rich: <b className="text-success">Главный строитель</b>,
     },
-    "srbuilder": {
+    "builderWarden": {
         name: "Проверенный строитель",
         rich: <b className="text-success">Проверенный строитель</b>,
     },
@@ -174,7 +174,7 @@ const TableRankComparison = () => {
                 <td>{checkOn}</td>
             </tr>
             <tr>
-                <td>Полет в лобби</td>
+                <td>Полёт в лобби</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
