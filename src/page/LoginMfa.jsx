@@ -12,7 +12,7 @@ import { ruPluralize } from "../lib/i18n"
 
 export const LoginMfaRecoveryPage = () => {
     useTitle('Восстановление двухэтапной аутентификации')
-    const { app, updateApp, logout } = useApp()
+    const { app, updateApp, fetchAuth, logout } = useApp()
     const {
         register,
         handleSubmit,
@@ -46,6 +46,7 @@ export const LoginMfaRecoveryPage = () => {
                 updateApp({
                     user: { ...app.user, mfa: "disabled" }
                 })
+                fetchAuth()
             } else {
                 switch (body.response.type) {
                     case "invalid_code":
@@ -109,7 +110,7 @@ export const LoginMfaRecoveryPage = () => {
 
 export const LoginMfaPage = () => {
     useTitle('Вход - Двухэтапная аутентификация')
-    const { app, updateApp, logout } = useApp()
+    const { app, updateApp, fetchAuth, logout } = useApp()
     const {
         register,
         handleSubmit,
@@ -141,6 +142,7 @@ export const LoginMfaPage = () => {
                 updateApp({
                     user: { ...app.user, mfa: 'completed' }
                 })
+                fetchAuth()
             } else {
                 switch (body.response.type) {
                     case "invalid_code":
