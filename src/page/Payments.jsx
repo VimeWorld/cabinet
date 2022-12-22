@@ -206,6 +206,16 @@ const paysystems = [
         logos: [],
     },
     {
+        id: 'enot',
+        description: '(Visa / Mastercard, ЮMoney, Криптовалюты)',
+        img: <ThemedPaysystemImage img="enot-light.svg" dark="enot-dark.svg" />,
+        logos: ['visa', 'mastercard', 'mir'],
+        filter: {
+            test: user => user.client_country == 'RU',
+            message: 'Только для РФ',
+        },
+    },
+    {
         id: 'unitpay',
         description: '(Yandex Pay)',
         img: <ThemedPaysystemImage img="unitpay.svg" dark="unitpay-dark.svg" />,
