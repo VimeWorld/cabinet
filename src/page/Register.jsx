@@ -144,7 +144,7 @@ const RegisterPage = () => {
                         },
                         maxLength: {
                             value: 16,
-                            message: 'Логина должен быть не более 16 символов'
+                            message: 'Логин должен быть не более 16 символов'
                         },
                         pattern: {
                             value: /^[0-9a-zA-Z_]{3,16}$/,
