@@ -496,7 +496,7 @@ const MinigamesDonatePage = () => {
             <div className='card-body'>
                 {loading && <div className='text-center'><Spinner variant='secondary' /></div>}
                 {error && <div className='text-center text-danger'>При загрузке произошла ошибка</div>}
-                {!loading && !error && <div className='text-center text-muted'>Вы еще ни разу не заходили на MiniGames</div>}
+                {!loading && !error && <div className='text-center text-body-secondary'>Вы еще ни разу не заходили на MiniGames</div>}
             </div>
         </div>
 

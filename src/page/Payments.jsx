@@ -244,7 +244,7 @@ const PaysystemListElement = ({ paysystem, checked, onChange }) => {
             <label className="form-check-label w-100" htmlFor={paysystem.id}>
                 <div className="d-flex justify-content-between align-items-center">
                     {paysystem.img}
-                    {filtered && <span className="badge bg-tertiary text-muted">
+                    {filtered && <span className="badge bg-tertiary text-body-secondary">
                         {paysystem.filter.message}
                     </span>}
                 </div>
@@ -357,7 +357,7 @@ const PayCard = () => {
 
                 {hasHidden && <div
                     role="button"
-                    className="text-muted text-center"
+                    className="text-body-secondary text-center"
                     onClick={e => {
                         setShowHidden(!showHidden)
                         e.preventDefault()

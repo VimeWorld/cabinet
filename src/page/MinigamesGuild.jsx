@@ -262,7 +262,7 @@ const MinigamesGuildPage = () => {
             <div className='card-body'>
                 {loading && <div className='text-center'><Spinner variant='secondary' /></div>}
                 {error && <div className='text-center text-danger'>При загрузке произошла ошибка</div>}
-                {!loading && !error && <div className='text-center text-muted'>Эта страница доступна только лидеру гильдии</div>}
+                {!loading && !error && <div className='text-center text-body-secondary'>Эта страница доступна только лидеру гильдии</div>}
             </div>
         </div>
 

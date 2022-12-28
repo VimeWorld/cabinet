@@ -27,6 +27,7 @@ const NotificationComponent = ({ notify }) => {
     return <Toast
         show={show}
         className={"mb-3 border-0 " + color}
+        data-bs-theme="dark"
         onClose={onClose}
         delay={notify.ttl}
         autohide
@@ -35,7 +36,6 @@ const NotificationComponent = ({ notify }) => {
             <Toast.Body>{notify.message}</Toast.Body>
             <CloseButton
                 aria-label="Close"
-                variant='white'
                 onClick={onClose}
                 data-dismiss="toast"
                 className='me-2 m-auto'

@@ -112,7 +112,7 @@ const ServerBansCard = ({ name, url }) => {
                         При загрузке произошла ошибка
                     </td></tr>}
 
-                    {bans?.bans.length == 0 && <tr><td className="text-center text-muted" colSpan="5">
+                    {bans?.bans.length == 0 && <tr><td className="text-center text-body-secondary" colSpan="5">
                         У вас не было ни одного бана, святой Вы человек...
                     </td></tr>}
 

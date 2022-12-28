@@ -116,7 +116,7 @@ export const PaymentHistoryCard = () => {
                         <button className="btn btn-outline-secondary" onClick={() => pages.load()}>Попробовать снова</button>
                     </td></tr>}
 
-                    {pages.items?.length == 0 && <tr><td className="text-center text-muted" colSpan="4">
+                    {pages.items?.length == 0 && <tr><td className="text-center text-body-secondary" colSpan="4">
                         Пусто...
                     </td></tr>}
 

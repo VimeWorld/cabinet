@@ -112,13 +112,13 @@ export const PromoCard = () => {
                             <button className="btn btn-outline-secondary" onClick={() => pages.load()}>Попробовать снова</button>
                         </td></tr>}
 
-                        {pages.items?.length == 0 && <tr><td className="text-center text-muted" colSpan="3">
+                        {pages.items?.length == 0 && <tr><td className="text-center text-body-secondary" colSpan="3">
                             Вы еще не активировали ни одного кода...
                         </td></tr>}
 
                         {pages.items?.map(p => {
                             return <tr key={p.id}>
-                                <td className="fit text-muted"><code>{p.code}</code></td>
+                                <td className="fit text-body-secondary"><code>{p.code}</code></td>
                                 <td className="fit">{new Date(Date.parse(p.date)).toLocaleString()}</td>
                                 <td dangerouslySetInnerHTML={{ __html: p.info }}></td>
                             </tr>

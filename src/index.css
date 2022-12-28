@@ -47,7 +47,7 @@ body {
   --bs-card-cap-padding-x: 1.5rem;
   --bs-card-spacer-y: 1.5rem;
   --bs-card-spacer-x: 1.5rem;
-  box-shadow: 0 0.125rem 0.25rem rgba(var(--bs-body-color-rgb), 0.075) !important;
+  box-shadow: var(--bs-box-shadow-sm);
   border: 0;
 }
 
