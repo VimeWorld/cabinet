@@ -19,6 +19,10 @@ interface AppContextType {
     user?: UserType;
 }
 
+interface ConfigType {
+    exchange_bonus: boolean;
+}
+
 interface UserType {
     id: number;
     username: string;
@@ -28,6 +32,7 @@ interface UserType {
     mfa: 'disabled' | 'needed' | 'completed';
     account_deleted: boolean;
     client_country: string;
+    config: ConfigType;
 }
 
 export const AppContext = createContext<AppContextContainerType>(null!)

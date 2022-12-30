@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import { useEffect, useState } from "react"
 import { Form, OverlayTrigger, ProgressBar, Spinner, Tooltip } from "react-bootstrap"
 import { useForm } from "react-hook-form"
@@ -97,8 +98,6 @@ const ranks = {
         rich: <b className="text-primary">Организатор</b>,
     },
 }
-
-const exchangeRate = 250
 
 const TableRankComparison = () => {
     const checkOff = <i className="bi bi-check-circle-fill text-secondary opacity-75"></i>
@@ -274,6 +273,10 @@ const ExchangeCoins = ({ profile }) => {
         mode: 'onChange',
     })
 
+    let exchangeRate = 250
+    if (app.user.config.exchange_bonus)
+        exchangeRate = 500
+
     const onSubmit = async data => {
         if (loading)
             return
@@ -374,6 +377,24 @@ const ExchangeCoins = ({ profile }) => {
     </form>
 }
 
+const ExchangeBonusMessage = () => {
+    const { app } = useApp()
+
+    if (!app.user.config.exchange_bonus)
+        return <></>
+
+    return <div className="p-3 mb-3 bg-info-subtle text-info" style={{
+        borderLeft: "0.25rem solid var(--bs-info-border-subtle)",
+    }}>
+        <p><b>Поздравляем с Новым 2023 годом!</b></p>
+        C <b>31.12.2022</b> по <b>02.01.2023</b> включительно действует бонус <b className={classNames({
+            "text-body-emphasis": app.theme === 'dark',
+            "text-body-secondary": app.theme === 'light',
+        })}>х2</b> на обмен!<br />
+        В сумму обменов будет добавляться в 2 раза больше вимеров, чем обычно.
+    </div>
+}
+
 const KindnessRowCard = ({ profile }) => {
     const progress = profile.donated / max
     const expireDate = Date.parse(profile.rank_donate_expire)
@@ -408,6 +429,8 @@ const KindnessRowCard = ({ profile }) => {
             })}
         </ProgressBar>
         <div className='card-body'>
+            <ExchangeBonusMessage />
+
             <div className="row gy-4">
                 <div className="col-lg-6 col-12">
                     <p>
