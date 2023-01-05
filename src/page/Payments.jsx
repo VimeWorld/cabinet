@@ -211,8 +211,8 @@ const paysystems = [
         img: <ThemedPaysystemImage img="enot-light.svg" dark="enot-dark.svg" />,
         logos: ['visa', 'mastercard', 'mir'],
         filter: {
-            test: user => user.client_country == 'RU',
-            message: 'Только для РФ',
+            test: user => ['RU', 'BY'].includes(user.client_country),
+            message: 'Для РФ и Беларуси',
         },
     },
     {
@@ -229,7 +229,7 @@ const paysystems = [
 
 const PaysystemListElement = ({ paysystem, checked, onChange }) => {
     const { app } = useApp()
-    const filtered = paysystem.filter && !paysystem.filter.test(app)
+    const filtered = paysystem.filter && !paysystem.filter.test(app.user)
 
     return <li className="list-group-item px-0 py-3">
         <div className="form-check">
