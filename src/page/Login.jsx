@@ -1,12 +1,12 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Notifications from '../lib/notifications'
-import { fetchApi, setToken } from "../lib/api"
-import { Form, Spinner } from "react-bootstrap"
-import useApp from "../hook/useApp"
-import OuterPage from "../component/OuterPage"
-import { useTitle } from "../hook/useTitle"
-import { ruPluralize } from "../lib/i18n"
+import { fetchApi, setToken } from '../lib/api'
+import { Form, Spinner } from 'react-bootstrap'
+import useApp from '../hook/useApp'
+import OuterPage from '../component/OuterPage'
+import { useTitle } from '../hook/useTitle'
+import { ruPluralize } from '../lib/i18n'
 
 const LoginPage = () => {
     useTitle('Вход в личный кабинет')

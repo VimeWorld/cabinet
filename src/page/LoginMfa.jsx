@@ -1,14 +1,14 @@
-import { useState } from "react"
-import { Form, Spinner } from "react-bootstrap"
-import { useForm } from "react-hook-form"
+import { useState } from 'react'
+import { Form, Spinner } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
 import Notifications from '../lib/notifications'
-import { fetchApi } from "../lib/api"
-import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha"
-import { Link } from "react-router-dom"
-import useApp from "../hook/useApp"
-import OuterPage from "../component/OuterPage"
-import { useTitle } from "../hook/useTitle"
-import { ruPluralize } from "../lib/i18n"
+import { fetchApi } from '../lib/api'
+import useInvisibleRecaptcha from '../hook/useInvisibleRecaptcha'
+import { Link } from 'react-router-dom'
+import useApp from '../hook/useApp'
+import OuterPage from '../component/OuterPage'
+import { useTitle } from '../hook/useTitle'
+import { ruPluralize } from '../lib/i18n'
 
 export const LoginMfaRecoveryPage = () => {
     useTitle('Восстановление двухэтапной аутентификации')

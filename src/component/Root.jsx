@@ -1,6 +1,6 @@
-import { Navigate, Outlet, ScrollRestoration, useLocation } from "react-router-dom"
-import useApp from "../hook/useApp"
-import AppProvider from "./AppProvider"
+import { Navigate, Outlet, ScrollRestoration, useLocation } from 'react-router-dom'
+import useApp from '../hook/useApp'
+import AppProvider from './AppProvider'
 
 const pagesWithNoAuth = ['/login', '/register', '/recovery', '/recovery/step2']
 const pagesWithNoMfa = ['/login/mfa', '/login/mfa/recovery']

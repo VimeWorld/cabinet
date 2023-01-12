@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from "react"
-import { Spinner } from "react-bootstrap"
-import { useSearchParams } from "react-router-dom"
-import OuterPage from "../component/OuterPage"
-import useApp from "../hook/useApp"
-import { useTitle } from "../hook/useTitle"
-import { fetchApi } from "../lib/api"
-import Notifications from "../lib/notifications"
+import { useEffect, useMemo, useState } from 'react'
+import { Spinner } from 'react-bootstrap'
+import { useSearchParams } from 'react-router-dom'
+import OuterPage from '../component/OuterPage'
+import useApp from '../hook/useApp'
+import { useTitle } from '../hook/useTitle'
+import { fetchApi } from '../lib/api'
+import Notifications from '../lib/notifications'
 
 const loadApproves = () => {
     return JSON.parse(localStorage.getItem('oauth_consent') || '{}')

@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom"
-import useApp from "../hook/useApp"
-import { ruPluralizeVimers } from "../lib/i18n"
+import { Link } from 'react-router-dom'
+import useApp from '../hook/useApp'
+import { ruPluralizeVimers } from '../lib/i18n'
 
 export const BalanceCard = ({ pay }) => {
     const { app } = useApp()

@@ -1,4 +1,4 @@
-import { EventBus, EVENT_NOTIFICATIONS_CHANGED } from "./eventbus"
+import { EventBus, EVENT_NOTIFICATIONS_CHANGED } from './eventbus'
 
 let list: any[] = []
 

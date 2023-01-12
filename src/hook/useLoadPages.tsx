@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react"
-import { IdPagination } from "../component/Pagination"
+import { useEffect, useRef, useState } from 'react'
+import { IdPagination } from '../component/Pagination'
 
 interface Pagination {
     has_more: boolean;

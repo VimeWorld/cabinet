@@ -1,4 +1,4 @@
-import { Spinner } from "react-bootstrap"
+import { Spinner } from 'react-bootstrap'
 
 const maxPages = 5 // sync with server
 

@@ -1,7 +1,7 @@
-import classNames from "classnames"
-import { Container, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap"
-import useApp from "../hook/useApp"
-import { SidebarToggleButton } from "./Sidebar"
+import classNames from 'classnames'
+import { Container, Nav, Navbar, NavDropdown, Offcanvas } from 'react-bootstrap'
+import useApp from '../hook/useApp'
+import { SidebarToggleButton } from './Sidebar'
 
 const NavDivider = () => {
     return <div className="nav-item py-2 py-md-1">

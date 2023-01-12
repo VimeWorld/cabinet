@@ -1,9 +1,9 @@
-import { useState } from "react"
-import { BalanceCard } from "../component/BalanceCard"
-import { PromoCard } from "../component/PromoCard"
-import SkinCard from "../component/skin/SkinCard"
-import useApp from "../hook/useApp"
-import { useTitle } from "../hook/useTitle"
+import { useState } from 'react'
+import { BalanceCard } from '../component/BalanceCard'
+import { PromoCard } from '../component/PromoCard'
+import SkinCard from '../component/skin/SkinCard'
+import useApp from '../hook/useApp'
+import { useTitle } from '../hook/useTitle'
 
 const PersonalInfoCard = () => {
     const { app } = useApp()

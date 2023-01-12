@@ -1,9 +1,9 @@
-import classNames from "classnames"
-import { useEffect, useState } from "react"
+import classNames from 'classnames'
+import { useEffect, useState } from 'react'
 import { Offcanvas } from "react-bootstrap"
-import { Link, useLocation, useResolvedPath } from "react-router-dom"
-import useSharedState from "../hook/useSharedState"
-import { EventBus } from "../lib/eventbus"
+import { Link, useLocation, useResolvedPath } from 'react-router-dom'
+import useSharedState from '../hook/useSharedState'
+import { EventBus } from '../lib/eventbus'
 import './Sidebar.css'
 
 const KeyShowToggle = Symbol('sidebar.show')

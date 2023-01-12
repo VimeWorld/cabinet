@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react"
-import { Form, Spinner } from "react-bootstrap"
-import { useForm } from "react-hook-form"
-import { Link, useNavigate, useSearchParams } from "react-router-dom"
-import OuterPage from "../component/OuterPage"
-import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha"
-import { useTitle } from "../hook/useTitle"
-import { fetchApi } from "../lib/api"
-import Notifications from "../lib/notifications"
+import { useEffect, useState } from 'react'
+import { Form, Spinner } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import OuterPage from '../component/OuterPage'
+import useInvisibleRecaptcha from '../hook/useInvisibleRecaptcha'
+import { useTitle } from '../hook/useTitle'
+import { fetchApi } from '../lib/api'
+import Notifications from '../lib/notifications'
 
 const RecoveryStep2Form = ({ token, username }) => {
     const {

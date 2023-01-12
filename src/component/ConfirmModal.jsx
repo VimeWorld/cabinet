@@ -1,4 +1,4 @@
-import { Modal } from "react-bootstrap"
+import { Modal } from 'react-bootstrap'
 
 export const ConfirmModal = ({
     show, close, onCancel, onConfirm,

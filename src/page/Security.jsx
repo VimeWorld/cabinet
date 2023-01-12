@@ -1,11 +1,11 @@
-import classNames from "classnames"
-import { useEffect, useState } from "react"
-import { Button, Form, Modal, Spinner } from "react-bootstrap"
-import { useForm } from "react-hook-form"
-import useApp from "../hook/useApp"
-import { useTitle } from "../hook/useTitle"
-import { fetchApi } from "../lib/api"
-import Notifications from "../lib/notifications"
+import classNames from 'classnames'
+import { useEffect, useState } from 'react'
+import { Button, Form, Modal, Spinner } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import useApp from '../hook/useApp'
+import { useTitle } from '../hook/useTitle'
+import { fetchApi } from '../lib/api'
+import Notifications from '../lib/notifications'
 
 const PasswordCard = () => {
     const {

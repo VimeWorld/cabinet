@@ -1,5 +1,5 @@
-import { useCallback, useRef } from "react"
-import ReCAPTCHA from "react-google-recaptcha"
+import { useCallback, useRef } from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 function useInvisibleRecaptcha() {
     const rc = useRef<ReCAPTCHA>(null)

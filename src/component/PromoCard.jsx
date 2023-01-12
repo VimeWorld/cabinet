@@ -1,10 +1,10 @@
-import { useState } from "react"
-import { Form, Spinner } from "react-bootstrap"
-import { useForm } from "react-hook-form"
-import useApp from "../hook/useApp"
-import useLoadPages from "../hook/useLoadPages"
-import { fetchApi } from "../lib/api"
-import Notifications from "../lib/notifications"
+import { useState } from 'react'
+import { Form, Spinner } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import useApp from '../hook/useApp'
+import useLoadPages from '../hook/useLoadPages'
+import { fetchApi } from '../lib/api'
+import Notifications from '../lib/notifications'
 
 export const PromoCard = () => {
     const { fetchAuth } = useApp()

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
-import { Spinner } from "react-bootstrap"
-import { useSearchParams } from "react-router-dom"
-import OuterPage from "../component/OuterPage"
-import useApp from "../hook/useApp"
-import { fetchApi } from "../lib/api"
+import { useEffect, useState } from 'react'
+import { Spinner } from 'react-bootstrap'
+import { useSearchParams } from 'react-router-dom'
+import OuterPage from '../component/OuterPage'
+import useApp from '../hook/useApp'
+import { fetchApi } from '../lib/api'
 
 const CheckCode = ({ code, resetCode }) => {
     const { app } = useApp()

@@ -1,6 +1,6 @@
-import { Outlet } from "react-router-dom"
-import MainNavbar from "./MainNavbar"
-import Sidebar from "./Sidebar"
+import { Outlet } from 'react-router-dom'
+import MainNavbar from './MainNavbar'
+import Sidebar from './Sidebar'
 
 const InnerPage = () => {
     return <>

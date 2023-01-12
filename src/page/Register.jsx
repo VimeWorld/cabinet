@@ -1,12 +1,12 @@
-import { useState } from "react"
-import { Form, Spinner } from "react-bootstrap"
-import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { useState } from 'react'
+import { Form, Spinner } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import Notifications from '../lib/notifications'
-import { fetchApi } from "../lib/api"
-import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha"
-import OuterPage from "../component/OuterPage"
-import { useTitle } from "../hook/useTitle"
+import { fetchApi } from '../lib/api'
+import useInvisibleRecaptcha from '../hook/useInvisibleRecaptcha'
+import OuterPage from '../component/OuterPage'
+import { useTitle } from '../hook/useTitle'
 
 const RegisterSuccessPage = () => {
     return <OuterPage>

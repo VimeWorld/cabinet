@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react"
-import { Spinner } from "react-bootstrap"
-import { Link, useSearchParams } from "react-router-dom"
-import OuterPage from "../component/OuterPage"
-import useApp from "../hook/useApp"
-import { useTitle } from "../hook/useTitle"
-import { fetchApi } from "../lib/api"
-import { ruPluralizeVimers } from "../lib/i18n"
-import Notifications from "../lib/notifications"
+import { useEffect, useState } from 'react'
+import { Spinner } from 'react-bootstrap'
+import { Link, useSearchParams } from 'react-router-dom'
+import OuterPage from '../component/OuterPage'
+import useApp from '../hook/useApp'
+import { useTitle } from '../hook/useTitle'
+import { fetchApi } from '../lib/api'
+import { ruPluralizeVimers } from '../lib/i18n'
+import Notifications from '../lib/notifications'
 
 const rowHeight = 30
 

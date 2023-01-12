@@ -1,14 +1,14 @@
-import { Fragment, useMemo, useState } from "react"
-import { Form, Spinner } from "react-bootstrap"
-import { useForm } from "react-hook-form"
-import { BalanceCard } from "../component/BalanceCard"
-import { PaymentHistoryCard } from "../component/PaymentHistoryCard"
-import useApp from "../hook/useApp"
-import { useTitle } from "../hook/useTitle"
-import { fetchApi } from "../lib/api"
-import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
-import { ruPluralizeVimers } from "../lib/i18n"
-import Notifications from "../lib/notifications"
+import { Fragment, useMemo, useState } from 'react'
+import { Form, Spinner } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import { BalanceCard } from '../component/BalanceCard'
+import { PaymentHistoryCard } from '../component/PaymentHistoryCard'
+import useApp from '../hook/useApp'
+import { useTitle } from '../hook/useTitle'
+import { fetchApi } from '../lib/api'
+import { EventBus, EVENT_UPDATE_PAYMENTS } from '../lib/eventbus'
+import { ruPluralizeVimers } from '../lib/i18n'
+import Notifications from '../lib/notifications'
 
 const TransferCard = () => {
     const { app, fetchAuth } = useApp()

@@ -1,13 +1,13 @@
-import classNames from "classnames"
-import { useEffect, useState } from "react"
-import { Form, OverlayTrigger, ProgressBar, Spinner, Tooltip } from "react-bootstrap"
-import { useForm } from "react-hook-form"
-import useApp from "../hook/useApp"
-import { useTitle } from "../hook/useTitle"
-import { fetchApi } from "../lib/api"
-import { EventBus, EVENT_MINIGAMES_PROFILE_UPDATED } from "../lib/eventbus"
-import { ruPluralizeVimers } from "../lib/i18n"
-import Notifications from "../lib/notifications"
+import classNames from 'classnames'
+import { useEffect, useState } from 'react'
+import { Form, OverlayTrigger, ProgressBar, Spinner, Tooltip } from 'react-bootstrap'
+import { useForm } from 'react-hook-form'
+import useApp from '../hook/useApp'
+import { useTitle } from '../hook/useTitle'
+import { fetchApi } from '../lib/api'
+import { EventBus, EVENT_MINIGAMES_PROFILE_UPDATED } from '../lib/eventbus'
+import { ruPluralizeVimers } from '../lib/i18n'
+import Notifications from '../lib/notifications'
 
 const max = 5000
 const segments = [{
@@ -38,63 +38,63 @@ const segments = [{
 }]
 
 const ranks = {
-    "": {
-        name: "Игрок",
+    '': {
+        name: 'Игрок',
     },
-    "vip": {
-        name: "VIP",
+    'vip': {
+        name: 'VIP',
         rich: <b style={{ color: "#00BE00" }}>VIP</b>,
     },
-    "premium": {
-        name: "Premium",
+    'premium': {
+        name: 'Premium',
         rich: <b style={{ color: "#00DADA" }}>Premium</b>,
     },
-    "holy": {
-        name: "Holy",
+    'holy': {
+        name: 'Holy',
         rich: <b style={{ color: "#FFBA2D" }}>Holy</b>,
     },
-    "immortal": {
-        name: "Immortal",
+    'immortal': {
+        name: 'Immortal',
         rich: <b style={{ color: "#E800D5" }}>Immortal</b>,
     },
-    "moder": {
-        name: "Модератор",
+    'moder': {
+        name: 'Модератор',
         rich: <b className="text-primary">Модератор</b>,
     },
-    "warden": {
-        name: "Проверенный модератор",
+    'warden': {
+        name: 'Проверенный модератор',
         rich: <b className="text-primary">Проверенный модератор</b>,
     },
-    "chief": {
-        name: "Главный модератор",
+    'chief': {
+        name: 'Главный модератор',
         rich: <b className="text-primary">Главный модератор</b>,
     },
-    "admin": {
-        name: "Администратор",
+    'admin': {
+        name: 'Администратор',
         rich: <b className="text-danger">Администратор</b>,
     },
-    "youtube": {
-        name: "Ютубер",
+    'youtube': {
+        name: 'Ютубер',
         rich: <b className="text-danger">Ютубер</b>,
     },
-    "dev": {
-        name: "Разработчик",
+    'dev': {
+        name: 'Разработчик',
         rich: <b className="text-primary">Разработчик</b>,
     },
-    "builder": {
-        name: "Строитель",
+    'builder': {
+        name: 'Строитель',
         rich: <b className="text-success">Строитель</b>,
     },
-    "maplead": {
-        name: "Главный строитель",
+    'maplead': {
+        name: 'Главный строитель',
         rich: <b className="text-success">Главный строитель</b>,
     },
-    "srbuilder": {
-        name: "Проверенный строитель",
+    'srbuilder': {
+        name: 'Проверенный строитель',
         rich: <b className="text-success">Проверенный строитель</b>,
     },
-    "organizer": {
-        name: "Организатор",
+    'organizer': {
+        name: 'Организатор',
         rich: <b className="text-primary">Организатор</b>,
     },
 }

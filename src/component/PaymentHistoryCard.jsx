@@ -1,8 +1,8 @@
-import { useEffect } from "react"
-import { Spinner } from "react-bootstrap"
-import useLoadPages from "../hook/useLoadPages"
-import { fetchApi } from "../lib/api"
-import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
+import { useEffect } from 'react'
+import { Spinner } from 'react-bootstrap'
+import useLoadPages from '../hook/useLoadPages'
+import { fetchApi } from '../lib/api'
+import { EventBus, EVENT_UPDATE_PAYMENTS } from '../lib/eventbus'
 
 const paymentDescription = (p) => {
     if (p.alias.startsWith('up_'))

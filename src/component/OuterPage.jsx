@@ -1,4 +1,4 @@
-import useApp from "../hook/useApp"
+import useApp from '../hook/useApp'
 
 const OuterPage = ({ children, variant = 'blue' }) => {
     const { app } = useApp()
