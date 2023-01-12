@@ -1,11 +1,11 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react"
-import { Button, Modal, OverlayTrigger, Spinner, Tooltip } from "react-bootstrap"
-import useApp from "../../hook/useApp"
-import { fetchApi } from "../../lib/api"
-import { EventBus, EVENT_LOGOUT } from "../../lib/eventbus"
-import Notifications from "../../lib/notifications"
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { Button, Modal, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap'
+import useApp from '../../hook/useApp'
+import { fetchApi } from '../../lib/api'
+import { EventBus, EVENT_LOGOUT } from '../../lib/eventbus'
+import Notifications from '../../lib/notifications'
 
-const SkinViewer3d = lazy(() => import("./SkinViewer3d"))
+const SkinViewer3d = lazy(() => import('./SkinViewer3d'))
 
 const maxSizeKb = 50
 let capeExistsCache = null
@@ -18,7 +18,7 @@ const ModalSkin = ({ show, close }) => {
     const { updateApp } = useApp()
     const file = useRef()
     const [skinType, setSkinType] = useState('steve')
-    const [loading, setLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const onSubmit = e => {
         e.preventDefault()
@@ -29,7 +29,7 @@ const ModalSkin = ({ show, close }) => {
             return
         }
 
-        setLoading(true)
+        setIsLoading(true)
         const formData = new FormData()
         formData.append('file', skinFile)
         formData.append('type', skinType)
@@ -60,7 +60,7 @@ const ModalSkin = ({ show, close }) => {
                 file.current.value = null
             })
             .catch(() => Notifications.error('Невозможно подключиться к серверу'))
-            .finally(() => setLoading(false))
+            .finally(() => setIsLoading(false))
     }
 
     return <Modal show={show} onHide={close}>
@@ -108,9 +108,9 @@ const ModalSkin = ({ show, close }) => {
                 <Button variant="secondary" onClick={close}>
                     Закрыть
                 </Button>
-                <Button type="submit" variant="primary" disabled={loading}>
-                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                    {loading ? ' Загрузка...' : 'Изменить'}
+                <Button type="submit" variant="primary" disabled={isLoading}>
+                    {isLoading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+                    {isLoading ? ' Загрузка...' : 'Изменить'}
                 </Button>
             </Modal.Footer>
         </form>
@@ -120,7 +120,7 @@ const ModalSkin = ({ show, close }) => {
 const ModalCape = ({ show, close, exists, onChanged }) => {
     const { fetchAuth, updateApp } = useApp()
     const file = useRef()
-    const [loading, setLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const onSubmit = e => {
         e.preventDefault()
@@ -131,7 +131,7 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
             return
         }
 
-        setLoading(true)
+        setIsLoading(true)
         const formData = new FormData()
         formData.append('file', skinFile)
         fetchApi('/user/cape', {
@@ -172,7 +172,7 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
                 file.current.value = null
             })
             .catch(() => Notifications.error('Невозможно подключиться к серверу'))
-            .finally(() => setLoading(false))
+            .finally(() => setIsLoading(false))
     }
 
     return <Modal show={show} onHide={close}>
@@ -197,9 +197,9 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
                 <Button variant="secondary" onClick={close}>
                     Закрыть
                 </Button>
-                <Button type="submit" variant="primary" disabled={loading}>
-                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                    {loading ? ' Загрузка...' : exists ? 'Изменить' : 'Купить'}
+                <Button type="submit" variant="primary" disabled={isLoading}>
+                    {isLoading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+                    {isLoading ? ' Загрузка...' : exists ? 'Изменить' : 'Купить'}
                 </Button>
             </Modal.Footer>
         </form>

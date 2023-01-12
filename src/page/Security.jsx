@@ -23,11 +23,11 @@ const PasswordCard = () => {
             new_password2: '',
         }
     })
-    const [loading, setLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const onSubmit = data => {
-        if (loading) return
-        setLoading(true)
+        if (isLoading) return
+        setIsLoading(true)
 
         fetchApi('/settings/password', {
             method: 'POST',
@@ -58,7 +58,7 @@ const PasswordCard = () => {
                 }
             })
             .catch(() => Notifications.error('Невозможно подключиться к серверу'))
-            .finally(() => setLoading(false))
+            .finally(() => setIsLoading(false))
     }
 
     return <div className="card">
@@ -105,9 +105,9 @@ const PasswordCard = () => {
                 </Form.Group>
 
                 <div className="text-end">
-                    <button className="btn btn-primary" disabled={loading}>
-                        {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                        {loading ? ' Загрузка...' : 'Изменить'}
+                    <button className="btn btn-primary" disabled={isLoading}>
+                        {isLoading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+                        {isLoading ? ' Загрузка...' : 'Изменить'}
                     </button>
                 </div>
             </form>

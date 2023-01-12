@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
-import { ErrorBoundary } from "react-error-boundary"
-import ReactSkinview3d from "react-skinview3d"
-import { IdleAnimation } from "skinview3d"
-import useApp from "../../hook/useApp"
+import { useEffect, useState } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
+import ReactSkinview3d from 'react-skinview3d'
+import { IdleAnimation } from 'skinview3d'
+import useApp from '../../hook/useApp'
 
 import steve from './steve.png'
 

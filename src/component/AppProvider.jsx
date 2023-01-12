@@ -21,15 +21,15 @@ function Preloader() {
 }
 
 function AuthLoadError({ error, app }) {
-    const [reloading, setReloading] = useState(false)
+    const [isReloading, setIsReloading] = useState(false)
 
     const reload = () => {
-        if (reloading) return
-        setReloading(true)
+        if (isReloading) return
+        setIsReloading(true)
         app.fetchAuth({
-            success: () => setReloading(false),
+            success: () => setIsReloading(false),
             error: () => {
-                setReloading(false)
+                setIsReloading(false)
                 Notifications.error("Ошибка осталась ヽ(ಠ_ಠ)ノ")
             },
         })
@@ -40,9 +40,9 @@ function AuthLoadError({ error, app }) {
         <h5 className='text-danger'>{error}</h5>
         <p>Если ошибка повторяется, значит что-то не работает, попробуйте зайти позже.</p>
         <div>
-            <button className='btn btn-outline-primary' onClick={reload} disabled={reloading}>
-                {reloading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                {reloading ? ' Пробую...' : 'Попробовать еще раз'}
+            <button className='btn btn-outline-primary' onClick={reload} disabled={isReloading}>
+                {isReloading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+                {isReloading ? ' Пробую...' : 'Попробовать еще раз'}
             </button>
         </div>
     </div>
@@ -69,7 +69,7 @@ function AppProvider({ children }) {
             skinModified: 0,
         }
     })
-    const [loading, setLoading] = useState(!!getToken())
+    const [isLoading, setIsLoading] = useState(!!getToken())
     const [error, setError] = useState(null)
 
     const updateApp = (newVal) => {
@@ -141,8 +141,8 @@ function AppProvider({ children }) {
     useEffect(() => {
         if (getToken()) {
             fetchAuth({
-                success: () => setLoading(false),
-                error: () => setLoading(false),
+                success: () => setIsLoading(false),
+                error: () => setIsLoading(false),
             })
         }
 
@@ -164,7 +164,7 @@ function AppProvider({ children }) {
 
     const value = { app, updateApp, logout, fetchAuth }
 
-    if (loading)
+    if (isLoading)
         return <Preloader />
 
     if (error)
