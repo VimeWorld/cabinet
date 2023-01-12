@@ -29,7 +29,7 @@ const DeleteInProgressFragment = ({ progress }) => {
                         }
                     })
                     Notifications.success('Аккаунт восстановлен')
-                } else if (body.response.type == 'too_late') {
+                } else if (body.response.type === 'too_late') {
                     Notifications.error('Уже слишком поздно отменять удаление')
                 } else {
                     Notifications.error(body.response.title)
@@ -77,7 +77,7 @@ const DeleteConfirmFragment = ({ token }) => {
                             account_deleted: true,
                         }
                     })
-                } else if (body.response.type == 'invalid_token') {
+                } else if (body.response.type === 'invalid_token') {
                     Notifications.error('Время действия ссылки истекло')
                 } else {
                     Notifications.error(body.response.title)
@@ -123,10 +123,10 @@ const AccountDeleteRequestPage = () => {
             .then(body => {
                 if (body.success) {
                     setValid(true)
-                } else if (body.response.type == 'invalid_token') {
+                } else if (body.response.type === 'invalid_token') {
                     Notifications.error('Некорректный запрос на удаление аккаунта')
                     navigate('/', { replace: true })
-                } else if (body.response.type == 'expired_token') {
+                } else if (body.response.type === 'expired_token') {
                     Notifications.error('Время действия ссылки истекло')
                     navigate('/', { replace: true })
                 } else {
@@ -170,7 +170,7 @@ const AccountDeletedStatePage = () => {
             .then(body => {
                 if (body.success) {
                     setStatus(body.response)
-                } else if (body.response.type == 'not_deleting') {
+                } else if (body.response.type === 'not_deleting') {
                     Notifications.error('Ваш аккаунт не удаляется, вас не должно быть на этой странице...')
                 } else {
                     Notifications.error(body.response.title)

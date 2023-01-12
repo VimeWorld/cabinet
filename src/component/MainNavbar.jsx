@@ -35,7 +35,7 @@ const ThemeSelector = () => {
             <span className="d-md-none ms-2">Сменить тему</span>
         </span>}>
             {Object.entries(themes).map(([id, t]) => {
-                const active = id == selected
+                const active = id === selected
                 let iconClass = `me-2 bi bi-${t.icon}`
                 if (!active)
                     iconClass += ' opacity-50'
@@ -43,7 +43,7 @@ const ThemeSelector = () => {
                     key={id}
                     onClick={() => {
                         let savid = id
-                        if (savid == 'auto')
+                        if (savid === 'auto')
                             savid = null
                         updateApp({ savedTheme: savid })
                     }}

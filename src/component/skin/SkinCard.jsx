@@ -83,7 +83,7 @@ const ModalSkin = ({ show, close }) => {
                             id="check-steve"
                             className="form-check-input"
                             type="radio"
-                            checked={skinType == 'steve'}
+                            checked={skinType === 'steve'}
                             onChange={() => setSkinType('steve')}
                         />
                         <OverlayTrigger overlay={<Tooltip>Стандартный скин</Tooltip>}>
@@ -95,7 +95,7 @@ const ModalSkin = ({ show, close }) => {
                             id="check-alex"
                             className="form-check-input"
                             type="radio"
-                            checked={skinType == 'alex'}
+                            checked={skinType === 'alex'}
                             onChange={() => setSkinType('alex')}
                         />
                         <OverlayTrigger overlay={<Tooltip>Более тонкие руки</Tooltip>}>

@@ -17,7 +17,7 @@ export const EventBus = {
     off(event: EventType, handler: Handler) {
         let list = _events[event]
         if (list) {
-            list = list.filter(h => h != handler)
+            list = list.filter(h => h !== handler)
             if (list.length)
                 _events[event] = list
             else

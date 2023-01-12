@@ -8,7 +8,7 @@ export const IdPagination = ({ pagination, onChange, loading }) => {
 
     let { prev, next, has_more } = pagination
 
-    if (prev.length == maxPages && prev[maxPages - 1] != 0)
+    if (prev.length === maxPages && prev[maxPages - 1] !== 0)
         prev = [...prev, 0]
 
     if (next.length > 0 && has_more)
@@ -24,9 +24,9 @@ export const IdPagination = ({ pagination, onChange, loading }) => {
     return <ul className={ulClassName}>
         {prev.map((page, idx) => {
             let name = idx + 1
-            if (page == 0)
+            if (page === 0)
                 name = <i className="bi bi-chevron-bar-left" />
-            else if (idx == 0)
+            else if (idx === 0)
                 name = <i className="bi bi-chevron-left" />
             return <li key={page} className={itemClassName}>
                 <button className="page-link" onClick={() => onChange(page)} disabled={loading}>{name}</button>
@@ -43,9 +43,9 @@ export const IdPagination = ({ pagination, onChange, loading }) => {
 
         {next.map((page, idx) => {
             let name = idx + 1
-            if (page == -1 || (!has_more && idx == next.length - 1))
+            if (page === -1 || (!has_more && idx === next.length - 1))
                 name = <i className="bi bi-chevron-bar-right" />
-            else if (idx == 0)
+            else if (idx === 0)
                 name = <i className="bi bi-chevron-right" />
             return <li key={page} className={itemClassName}>
                 <button className="page-link" onClick={() => onChange(page)} disabled={loading}>{name}</button>

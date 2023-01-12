@@ -41,7 +41,7 @@ const ConsentScreen = ({ data }) => {
 
     const scope = useMemo(() => {
         const scope = (searchParams.get('scope') || '').replaceAll(",", " ").trim()
-        const scopeParsed = scope == '' ? [] : scope.split(' ')
+        const scopeParsed = scope === '' ? [] : scope.split(' ')
         scopeParsed.unshift('userinfo')
         return scopeParsed
     }, [searchParams])
@@ -108,7 +108,7 @@ const ConsentScreen = ({ data }) => {
 
         <ul className="mb-4">
             {scope.map(s => {
-                if (s == 'userinfo')
+                if (s === 'userinfo')
                     return <li key={s}><b>Ваш ник</b>: {app.user.username}</li>
 
                 return <li key={s}>{s}</li>
@@ -144,9 +144,9 @@ const OauthAuthorizePage = () => {
                     }
                     if (body.response.oauth_error) {
                         let err = body.response.oauth_error
-                        if (err.error == 'invalid_client')
+                        if (err.error === 'invalid_client')
                             setError('Клиента с таким client_id не существует')
-                        else if (err.error == 'invalid_redirect_uri')
+                        else if (err.error === 'invalid_redirect_uri')
                             setError('Некорректный адрес редиректа для этого клиента')
                         else
                             setError('Ошибка oauth: ' + JSON.stringify(err))
@@ -154,7 +154,7 @@ const OauthAuthorizePage = () => {
                     }
 
                     setData(body.response)
-                } else if (body.response.type == 'bad_request') {
+                } else if (body.response.type === 'bad_request') {
                     setError('Некорректный запрос на авторизацию')
                 } else {
                     setError(body.response.title)

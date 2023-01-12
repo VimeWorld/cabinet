@@ -37,7 +37,7 @@ const MenuItem = ({ to, icon, children, onClick, className }) => {
     const location = useLocation()
     const path = useResolvedPath(to)
 
-    const active = !!to && path.pathname == location.pathname
+    const active = !!to && path.pathname === location.pathname
     const click = () => {
         EventBus.emit(KeyShowToggle, false)
         onClick?.()

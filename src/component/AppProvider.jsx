@@ -76,7 +76,7 @@ function AppProvider({ children }) {
         setApp((old) => {
             const clone = { ...old, ...newVal }
 
-            if (old.savedTheme != clone.savedTheme) {
+            if (old.savedTheme !== clone.savedTheme) {
                 if (clone.savedTheme)
                     localStorage.setItem('theme', clone.savedTheme)
                 else
@@ -87,7 +87,7 @@ function AppProvider({ children }) {
             if (newVal.skinModified)
                 sessionStorage.setItem('skin:' + clone.user.username, newVal.skinModified + '')
 
-            if (old.user != clone.user) {
+            if (old.user !== clone.user) {
                 // Начальная загрузка даты обновления скина
                 if (!old.user && clone.user && !clone.skinModified)
                     clone.skinModified = parseInt(sessionStorage.getItem('skin:' + clone.user.username) || '0')
@@ -117,7 +117,7 @@ function AppProvider({ children }) {
                     setError(null)
                     options?.success?.()
                 } else if (body.error) {
-                    if (body.response.type == 'unauthorized') {
+                    if (body.response.type === 'unauthorized') {
                         setToken(undefined)
                         updateApp({
                             user: undefined,

@@ -6,9 +6,9 @@ const OuterPage = ({ children, variant = 'blue' }) => {
     let border = ''
     let background = ''
     if (app.theme === 'dark') {
-        border = 'border border-' + (variant == 'red' ? 'danger' : 'primary')
+        border = 'border border-' + (variant === 'red' ? 'danger' : 'primary')
     } else {
-        background = variant == 'red' ? 'bg-gradient-red' : 'bg-gradient-blue'
+        background = variant === 'red' ? 'bg-gradient-red' : 'bg-gradient-blue'
     }
 
     return <section className={background}>

@@ -54,7 +54,7 @@ const TransactionConfirmPage = () => {
             .then(body => {
                 if (body.success) {
                     setPayment(body.response)
-                } else if (body.response.type == 'invalid_transaction') {
+                } else if (body.response.type === 'invalid_transaction') {
                     setError('Транзакция не найдена')
                 } else {
                     setError(body.response.title)
@@ -76,7 +76,7 @@ const TransactionConfirmPage = () => {
             .then(body => {
                 if (body.success) {
                     setSuccess(true)
-                } else if (body.response.type == 'invalid_transaction') {
+                } else if (body.response.type === 'invalid_transaction') {
                     Notifications.error('Транзакция не найдена')
                 } else {
                     Notifications.error(body.response.title)

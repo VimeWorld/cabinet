@@ -51,7 +51,7 @@ const RegisterPage = () => {
         if (loading)
             return
 
-        if (checkedLogin.login == data.login && checkedLogin.error) {
+        if (checkedLogin.login === data.login && checkedLogin.error) {
             setError('login', { type: 'custom', message: checkedLogin.error }, { shouldFocus: true })
             return
         }
@@ -103,7 +103,7 @@ const RegisterPage = () => {
         const login = watch('login')
         if (!!errors.login || !login)
             return
-        if (checkedLogin.login == login && !checkedLogin.error)
+        if (checkedLogin.login === login && !checkedLogin.error)
             return
 
         let error = ''
@@ -152,7 +152,7 @@ const RegisterPage = () => {
                         }
                     })}
                     isInvalid={!!errors.login}
-                    isValid={checkedLogin.login && !checkedLogin.error && checkedLogin.login == watch('login')}
+                    isValid={checkedLogin.login && !checkedLogin.error && checkedLogin.login === watch('login')}
                     onBlur={onLoginBlur}
                 />
                 {errors.login && <Form.Control.Feedback type="invalid">{errors.login.message}</Form.Control.Feedback>}
@@ -179,7 +179,7 @@ const RegisterPage = () => {
                 <Form.Label>Повтор пароля</Form.Label>
                 <Form.Control type="password" {...register('password_confirm', {
                     validate: (val) => {
-                        if (watch('password') != val)
+                        if (watch('password') !== val)
                             return 'Пароли должны совпадать'
                     },
                 })} isInvalid={!!errors.password_confirm} />

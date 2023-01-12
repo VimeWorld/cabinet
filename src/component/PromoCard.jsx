@@ -37,8 +37,8 @@ export const PromoCard = () => {
                         Промо-код успешно активирован: {<span dangerouslySetInnerHTML={{ __html: body.response.info }} />}
                     </>)
                     reset()
-                    if (pages.id == 0) pages.load()
-                    if (body.response.action == 'vimer') fetchAuth()
+                    if (pages.id === 0) pages.load()
+                    if (body.response.action === 'vimer') fetchAuth()
                     return
                 }
                 switch (body.response.type) {
@@ -112,7 +112,7 @@ export const PromoCard = () => {
                             <button className="btn btn-outline-secondary" onClick={() => pages.load()}>Попробовать снова</button>
                         </td></tr>}
 
-                        {pages.items?.length == 0 && <tr><td className="text-center text-body-secondary" colSpan="3">
+                        {pages.items?.length === 0 && <tr><td className="text-center text-body-secondary" colSpan="3">
                             Вы еще не активировали ни одного кода...
                         </td></tr>}
 

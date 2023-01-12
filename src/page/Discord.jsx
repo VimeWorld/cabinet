@@ -22,7 +22,7 @@ const CheckCode = ({ code, resetCode }) => {
             .then(body => {
                 if (body.success) {
                     setDiscordData(body.response.discord)
-                } else if (body.response.type == 'invalid_code') {
+                } else if (body.response.type === 'invalid_code') {
                     setError('Некорректный код авторизации')
                 } else {
                     setError(body.response.title)

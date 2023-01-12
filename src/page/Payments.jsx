@@ -36,7 +36,7 @@ const TransferCard = () => {
         if (loading)
             return
 
-        if (checkedLogin.login == data.target && checkedLogin.error) {
+        if (checkedLogin.login === data.target && checkedLogin.error) {
             setError('target', { type: 'custom', message: checkedLogin.error }, { shouldFocus: true })
             return
         }
@@ -87,9 +87,9 @@ const TransferCard = () => {
         const login = watch('target')
         if (!!errors.target || !login)
             return
-        if (checkedLogin.login == login && !checkedLogin.error)
+        if (checkedLogin.login === login && !checkedLogin.error)
             return
-        if (login.toLowerCase() == app.user.username.toLowerCase()) {
+        if (login.toLowerCase() === app.user.username.toLowerCase()) {
             let error = 'Вы не можете переводить себе'
             setError('target', { type: 'custom', message: error })
             setCheckedLogin({ login, error })
@@ -129,7 +129,7 @@ const TransferCard = () => {
                         })}
                         placeholder="Игрок"
                         isInvalid={!!errors.target}
-                        isValid={checkedLogin.login && !checkedLogin.error && checkedLogin.login == watch('target')}
+                        isValid={checkedLogin.login && !checkedLogin.error && checkedLogin.login === watch('target')}
                     />
                     {errors.target && <Form.Control.Feedback type="invalid">{errors.target.message}</Form.Control.Feedback>}
                 </Form.Group>
@@ -195,7 +195,7 @@ const paysystems = [
         img: <ThemedPaysystemImage img="fondy-main-light.svg" dark="fondy-main-dark.svg" />,
         logos: ['visa', 'mastercard', 'googlepay'],
         filter: {
-            test: user => user.client_country != 'RU',
+            test: user => user.client_country !== 'RU',
             message: 'Недоступно в РФ',
         },
     },
@@ -221,7 +221,7 @@ const paysystems = [
         img: <ThemedPaysystemImage img="unitpay.svg" dark="unitpay-dark.svg" />,
         logos: ['visa', 'mastercard', 'mir', 'sbp'],
         filter: {
-            test: user => user.client_country == 'RU',
+            test: user => user.client_country === 'RU',
             message: 'Только для РФ',
         },
     },
@@ -262,9 +262,9 @@ const PayCard = () => {
 
     const [psVisible, logoList, hasHidden] = useMemo(() => {
         const psVisible = paysystems.filter(p => !p.filter || p.filter.test(app.user))
-        const hasHidden = paysystems.length != psVisible.length
+        const hasHidden = paysystems.length !== psVisible.length
         if (showHidden)
-            paysystems.filter(p => !psVisible.find(p0 => p0.id == p.id))
+            paysystems.filter(p => !psVisible.find(p0 => p0.id === p.id))
                 .forEach(p => psVisible.push(p))
         const logoList = new Set([].concat(...psVisible.map(p => p.logos)))
         return [psVisible, logoList, hasHidden]
@@ -285,9 +285,9 @@ const PayCard = () => {
         }).then(r => r.json())
             .then(body => {
                 if (body.success) {
-                    if (body.response.method == 'url') {
+                    if (body.response.method === 'url') {
                         window.location.href = body.response.data
-                    } else if (body.response.method == 'post') {
+                    } else if (body.response.method === 'post') {
                         const data = body.response.data
                         const form = document.createElement('form')
                         form.style.visibility = 'hidden'
@@ -349,7 +349,7 @@ const PayCard = () => {
                         return <PaysystemListElement
                             key={e.id}
                             paysystem={e}
-                            checked={paysystem == e.id}
+                            checked={paysystem === e.id}
                             onChange={() => setPaysystem(e.id)}
                         />
                     })}

@@ -97,7 +97,7 @@ const PasswordCard = () => {
                     <Form.Label>Повтор нового пароля</Form.Label>
                     <Form.Control type="password" {...register('new_password2', {
                         validate: (val) => {
-                            if (watch('new_password') != val)
+                            if (watch('new_password') !== val)
                                 return 'Пароли должны совпадать'
                         },
                     })} isInvalid={!!errors.new_password2} />
@@ -362,13 +362,13 @@ const MfaCard = () => {
     const [modalSetupMfa, setModalSetupMfa] = useState(false)
 
     return <div className={classNames('card', {
-        'border border-warning': app.theme === 'dark' && app.user.mfa == 'disabled',
-        'border border-success': app.theme === 'dark' && app.user.mfa == 'completed',
+        'border border-warning': app.theme === 'dark' && app.user.mfa === 'disabled',
+        'border border-success': app.theme === 'dark' && app.user.mfa === 'completed',
     })}>
         <div className={classNames("card-header", {
             'text-white': app.theme === 'light',
-            'bg-gradient-red': app.theme === 'light' && app.user.mfa == 'disabled',
-            'bg-gradient-green': app.theme === 'light' && app.user.mfa == 'completed',
+            'bg-gradient-red': app.theme === 'light' && app.user.mfa === 'disabled',
+            'bg-gradient-green': app.theme === 'light' && app.user.mfa === 'completed',
         })}>
             <h4 className="mb-0">Двухэтапная аутентификация</h4>
             <span>Дополнительная защита вашего аккаунта</span>
@@ -377,7 +377,7 @@ const MfaCard = () => {
         <div className="card-body">
             <p className="">Помимо пароля, для входа также будет требоваться одноразовый код из приложения.</p>
 
-            {app.user.mfa == 'disabled' && <>
+            {app.user.mfa === 'disabled' && <>
                 <p className="mb-0 d-flex justify-content-between align-items-center">
                     <span className="text-danger"><i className="bi bi-x-lg" /> Отключена</span>
                     <button className="btn btn-primary" onClick={() => setModalSetupMfa(true)}>Включить</button>
@@ -391,7 +391,7 @@ const MfaCard = () => {
                 </p>
             </>}
 
-            {app.user.mfa == 'completed' && <div className="d-flex justify-content-between align-items-center">
+            {app.user.mfa === 'completed' && <div className="d-flex justify-content-between align-items-center">
                 <span className="text-success"><i className="bi bi-check-lg" /> Активна</span>
                 <button className="btn btn-outline-danger" onClick={() => setModalDisableMfa(true)}>Отключить</button>
                 <ModalDisableMfa
@@ -461,7 +461,7 @@ const ModalAccountDelete = ({ show, close }) => {
             </Button>
             <Button
                 variant="danger"
-                disabled={loading || username.trim().toLowerCase() != app.user.username.toLowerCase()}
+                disabled={loading || username.trim().toLowerCase() !== app.user.username.toLowerCase()}
                 onClick={confirmDelete}
             >
                 {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}

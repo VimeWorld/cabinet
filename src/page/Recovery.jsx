@@ -83,7 +83,7 @@ const RecoveryStep2Form = ({ token, username }) => {
             <Form.Label>Повтор нового пароля</Form.Label>
             <Form.Control type="password" {...register('password2', {
                 validate: (val) => {
-                    if (watch('password') != val)
+                    if (watch('password') !== val)
                         return 'Пароли должны совпадать'
                 },
             })} isInvalid={!!errors.password2} />
@@ -112,10 +112,10 @@ const RecoveryStep2Page = () => {
             .then(body => {
                 if (body.success) {
                     setUsername(body.response.username)
-                } else if (body.response.type == 'invalid_token') {
+                } else if (body.response.type === 'invalid_token') {
                     Notifications.error('Некорректный запрос на восстановление аккаунта')
                     navigate('/login', { replace: true })
-                } else if (body.response.type == 'expired_token') {
+                } else if (body.response.type === 'expired_token') {
                     Notifications.error('Время действия ссылки истекло')
                     navigate('/login', { replace: true })
                 } else {

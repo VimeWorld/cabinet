@@ -44,7 +44,7 @@ const paymentDescription = (p) => {
         case "mod_item":
             return <>{p.data.name} на сервере <b>{p.data.server}</b></>
         case "hold":
-            if (p.data.alias == 'trade' || p.data.alias == 'trade_shop')
+            if (p.data.alias === 'trade' || p.data.alias === 'trade_shop')
                 return 'Заморозка вимеров на время сделки'
             return 'Замороженные вимеры (активная транзакция)'
         case "trade":
@@ -76,7 +76,7 @@ export const PaymentHistoryCard = () => {
     const pages = useLoadPages(id => fetchApi('/payment/history?count=20&id=' + id))
 
     useEffect(() => {
-        if (pages.id != 0 || !pages.items)
+        if (pages.id !== 0 || !pages.items)
             return
         return EventBus.on(EVENT_UPDATE_PAYMENTS, () => pages.load())
     }, [pages.id, pages.items])
@@ -116,7 +116,7 @@ export const PaymentHistoryCard = () => {
                         <button className="btn btn-outline-secondary" onClick={() => pages.load()}>Попробовать снова</button>
                     </td></tr>}
 
-                    {pages.items?.length == 0 && <tr><td className="text-center text-body-secondary" colSpan="4">
+                    {pages.items?.length === 0 && <tr><td className="text-center text-body-secondary" colSpan="4">
                         Пусто...
                     </td></tr>}
 

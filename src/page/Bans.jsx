@@ -46,9 +46,9 @@ const ServerBansCard = ({ name, url }) => {
                     Notifications.success('Все баны на ' + name + ' успешно сняты')
                     loadBanlist()
                     fetchAuth()
-                } else if (body.response.type == 'not_possible') {
+                } else if (body.response.type === 'not_possible') {
                     Notifications.error('Вы не можете купить разбан')
-                } else if (body.response.type == 'insufficient_funds') {
+                } else if (body.response.type === 'insufficient_funds') {
                     Notifications.error('У вас недостаточно вимеров')
                 } else {
                     Notifications.error('Ошибка сервера: ' + body.response.title)
@@ -112,13 +112,13 @@ const ServerBansCard = ({ name, url }) => {
                         При загрузке произошла ошибка
                     </td></tr>}
 
-                    {bans?.bans.length == 0 && <tr><td className="text-center text-body-secondary" colSpan="5">
+                    {bans?.bans.length === 0 && <tr><td className="text-center text-body-secondary" colSpan="5">
                         У вас не было ни одного бана, святой Вы человек...
                     </td></tr>}
 
                     {bans?.bans.map(b => {
                         const toTs = Date.parse(b.to)
-                        const to = toTs == 0 ? 'Вечный бан' : new Date(toTs).toLocaleString()
+                        const to = toTs === 0 ? 'Вечный бан' : new Date(toTs).toLocaleString()
                         let status
                         switch (b.status) {
                             case "expired":
