@@ -217,9 +217,9 @@ const paysystems = [
     },
     {
         id: 'unitpay',
-        description: '(Yandex Pay)',
+        description: '(Visa / Mastercard, Qiwi, СБП, Yandex Pay)',
         img: <ThemedPaysystemImage img="unitpay.svg" dark="unitpay-dark.svg" />,
-        logos: ['visa', 'mastercard', 'mir', 'sbp'],
+        logos: ['visa', 'mastercard', 'mir', 'sbp', 'googlepay'],
         filter: {
             test: user => user.client_country === 'RU',
             message: 'Только для РФ',
