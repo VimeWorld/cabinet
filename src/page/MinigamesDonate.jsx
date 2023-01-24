@@ -57,6 +57,10 @@ const ranks = {
         name: "Immortal",
         rich: <b style={{ color: "#E800D5" }}>Immortal</b>,
     },
+    "helper": {
+        name: "Хелпер",
+        rich: <b className="text-primary">Хелпер</b>,
+    },
     "moder": {
         name: "Модератор",
         rich: <b className="text-primary">Модератор</b>,
