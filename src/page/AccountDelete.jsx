@@ -93,7 +93,7 @@ const DeleteConfirmFragment = ({ token }) => {
             До этого времени вы можете отменить удаление.
         </p>
 
-        <p className="text-danger">Ваш ник не будет доступен для регистрации еще <b>3 месяца</b> после удаления аккаунта.</p>
+        <p className="text-danger">Ваш ник не будет доступен для регистрации еще <b>90 дней</b> после удаления аккаунта.</p>
 
         <button className="btn btn-lg btn-danger w-100 mt-3" onClick={confirm} disabled={loading}>
             {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
