@@ -11,9 +11,6 @@ import Notifications from "../lib/notifications"
 const rowHeight = 30
 
 const Vimers = ({ amount }) => {
-    const { app } = useApp()
-    if (!amount)
-        amount = app.user.cash
     return <b className="text-success">{ruPluralizeVimers(amount)}</b>
 }
 
@@ -37,6 +34,7 @@ const Row = ({ name, children }) => {
 }
 
 const TransactionConfirmPage = () => {
+    const { app } = useApp()
     const [payment, setPayment] = useState(null)
     const [loading, setLoading] = useState(true)
     const [confirmLoading, setConfirmLoading] = useState(false)
@@ -137,7 +135,7 @@ const TransactionConfirmPage = () => {
         content = <>
             {text}
 
-            <div className="mt-4">Ваш баланс: <Vimers /></div>
+            <div className="mt-4">Ваш баланс: <Vimers amount={app.user.cash + payment.amount} /></div>
 
             <button className="btn btn-lg btn-primary w-100 mt-4" onClick={confirm} disabled={confirmLoading}>
                 {confirmLoading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
