@@ -195,8 +195,8 @@ const paysystems = [
         img: <ThemedPaysystemImage img="fondy-main-light.svg" dark="fondy-main-dark.svg" />,
         logos: ['visa', 'mastercard', 'googlepay'],
         filter: {
-            test: user => user.client_country !== 'RU',
-            message: 'Недоступно в РФ',
+            test: user => !['RU', 'BY'].includes(user.client_country),
+            message: 'Недоступно в РФ и Беларуси',
         },
     },
     {
@@ -204,6 +204,16 @@ const paysystems = [
         description: '(Криптовалюты, Perfect Money, AdvCash)',
         img: <ThemedPaysystemImage img="interkassa-light.png" dark="interkassa-dark.png" />,
         logos: [],
+    },
+    {
+        id: 'paypalych',
+        description: '(Visa / Mastercard / МИР, Криптовалюты)',
+        img: <ThemedPaysystemImage img="paypalych-light.svg" dark="paypalych-dark.svg" />,
+        logos: ['visa', 'mastercard'],
+        filter: {
+            test: user => ['RU', 'BY'].includes(user.client_country),
+            message: 'Для РФ и Беларуси',
+        },
     },
     {
         id: 'enot',
@@ -221,8 +231,8 @@ const paysystems = [
         img: <ThemedPaysystemImage img="unitpay.svg" dark="unitpay-dark.svg" />,
         logos: ['visa', 'mastercard', 'mir', 'sbp', 'googlepay'],
         filter: {
-            test: user => user.client_country === 'RU',
-            message: 'Только для РФ',
+            test: user => ['RU', 'BY'].includes(user.client_country),
+            message: 'Для РФ и Беларуси',
         },
     },
 ]
@@ -241,7 +251,7 @@ const PaysystemListElement = ({ paysystem, checked, onChange }) => {
                 checked={checked}
                 onChange={onChange}
             />
-            <label className="form-check-label w-100" htmlFor={paysystem.id}>
+            <label className="form-check-label w-100 stretched-link" htmlFor={paysystem.id}>
                 <div className="d-flex justify-content-between align-items-center">
                     {paysystem.img}
                     {filtered && <span className="badge bg-tertiary text-body-secondary">

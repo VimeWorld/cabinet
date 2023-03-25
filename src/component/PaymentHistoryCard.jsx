@@ -64,6 +64,7 @@ const paymentDescription = (p) => {
         case "liqpay": return 'Пополнение через LiqPay'
         case "fondy": return 'Пополнение через Fondy'
         case "fondy_check": return 'Пополнение через Fondy (Проходит ручную проверку)'
+        case "paypalych": return 'Пополнение через PayPalych'
         case "vote": return 'Голосование за сервер'
         case "promo-code": return 'Активация промо-кода'
         case "admin": return 'Администрация VimeWorld'
