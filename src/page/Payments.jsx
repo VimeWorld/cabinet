@@ -225,7 +225,7 @@ const paysystems = [
             message: 'Для РФ и Беларуси',
         },
     },
-    {
+    /*{
         id: 'unitpay',
         description: '(Visa / Mastercard, Qiwi, СБП, Yandex Pay)',
         img: <ThemedPaysystemImage img="unitpay.svg" dark="unitpay-dark.svg" />,
@@ -234,7 +234,7 @@ const paysystems = [
             test: user => ['RU', 'BY'].includes(user.client_country),
             message: 'Для РФ и Беларуси',
         },
-    },
+    },*/
 ]
 
 const PaysystemListElement = ({ paysystem, checked, onChange }) => {
