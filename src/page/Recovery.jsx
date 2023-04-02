@@ -67,8 +67,8 @@ const RecoveryStep2Form = ({ token, username }) => {
             <Form.Control type="password" {...register('password', {
                 required: 'Пароль не может быть пустым',
                 minLength: {
-                    value: 6,
-                    message: 'Минимальная длина пароля 6 символов'
+                    value: 8,
+                    message: 'Минимальная длина пароля 8 символов'
                 },
                 maxLength: {
                     value: 50,
