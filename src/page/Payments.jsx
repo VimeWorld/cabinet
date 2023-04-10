@@ -1,5 +1,5 @@
 import { Fragment, useMemo, useState } from "react"
-import { Form, Spinner } from "react-bootstrap"
+import { Form, OverlayTrigger, Placeholder, Popover, Spinner } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import { BalanceCard } from "../component/BalanceCard"
 import { PaymentHistoryCard } from "../component/PaymentHistoryCard"
@@ -9,6 +9,7 @@ import { fetchApi } from "../lib/api"
 import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
 import { ruPluralizeVimers } from "../lib/i18n"
 import Notifications from "../lib/notifications"
+import { useEffect } from "react"
 
 const TransferCard = () => {
     const { app, fetchAuth } = useApp()
@@ -264,6 +265,48 @@ const PaysystemListElement = ({ paysystem, checked, onChange }) => {
     </li>
 }
 
+const PriceCalculator = ({ amount }) => {
+    const [rates, setRates] = useState(null)
+    const [error, setError] = useState(false)
+    useEffect(() => {
+        if (rates)
+            return
+        fetchApi('/payment/rates')
+            .then(response => response.json())
+            .then(body => {
+                if (body.success)
+                    setRates(body.response.rates)
+                else
+                    setError(true)
+            })
+            .catch(() => setError(true))
+    }, [rates])
+
+    amount = Math.min(Math.max(1, amount), 500000)
+
+    const Currency = ({ id, name }) => {
+        if (!rates)
+            return <li><Placeholder style={{ width: 40 }} /> {name}</li>
+        if (!(id in rates))
+            return <li className="text-danger">Not found: {id}</li>
+        return <div>~ {(amount * rates[id]).toFixed(2)} {name}</div>
+    }
+
+    return <>
+        <Popover.Header>{ruPluralizeVimers(amount)}</Popover.Header>
+        <Popover.Body>
+            {error && rates == null && <div className="text-danger text-center">Ошибка сервера</div>}
+            {!error && <>
+                <Currency id="RUB" name="руб." />
+                <Currency id="UAH" name="грн." />
+                <Currency id="USD" name="$" />
+                <Currency id="EUR" name="€" />
+                <div className="pt-2">Стоимость 85 вимеров = 1 евро</div>
+            </>}
+        </Popover.Body>
+    </>
+}
+
 const PayCard = () => {
     const { app } = useApp()
     const [amount, setAmount] = useState('')
@@ -337,7 +380,7 @@ const PayCard = () => {
         </div>
         <div className="card-body">
             <form onSubmit={onSubmit} className="mb-3">
-                <div className="d-flex mb-3">
+                <div className="d-flex gap-2 mb-3">
                     <input
                         className="form-control"
                         type="number"
@@ -349,7 +392,12 @@ const PayCard = () => {
                         min="1"
                         max="500000"
                     />
-                    <button className="btn btn-primary ms-3" type="submit" disabled={loading}>
+                    <OverlayTrigger trigger="click" overlay={<Popover id="vimer-rate">
+                        <PriceCalculator amount={amount} />
+                    </Popover>}>
+                        <button type="button" className="btn btn-link px-2"><i className="bi bi-currency-exchange" /></button>
+                    </OverlayTrigger>
+                    <button className="btn btn-primary" type="submit" disabled={loading}>
                         {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                         {!loading && 'Пополнить'}
                     </button>
