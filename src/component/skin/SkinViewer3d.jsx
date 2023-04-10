@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import ReactSkinview3d from "react-skinview3d"
 import { IdleAnimation } from "skinview3d"
@@ -31,6 +31,7 @@ const Fallback = ({ height }) => {
 const SkinViewer3d = ({ skin, cape, parent, height }) => {
     const [svWidth, setSvWidth] = useState(100)
     const [skinData, setSkinData] = useState(null)
+    const viewerRef = useRef()
 
     useEffect(() => {
         const handleResize = () => {
@@ -59,6 +60,12 @@ const SkinViewer3d = ({ skin, cape, parent, height }) => {
             .catch(() => setSkinData(steve))
     }, [skin])
 
+    // Либа react-skinview3d не удаляет рендерер при закрытии, поэтому он остается работать в фоне
+    // В идеале бы зафиксить саму либу, но делать это лень, поэтому добавляем костыль
+    useEffect(() => {
+        return () => viewerRef.current?.dispose()
+    }, [viewerRef])
+
     return <ErrorBoundary
         fallback={<Fallback height={height} />}
         onError={error => {
@@ -71,6 +78,7 @@ const SkinViewer3d = ({ skin, cape, parent, height }) => {
             height={height}
             width={svWidth}
             onReady={({ viewer }) => {
+                viewerRef.current = viewer
                 viewer.animation = new IdleAnimation()
                 viewer.animation.speed = 1.2
                 viewer.controls.enableZoom = false
