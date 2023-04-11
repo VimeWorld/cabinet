@@ -204,7 +204,7 @@ const TableRankComparison = () => {
                         <div className="text-start">
                             <div><span style={{ color: "#000000" }} className="bg-secondary">&0</span> - черный</div>
                             <div><span style={{ color: "#0000bf" }} className="bg-secondary">&1</span> - темно-синий</div>
-                            <div><span style={{ color: "#00be00" }}>&2</span> - зелёный</div>
+                            <div><span style={{ color: "#00be00" }}>&2</span> - зеленый</div>
                             <div><span style={{ color: "#00bebe" }}>&3</span> - бирюзовый</div>
                             <div><span style={{ color: "#be0000" }}>&4</span> - бордовый</div>
                             <div><span style={{ color: "#be00be" }}>&5</span> - фиолетовый</div>
@@ -317,7 +317,7 @@ const ExchangeCoins = ({ profile }) => {
 
         <p>
             Работает система накопления.
-            Все обмены суммируются и вы можете получить статус, когда количество ваших обменов достигнет определенной суммы.
+            Все обмены суммируются и вы сможете получить статус, когда количество ваших обменов достигнет определенной суммы.
         </p>
 
         <div className="d-flex justify-content-between align-items-center mb-3">
