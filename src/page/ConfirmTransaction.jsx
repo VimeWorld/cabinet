@@ -129,7 +129,7 @@ const TransactionConfirmPage = () => {
     else if (success)
         content = <>
             <h5 className="text-center">Спасибо</h5>
-            <div>Транзакция подтвержена. Теперь вы можете вернуться в игру.</div>
+            <div>Транзакция подтверждена. Теперь Вы можете вернуться в игру.</div>
         </>
     else if (payment)
         content = <>

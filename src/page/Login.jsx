@@ -53,7 +53,7 @@ const LoginPage = () => {
                         break
                     }
                     case "captcha":
-                        Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.')
+                        Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте ещё раз.')
                         break
                     default:
                         Notifications.error(body.response.title)
@@ -88,7 +88,7 @@ const LoginPage = () => {
                 {loading ? ' Загрузка...' : 'Вход'}
             </button>
 
-            <p className="text-center">Еще нет аккаунта? <Link to="/register">Регистрация</Link></p>
+            <p className="text-center">Ещё нет аккаунта? <Link to="/register">Регистрация</Link></p>
         </Form>
     </OuterPage>
 }

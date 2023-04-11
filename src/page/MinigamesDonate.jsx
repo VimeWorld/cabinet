@@ -177,7 +177,7 @@ const TableRankComparison = () => {
                 <td>{checkOn}</td>
             </tr>
             <tr>
-                <td>Полет в лобби</td>
+                <td>Полёт в лобби</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
@@ -202,22 +202,22 @@ const TableRankComparison = () => {
                     Цветной чат
                     <OverlayTrigger overlay={<Tooltip>
                         <div className="text-start">
-                            <div><span style={{ color: "#000000" }} className="bg-secondary">&0</span> - черный</div>
-                            <div><span style={{ color: "#0000bf" }} className="bg-secondary">&1</span> - темно-синий</div>
-                            <div><span style={{ color: "#00be00" }}>&2</span> - зелёный</div>
-                            <div><span style={{ color: "#00bebe" }}>&3</span> - бирюзовый</div>
-                            <div><span style={{ color: "#be0000" }}>&4</span> - бордовый</div>
-                            <div><span style={{ color: "#be00be" }}>&5</span> - фиолетовый</div>
-                            <div><span style={{ color: "#D9A334" }}>&6</span> - оранжевый</div>
-                            <div><span style={{ color: "#bebebe" }}>&7</span> - серый</div>
-                            <div><span style={{ color: "#3f3f3f" }} className="bg-secondary">&8</span> - темно-серый</div>
-                            <div><span style={{ color: "#3f3ffe" }}>&9</span> - синий</div>
-                            <div><span style={{ color: "#3ffe3f" }}>&a</span> - салатовый</div>
-                            <div><span style={{ color: "#3ffefe" }} className="bg-dark">&b</span> - голубой</div>
-                            <div><span style={{ color: "#fe3f3f" }}>&c</span> - красный</div>
-                            <div><span style={{ color: "#fe3ffe" }}>&d</span> - розовый</div>
-                            <div><span style={{ color: "#fefe3f" }} className="bg-dark">&e</span> - желтый</div>
-                            <div><span style={{ color: "#ffffff" }} className="bg-dark">&f</span> - белый</div>
+                            <div><span style={{ color: "#000000" }} className="bg-secondary">&0</span> — чёрный</div>
+                            <div><span style={{ color: "#0000bf" }} className="bg-secondary">&1</span> — тёмно-синий</div>
+                            <div><span style={{ color: "#00be00" }}>&2</span> — зелёный</div>
+                            <div><span style={{ color: "#00bebe" }}>&3</span> — бирюзовый</div>
+                            <div><span style={{ color: "#be0000" }}>&4</span> — бордовый</div>
+                            <div><span style={{ color: "#be00be" }}>&5</span> — фиолетовый</div>
+                            <div><span style={{ color: "#D9A334" }}>&6</span> — оранжевый</div>
+                            <div><span style={{ color: "#bebebe" }}>&7</span> — серый</div>
+                            <div><span style={{ color: "#3f3f3f" }} className="bg-secondary">&8</span> — тёмно-серый</div>
+                            <div><span style={{ color: "#3f3ffe" }}>&9</span> — синий</div>
+                            <div><span style={{ color: "#3ffe3f" }}>&a</span> — салатовый</div>
+                            <div><span style={{ color: "#3ffefe" }} className="bg-dark">&b</span> — голубой</div>
+                            <div><span style={{ color: "#fe3f3f" }}>&c</span> — красный</div>
+                            <div><span style={{ color: "#fe3ffe" }}>&d</span> — розовый</div>
+                            <div><span style={{ color: "#fefe3f" }} className="bg-dark">&e</span> — жёлтый</div>
+                            <div><span style={{ color: "#ffffff" }} className="bg-dark">&f</span> — белый</div>
                         </div>
                     </Tooltip>}>
                         <i className="bi bi-info-circle ms-2 text-primary"></i>
@@ -302,7 +302,7 @@ const ExchangeCoins = ({ profile }) => {
                 } else if (body.response.type === "invalid_amount") {
                     setError('vimers', { message: 'Некорректное количество вимеров' })
                 } else if (body.response.type === "insufficient_funds") {
-                    setError('vimers', { message: 'У вас недостаточно вимеров' })
+                    setError('vimers', { message: 'У Вас недостаточно вимеров' })
                     fetchAuth()
                 }
             })
@@ -317,7 +317,7 @@ const ExchangeCoins = ({ profile }) => {
 
         <p>
             Работает система накопления.
-            Все обмены суммируются и вы можете получить статус, когда количество ваших обменов достигнет определенной суммы.
+            Все обмены суммируются и Вы сможете получить статус, когда количество Ваших обменов достигнет определённой суммы.
         </p>
 
         <div className="d-flex justify-content-between align-items-center mb-3">
@@ -337,7 +337,7 @@ const ExchangeCoins = ({ profile }) => {
                             if (val < 1)
                                 return 'Минимум 1 вимер'
                             if (val > app.user.cash)
-                                return 'У вас недостаточно вимеров'
+                                return 'У Вас недостаточно вимеров'
                         }
                     })}
                     placeholder="Вимеров"
@@ -454,7 +454,7 @@ const KindnessRowCard = ({ profile }) => {
                                 className="list-group-item"
                                 style={{ borderLeft: "10px solid " + curr.barColor }}
                             >
-                                {curr.limit} вимеров - {name} {till}
+                                {curr.limit} вимеров — {name} {till}
                             </li>
                         })}
                     </ul>
@@ -523,7 +523,7 @@ const MinigamesDonatePage = () => {
             <div className='card-body'>
                 {loading && <div className='text-center'><Spinner variant='secondary' /></div>}
                 {error && <div className='text-center text-danger'>При загрузке произошла ошибка</div>}
-                {!loading && !error && <div className='text-center text-body-secondary'>Вы еще ни разу не заходили на MiniGames</div>}
+                {!loading && !error && <div className='text-center text-body-secondary'>Вы ещё ни разу не заходили на MiniGames</div>}
             </div>
         </div>
 

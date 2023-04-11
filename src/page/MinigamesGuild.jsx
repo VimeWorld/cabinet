@@ -125,7 +125,7 @@ const AvatarCard = ({ guild }) => {
         }).then(r => r.json())
             .then(body => {
                 if (body.success) {
-                    Notifications.success('Аватар успешно удален')
+                    Notifications.success('Аватар успешно удалён')
                     guild.avatar = ""
                 } else {
                     switch (body.response.type) {
@@ -161,7 +161,7 @@ const AvatarCard = ({ guild }) => {
         }).then(r => r.json())
             .then(body => {
                 if (body.success) {
-                    Notifications.success('Аватар успешно изменен')
+                    Notifications.success('Аватар успешно изменён')
                     guild.avatar = body.response.avatar
                 } else {
                     switch (body.response.type) {

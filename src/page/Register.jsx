@@ -12,7 +12,7 @@ const RegisterSuccessPage = () => {
     return <OuterPage>
         <h4 className="mb-4 text-center">Спасибо за регистрацию!</h4>
 
-        <p>Теперь вы можете <Link to="/login">войти</Link> в свой аккаунт.</p>
+        <p>Теперь Вы можете <Link to="/login">войти</Link> в свой аккаунт.</p>
         <Link to="/login" className="btn btn-lg btn-primary w-100">Вход</Link>
     </OuterPage>
 }
@@ -87,7 +87,7 @@ const RegisterPage = () => {
                         setError('email', { type: 'custom', message: 'Недопустимый Email' }, { shouldFocus: true })
                         break
                     case "captcha":
-                        Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.')
+                        Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте ещё раз.')
                         break
                     default:
                         Notifications.error(body.response.title)
@@ -194,7 +194,7 @@ const RegisterPage = () => {
                         if (!/^[0-9a-zA-Z_\-.@]+$/.test(val))
                             return 'Email содержит недопустимые символы'
                         if (!/^[0-9a-zA-Z_-]+(?:\.[0-9a-zA-Z_-]+)*@[0-9a-z-]+(?:\.[0-9a-z-]+)+$/.test(val))
-                            return 'Введен некорректный Email'
+                            return 'Введён некорректный Email'
                     },
                 })} isInvalid={!!errors.email} />
                 {errors.email && <Form.Control.Feedback type="invalid">{errors.email.message}</Form.Control.Feedback>}
@@ -203,7 +203,7 @@ const RegisterPage = () => {
             {recaptchaComponent}
 
             <p className="text-center text-body-secondary text-small"><small>
-                Нажатием кнопки Регистрация, вы соглашаетесь с <a className="link-secondary" href="https://vime.one/terms">Пользовательским соглашением</a>, <a className="link-secondary" href="https://vime.one/rules">Правилами сервера</a> и признаете, что применяется наша <a className="link-secondary" href="https://vime.one/privacy">Политика конфиденциальности</a>.
+                Нажатием кнопки Регистрация, Вы соглашаетесь с <a className="link-secondary" href="https://vime.one/terms">Пользовательским соглашением</a>, <a className="link-secondary" href="https://vime.one/rules">Правилами сервера</a> и признаёте, что применяется наша <a className="link-secondary" href="https://vime.one/privacy">Политика конфиденциальности</a>.
             </small></p>
 
             <button className="btn btn-lg btn-primary w-100 mt-2 mb-4" type="submit" disabled={loading}>

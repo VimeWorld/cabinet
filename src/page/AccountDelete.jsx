@@ -47,7 +47,7 @@ const DeleteInProgressFragment = ({ progress }) => {
     return <div>
         <p>
             Аккаунт будет окончательно удален после <b>{new Date(Date.parse(progress.cancel_deadline)).toLocaleString()}</b>.
-            До этого времени вы можете отменить удаление.
+            До этого времени Вы можете отменить удаление.
         </p>
 
         <button className="btn btn-lg btn-primary w-100 mt-4" onClick={cancel} disabled={loading}>
@@ -89,11 +89,11 @@ const DeleteConfirmFragment = ({ token }) => {
 
     return <>
         <p>
-            После нажатия кнопки <b>Удалить аккаунт</b> у вас будет еще <b>20 дней</b> чтобы передумать и восстановить его.
-            До этого времени вы можете отменить удаление.
+            После нажатия кнопки <b>Удалить аккаунт</b> у Вас будет ещё <b>20 дней</b> чтобы передумать и восстановить его.
+            До окончания этого времени Вы можете отменить удаление.
         </p>
 
-        <p className="text-danger">Ваш ник не будет доступен для регистрации еще <b>90 дней</b> после удаления аккаунта.</p>
+        <p className="text-danger">Ваш ник не будет доступен для регистрации ещё <b>90 дней</b> после удаления аккаунта.</p>
 
         <button className="btn btn-lg btn-danger w-100 mt-3" onClick={confirm} disabled={loading}>
             {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
@@ -171,7 +171,7 @@ const AccountDeletedStatePage = () => {
                 if (body.success) {
                     setStatus(body.response)
                 } else if (body.response.type === 'not_deleting') {
-                    Notifications.error('Ваш аккаунт не удаляется, вас не должно быть на этой странице...')
+                    Notifications.error('Ваш аккаунт не удаляется, Вас не должно быть на этой странице...')
                 } else {
                     Notifications.error(body.response.title)
                 }
@@ -184,7 +184,7 @@ const AccountDeletedStatePage = () => {
         return <></>
 
     return <OuterPage>
-        <h5 className="mb-4 text-center text-danger">Аккаунт {app.user.username} удален</h5>
+        <h5 className="mb-4 text-center text-danger">Аккаунт {app.user.username} удалён</h5>
 
         {loading && <div className="text-center"><Spinner size="lg" variant="secondary" /></div>}
         {!loading && !status && <div className="text-danger text-center">Ошибка</div>}

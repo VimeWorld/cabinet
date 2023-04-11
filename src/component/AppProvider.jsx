@@ -38,7 +38,7 @@ function AuthLoadError({ error, app }) {
     return <div className="vh-100 d-flex flex-column align-items-center justify-content-center">
         <h1 className='display-1'>Неполадки</h1>
         <h5 className='text-danger'>{error}</h5>
-        <p>Если ошибка повторяется, значит что-то не работает, попробуйте зайти позже.</p>
+        <p>Если ошибка повторяется, значит, что-то не работает, попробуйте зайти позже.</p>
         <div>
             <button className='btn btn-outline-primary' onClick={reload} disabled={reloading}>
                 {reloading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}

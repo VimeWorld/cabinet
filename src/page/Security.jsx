@@ -38,7 +38,7 @@ const PasswordCard = () => {
         }).then(r => r.json())
             .then(body => {
                 if (body.success) {
-                    Notifications.success('Пароль успешно изменен')
+                    Notifications.success('Пароль успешно изменён')
                     reset()
                     return
                 }
@@ -48,10 +48,10 @@ const PasswordCard = () => {
                         setError('new_password', { message: 'Нельзя установить такой пароль' }, { shouldFocus: true })
                         break
                     case 'invalid_credentials':
-                        setError('password', { message: 'Текущий пароль введен неправильно' }, { shouldFocus: true })
+                        setError('password', { message: 'Текущий пароль введён неправильно' }, { shouldFocus: true })
                         break
                     case 'passwords_equals':
-                        setError('new_password', { message: 'Старый и новый пароли не отличаются' }, { shouldFocus: true })
+                        setError('new_password', { message: 'Старый и новый пароли идентичны' }, { shouldFocus: true })
                         break
                     default:
                         Notifications.error(body.response.title)
@@ -191,7 +191,7 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
 
                 switch (body.response.type) {
                     case 'invalid_code':
-                        setError('code', { message: 'Введен неправильный код' }, { shouldFocus: true })
+                        setError('code', { message: 'Введён неправильный код' }, { shouldFocus: true })
                         break
                     default:
                         Notifications.error(body.response.title)
@@ -303,7 +303,7 @@ const ModalDisableMfa = ({ show, close, onDisable }) => {
 
                 switch (body.response.type) {
                     case 'invalid_code':
-                        setError('code', { message: 'Введен неправильный код' }, { shouldFocus: true })
+                        setError('code', { message: 'Введён неправильный код' }, { shouldFocus: true })
                         break
                     case 'not_active':
                         close()
@@ -371,7 +371,7 @@ const MfaCard = () => {
             'bg-gradient-green': app.theme === 'light' && app.user.mfa === 'completed',
         })}>
             <h4 className="mb-0">Двухэтапная аутентификация</h4>
-            <span>Дополнительная защита вашего аккаунта</span>
+            <span>Дополнительная защита Вашего аккаунта</span>
         </div>
 
         <div className="card-body">

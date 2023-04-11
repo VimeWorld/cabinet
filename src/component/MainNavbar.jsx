@@ -16,7 +16,7 @@ const themes = {
         icon: 'sun-fill',
     },
     'dark': {
-        name: 'Темная',
+        name: 'Тёмная',
         icon: 'moon-stars-fill',
     },
     'auto': {

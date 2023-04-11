@@ -49,7 +49,7 @@ const ServerBansCard = ({ name, url }) => {
                 } else if (body.response.type === 'not_possible') {
                     Notifications.error('Вы не можете купить разбан')
                 } else if (body.response.type === 'insufficient_funds') {
-                    Notifications.error('У вас недостаточно вимеров')
+                    Notifications.error('У Вас недостаточно вимеров')
                 } else {
                     Notifications.error('Ошибка сервера: ' + body.response.title)
                 }
@@ -60,7 +60,7 @@ const ServerBansCard = ({ name, url }) => {
     return <>
         {bans?.unban.possible && <div className="card-body pt-0">
             <div>
-                <span className="text-danger">У вас есть активные баны. </span>
+                <span className="text-danger">У Вас есть активные баны. </span>
                 Вы можете их снять за <b className="text-success">{ruPluralizeVimers(bans.unban.price)}</b>.
                 Однако учтите, что после каждого снятия бана стоимость повышается.
                 Соблюдайте <a href="https://vime.one/rules">правила</a>, чтобы это больше не повторялось!
@@ -84,7 +84,7 @@ const ServerBansCard = ({ name, url }) => {
                         onConfirm={() => navigate("/payments")}
                         title="Недостаточно вимеров"
                     >
-                        У вас недостаточно вимеров для снятия бана.<br />
+                        У Вас недостаточно вимеров для снятия бана.<br />
                         Ваш баланс <b className="text-success">{ruPluralizeVimers(app.user.cash)}</b><br />
                         Стоимость снятия бана <b className="text-success">{ruPluralizeVimers(bans.unban.price)}</b>
                     </ConfirmModal>
@@ -113,7 +113,7 @@ const ServerBansCard = ({ name, url }) => {
                     </td></tr>}
 
                     {bans?.bans.length === 0 && <tr><td className="text-center text-body-secondary" colSpan="5">
-                        У вас не было ни одного бана, святой Вы человек...
+                        У Вас не было ни одного бана, святой Вы человек...
                     </td></tr>}
 
                     {bans?.bans.map(b => {
@@ -136,7 +136,7 @@ const ServerBansCard = ({ name, url }) => {
                                     </OverlayTrigger>
                                 break
                             case "unban_moder":
-                                status = <span className="badge text-bg-success">Снят модером</span>
+                                status = <span className="badge text-bg-success">Снят модератором</span>
                                 break
                             case "unban_bought":
                                 status = <span className="badge text-bg-primary">Снят за вимеры</span>

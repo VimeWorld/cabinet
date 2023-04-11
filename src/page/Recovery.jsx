@@ -38,7 +38,7 @@ const RecoveryStep2Form = ({ token, username }) => {
         }).then(r => r.json())
             .then(body => {
                 if (body.success) {
-                    Notifications.success('Ваш пароль изменен. Теперь вы можете использовать его для входа в аккаунт.')
+                    Notifications.success('Ваш пароль изменён. Теперь Вы можете использовать его для входа в аккаунт.')
                     navigate('/login', { replace: true })
                     return
                 }
@@ -165,14 +165,14 @@ const RecoveryPage = () => {
             })
             const body = await response.json()
             if (response.ok) {
-                Notifications.success('Письмо с подтверждением было отправлено на вашу почту', { ttl: 30000 })
+                Notifications.success('Письмо с подтверждением было отправлено на Вашу почту', { ttl: 30000 })
             } else {
                 switch (body.response.type) {
                     case "invalid_credentials":
                         Notifications.error('Такой комбинации логина и почты не существует')
                         break
                     case "captcha":
-                        Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.')
+                        Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте ещё раз.')
                         break
                     case "throttle":
                         Notifications.error('Восстанавливать аккаунт можно только один раз в сутки')

@@ -3,6 +3,7 @@ import { Spinner } from "react-bootstrap"
 import useLoadPages from "../hook/useLoadPages"
 import { fetchApi } from "../lib/api"
 import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
+import { ruPluralize } from "../lib/i18n"
 
 const paymentDescription = (p) => {
     if (p.alias.startsWith('up_'))
@@ -22,9 +23,9 @@ const paymentDescription = (p) => {
         case "perm":
             return <>Покупка привилегий на сервере <b>{p.data.server}</b></>
         case "coins":
-            return <>Обмен на коины (<b>{p.data}</b> шт.)</>
+            return <>Обмен на коины (<b>{ruPluralize(p.data, ['коин', 'коина', 'коинов'])}</b>)</>
         case "aff":
-            return <>Награда за друга (<b>{p.data}</b> шт.)</>
+            return <>Награда за друга (<b>{ruPluralize(p.data, ['коин', 'коина', 'коинов'])}</b>)</>
         case "color":
             return <>Изменение цвета ника на <b>{p.data.color}</b></>
         case "civ_item":
@@ -59,11 +60,11 @@ const paymentDescription = (p) => {
                 <b>{p.data.seller || p.data.buyer}</b>
                 {p.data.desc ? ' - ' + p.data.desc : ''}
             </>
-        case "interkassa": return 'Пополнение через Интеркассу'
+        case "interkassa": return 'Пополнение через Interkassa'
         case "enot": return 'Пополнение через Enot.io'
         case "liqpay": return 'Пополнение через LiqPay'
         case "fondy": return 'Пополнение через Fondy'
-        case "fondy_check": return 'Пополнение через Fondy (Проходит ручную проверку)'
+        case "fondy_check": return 'Пополнение через Fondy (проходит ручную проверку)'
         case "paypalych": return 'Пополнение через PayPalych'
         case "vote": return 'Голосование за сервер'
         case "promo-code": return 'Активация промо-кода'

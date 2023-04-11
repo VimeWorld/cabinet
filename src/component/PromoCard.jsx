@@ -60,7 +60,7 @@ export const PromoCard = () => {
         <div className="card-header d-flex justify-content-between align-items-center">
             <div className="mb-0">
                 <h4 className="mb-0">Промо-код</h4>
-                <span>Если у вас есть промо-код, активируйте его и получите награду</span>
+                <span>Если у Вас есть промо-код, активируйте его и получите награду</span>
             </div>
             {pages.loading && <div>
                 <Spinner variant="secondary" />
@@ -113,7 +113,7 @@ export const PromoCard = () => {
                         </td></tr>}
 
                         {pages.items?.length === 0 && <tr><td className="text-center text-body-secondary" colSpan="3">
-                            Вы еще не активировали ни одного кода...
+                            Вы ещё не активировали ни одного кода...
                         </td></tr>}
 
                         {pages.items?.map(p => {

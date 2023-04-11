@@ -71,7 +71,7 @@ const TransferCard = () => {
                         setError('amount', { type: 'custom', message: 'Некорректное количество' })
                         break
                     case "insufficient_funds":
-                        setError('amount', { type: 'custom', message: 'У вас недостаточно вимеров' })
+                        setError('amount', { type: 'custom', message: 'У Вас недостаточно вимеров' })
                         fetchAuth()
                         break
                     default:
@@ -146,7 +146,7 @@ const TransferCard = () => {
                                 if (!Number.isInteger(val))
                                     return 'Можно передавать только целое количество'
                                 if (val > app.user.cash)
-                                    return 'У вас недостаточно вимеров'
+                                    return 'У Вас недостаточно вимеров'
                             }
                         })}
                         autoComplete="off"
@@ -297,11 +297,11 @@ const PriceCalculator = ({ amount }) => {
         <Popover.Body>
             {error && rates == null && <div className="text-danger text-center">Ошибка сервера</div>}
             {!error && <>
-                <Currency id="RUB" name="руб." />
-                <Currency id="UAH" name="грн." />
+                <Currency id="RUB" name="₽" />
+                <Currency id="UAH" name="₴" />
                 <Currency id="USD" name="$" />
                 <Currency id="EUR" name="€" />
-                <div className="pt-2">Стоимость 85 вимеров = 1 евро</div>
+                <div className="pt-2">Стоимость 85 вимеров = 1 €</div>
             </>}
         </Popover.Body>
     </>
@@ -375,8 +375,8 @@ const PayCard = () => {
 
     return <div className="card">
         <div className="card-header">
-            <h4 className="mb-0">Пополнение счета</h4>
-            <span>Вы можете пополнить свой счет на любое количество вимеров</span>
+            <h4 className="mb-0">Пополнение счёта</h4>
+            <span>Вы можете пополнить свой счёт на любое количество вимеров</span>
         </div>
         <div className="card-body">
             <form onSubmit={onSubmit} className="mb-3">

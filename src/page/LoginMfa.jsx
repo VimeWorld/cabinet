@@ -50,7 +50,7 @@ export const LoginMfaRecoveryPage = () => {
             } else {
                 switch (body.response.type) {
                     case "invalid_code":
-                        setError('code', { type: 'custom', message: 'Введен неправильный код' }, { shouldFocus: true })
+                        setError('code', { type: 'custom', message: 'Введён неправильный код' }, { shouldFocus: true })
                         break
                     case "throttle": {
                         const retryAfter = response.headers.get('Retry-After')
@@ -63,7 +63,7 @@ export const LoginMfaRecoveryPage = () => {
                         break
                     }
                     case "captcha":
-                        Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.')
+                        Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте ещё раз.')
                         break
                     default:
                         Notifications.error(body.response.title)
@@ -81,7 +81,7 @@ export const LoginMfaRecoveryPage = () => {
             <h4 className="mb-4 text-center">Восстановление аккаунта</h4>
 
             <Form.Group className="mb-3" controlId="code">
-                <Form.Label>Вам необходимо ввести один из кодов восстановления, которые вы получили при включении двухэтапной аутентификации</Form.Label>
+                <Form.Label>Вам необходимо ввести один из кодов восстановления, которые Вы получили при включении двухэтапной аутентификации</Form.Label>
                 <Form.Control
                     {...register('code', {
                         required: true,
@@ -146,7 +146,7 @@ export const LoginMfaPage = () => {
             } else {
                 switch (body.response.type) {
                     case "invalid_code":
-                        setError('code', { type: 'custom', message: 'Введен неправильный код' }, { shouldFocus: true })
+                        setError('code', { type: 'custom', message: 'Введён неправильный код' }, { shouldFocus: true })
                         break
                     case "throttle": {
                         const retryAfter = response.headers.get('Retry-After')
@@ -159,7 +159,7 @@ export const LoginMfaPage = () => {
                         break
                     }
                     case "captcha":
-                        Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте еще раз.')
+                        Notifications.error('Ошибка Recaptcha. Обновите страницу и попробуйте ещё раз.')
                         break
                     default:
                         Notifications.error(body.response.title)

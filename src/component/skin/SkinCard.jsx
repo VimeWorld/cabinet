@@ -40,7 +40,7 @@ const ModalSkin = ({ show, close }) => {
             .then(body => {
                 if (body.success) {
                     updateApp({ skinModified: Date.now() })
-                    Notifications.success('Скин успешно изменен')
+                    Notifications.success('Скин успешно изменён')
                     close()
                 } else {
                     switch (body.response.type) {
@@ -146,14 +146,14 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
                         capeExistsCache = true
                         fetchAuth()
                     } else {
-                        Notifications.success('Плащ успешно изменен')
+                        Notifications.success('Плащ успешно изменён')
                     }
                     onChanged?.()
                     close()
                 } else {
                     switch (body.response.type) {
                         case "insufficient_funds":
-                            Notifications.error('У вас недостаточно вимеров')
+                            Notifications.error('У Вас недостаточно вимеров')
                             close()
                             break
                         case "too_large":
@@ -182,8 +182,8 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
             </Modal.Header>
             <Modal.Body>
                 {!exists && <p>
-                    Стоимость плаща <b className="text-success">50 вимеров</b>.
-                    После покупки вы сможете менять плащ сколько угодно раз.
+                    Стоимость плаща: <b className="text-success">50 вимеров</b>.
+                    После покупки Вы сможете менять плащ сколько угодно.
                 </p>}
 
                 <p>
@@ -233,7 +233,7 @@ const SkinCard = () => {
     return <div className="card">
         <div className="card-header">
             <h4 className="mb-0">Скин и плащ</h4>
-            <span>Здесь вы можете изменить свой скин на всех серверах VimeWorld</span>
+            <span>Здесь Вы можете изменить свой скин на всех серверах VimeWorld</span>
         </div>
         <div ref={cardRef} className="card-body">
             <Suspense fallback={
