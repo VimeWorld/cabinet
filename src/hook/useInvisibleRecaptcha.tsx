@@ -20,8 +20,9 @@ function useInvisibleRecaptcha() {
             }
             value.current = await Promise.race([
                 rc.current?.executeAsync(),
-                // Таймаут 10 секунд, возвращает пустую строку
-                new Promise<string>(res => setTimeout(() => res(''), 10000)),
+                // Таймаут 60 секунд, возвращает пустую строку
+                // Пользователю может открыться интерфейс с картинками, он должен успеть за 60 секунд
+                new Promise<string>(res => setTimeout(() => res(''), 60000)),
             ])
             return value.current!
         }
