@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from "react"
+import { Fragment, useEffect, useMemo, useState } from "react"
 import { Form, OverlayTrigger, Placeholder, Popover, Spinner } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import { BalanceCard } from "../component/BalanceCard"
@@ -9,7 +9,6 @@ import { fetchApi } from "../lib/api"
 import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
 import { ruPluralizeVimers } from "../lib/i18n"
 import Notifications from "../lib/notifications"
-import { useEffect } from "react"
 
 const TransferCard = () => {
     const { app, fetchAuth } = useApp()
@@ -269,8 +268,6 @@ const PriceCalculator = ({ amount }) => {
     const [rates, setRates] = useState(null)
     const [error, setError] = useState(false)
     useEffect(() => {
-        if (rates)
-            return
         fetchApi('/payment/rates')
             .then(response => response.json())
             .then(body => {
@@ -280,7 +277,7 @@ const PriceCalculator = ({ amount }) => {
                     setError(true)
             })
             .catch(() => setError(true))
-    }, [rates])
+    }, [])
 
     amount = Math.min(Math.max(1, amount), 500000)
 
