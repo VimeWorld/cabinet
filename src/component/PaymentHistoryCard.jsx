@@ -43,6 +43,8 @@ const paymentDescription = (p) => {
             return <>Покупка предмета на <b>SkyBlock</b></>
         case "mod_item":
             return <>{p.data.name} на сервере <b>{p.data.server}</b></>
+        case "mg_item":
+            return <>{p.data.name} в игре <b>{p.data.game}</b></>
         case "hold":
             if (p.data.alias === 'trade' || p.data.alias === 'trade_shop')
                 return 'Заморозка вимеров на время сделки'

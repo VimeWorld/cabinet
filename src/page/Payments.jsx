@@ -200,12 +200,6 @@ const paysystems = [
         },
     },
     {
-        id: 'interkassa',
-        description: '(Криптовалюты, Perfect Money, AdvCash)',
-        img: <ThemedPaysystemImage img="interkassa-light.png" dark="interkassa-dark.png" />,
-        logos: [],
-    },
-    {
         id: 'paypalych',
         description: '(Visa / Mastercard / МИР, Криптовалюты)',
         img: <ThemedPaysystemImage img="paypalych-light.svg" dark="paypalych-dark.svg" />,
@@ -216,6 +210,12 @@ const paysystems = [
         },
     },
     {
+        id: 'interkassa',
+        description: '(Криптовалюты, Perfect Money, AdvCash)',
+        img: <ThemedPaysystemImage img="interkassa-light.png" dark="interkassa-dark.png" />,
+        logos: [],
+    },
+    /*{
         id: 'enot',
         description: '(Visa / Mastercard, ЮMoney, Криптовалюты)',
         img: <ThemedPaysystemImage img="enot-light.svg" dark="enot-dark.svg" />,
@@ -225,7 +225,7 @@ const paysystems = [
             message: 'Для РФ и Беларуси',
         },
     },
-    /*{
+    {
         id: 'unitpay',
         description: '(Visa / Mastercard, Qiwi, СБП, Yandex Pay)',
         img: <ThemedPaysystemImage img="unitpay.svg" dark="unitpay-dark.svg" />,
