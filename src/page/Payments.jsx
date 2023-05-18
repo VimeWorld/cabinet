@@ -359,7 +359,10 @@ const PayCard = () => {
                             Notifications.error('Выбранный метод оплаты не поддерживается')
                             break
                         case "invalid_amount":
-                            Notifications.error('Некорректная сумма пополнения')
+                            if (paysystem === 'paypalych' && amount < 15)
+                                Notifications.error('Минимальная сумма пополнения PayPalych - 15 вимеров')
+                            else
+                                Notifications.error('Некорректная сумма пополнения')
                             break
                         default:
                             Notifications.error('Ошибка сервера, попробуйте позже')
