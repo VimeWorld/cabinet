@@ -26,27 +26,27 @@ import DiscordLinkPage from './page/Discord'
 import OauthAuthorizePage from './page/OauthAutrorize'
 
 const router = createBrowserRouter(createRoutesFromElements(
-    <Route path='/' element={<Root />} >
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/login/mfa' element={<LoginMfaPage />} />
-        <Route path='/login/mfa/recovery' element={<LoginMfaRecoveryPage />} />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/recovery' element={<RecoveryPage />} />
-        <Route path='/recovery/step2' element={<RecoveryStep2Page />} />
-        <Route path='/confirm_transaction' element={<TransactionConfirmPage />} />
-        <Route path='/discord' element={<DiscordLinkPage />} />
-        <Route path='/account_delete' element={<AccountDeleteRequestPage />} />
-        <Route path='/account_deleted' element={<AccountDeletedStatePage />} />
-        <Route path='/oauth/authorize' element={<OauthAuthorizePage />} />
-        <Route path='/' element={<InnerPage />}>
-            <Route path='/' element={<HomePage />} />
-            <Route path='/payments' element={<PaymentsPage />} />
-            <Route path='/security' element={<SecurityPage />} />
-            <Route path='/bans' element={<BansPage />} />
-            <Route path='/minigames/donate' element={<MinigamesDonatePage />} />
-            <Route path='/minigames/guild' element={<MinigamesGuildPage />} />
+    <Route path='/' Component={Root} >
+        <Route path='/login' Component={LoginPage} />
+        <Route path='/login/mfa' Component={LoginMfaPage} />
+        <Route path='/login/mfa/recovery' Component={LoginMfaRecoveryPage} />
+        <Route path='/register' Component={RegisterPage} />
+        <Route path='/recovery' Component={RecoveryPage} />
+        <Route path='/recovery/step2' Component={RecoveryStep2Page} />
+        <Route path='/confirm_transaction' Component={TransactionConfirmPage} />
+        <Route path='/discord' Component={DiscordLinkPage} />
+        <Route path='/account_delete' Component={AccountDeleteRequestPage} />
+        <Route path='/account_deleted' Component={AccountDeletedStatePage} />
+        <Route path='/oauth/authorize' Component={OauthAuthorizePage} />
+        <Route path='/' Component={InnerPage}>
+            <Route path='/' Component={HomePage} />
+            <Route path='/payments' Component={PaymentsPage} />
+            <Route path='/security' Component={SecurityPage} />
+            <Route path='/bans' Component={BansPage} />
+            <Route path='/minigames/donate' Component={MinigamesDonatePage} />
+            <Route path='/minigames/guild' Component={MinigamesGuildPage} />
         </Route>
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="*" Component={NotFoundPage} />
     </Route>
 ))
 
