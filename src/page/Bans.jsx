@@ -94,7 +94,7 @@ const ServerBansCard = ({ name, url }) => {
 
         <div className="card-table table-responsive">
             <table className="table table-payments">
-                <thead className="bg-tertiary">
+                <thead className="table-tertiary">
                     <tr>
                         <th scope="col" className="border-bottom-0">Выдан</th>
                         <th scope="col" className="border-bottom-0">До</th>

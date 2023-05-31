@@ -108,7 +108,7 @@ const TableRankComparison = () => {
     const checkOn = <i className="bi bi-check-circle-fill text-success"></i>
 
     return <table className="table">
-        <thead className="bg-tertiary">
+        <thead className="table-tertiary">
             <tr>
                 <th style={{ minWidth: 200 }}></th>
                 <th width="120px" style={{ color: "#00BE00" }}>VIP</th>

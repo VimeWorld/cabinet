@@ -1,14 +1,13 @@
+:root {
+  --bs-heading-color: var(--bs-emphasis-color);
+}
+
 body {
   background-color: #f5f4f8;
 }
 [data-bs-theme="dark"] body {
   background-color: #121212;
 }
-
-/* Какой-то прикол
-[data-bs-theme="dark"] .form-control {
-  background-color: var(--bs-body-bg);
-}*/
 
 .navbar-brand {
   transition: color 0.25s ease-in-out;
@@ -39,6 +38,9 @@ body {
 }
 .bg-tertiary {
   background-color: var(--bs-tertiary-bg);
+}
+.table-tertiary {
+  --bs-table-bg: var(--bs-tertiary-bg);
 }
 
 .card {

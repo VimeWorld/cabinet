@@ -94,7 +94,7 @@ export const PromoCard = () => {
         {pages.isLoadRequested ?
             <div className="card-table table-responsive">
                 <table className="table">
-                    <thead className="bg-tertiary">
+                    <thead className="table-tertiary">
                         <tr>
                             <th scope="col" className="border-bottom-0">Код</th>
                             <th scope="col" className="border-bottom-0">Дата</th>
