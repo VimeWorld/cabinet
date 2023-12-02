@@ -54,12 +54,14 @@ const paymentDescription = (p) => {
                 {'Торговля с игроком '}
                 <b>{p.data.recipient || p.data.sender}</b>
                 {p.data.desc ? ' - ' + p.data.desc : ''}
+                {p.data.instance ? ' на ' + <b>p.data.instance</b> : ''}
             </>
         case "trade_shop":
             return <>
                 {p.amount > 0 ? 'Продажа игроку ' : 'Покупка у игрока '}
                 <b>{p.data.seller || p.data.buyer}</b>
                 {p.data.desc ? ' - ' + p.data.desc : ''}
+                {p.data.instance ? ' на ' + <b>p.data.instance</b> : ''}
             </>
         case "interkassa": return 'Пополнение через Interkassa'
         case "enot": return 'Пополнение через Enot.io'
