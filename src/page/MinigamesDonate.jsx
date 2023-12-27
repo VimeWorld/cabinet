@@ -387,11 +387,11 @@ const ExchangeBonusMessage = () => {
     if (!app.user.config.exchange_bonus)
         return <></>
 
-    return <div className="p-3 mb-3 bg-warning-subtle text-warning" style={{
-        borderLeft: "0.25rem solid var(--bs-warning-border-subtle)",
+    return <div className="p-3 mb-3 bg-info-subtle text-info" style={{
+        borderLeft: "0.25rem solid var(--bs-info-border-subtle)",
     }}>
-        <p><b>Черная пятница 2023</b></p>
-        C <b>24.11.2023</b> по <b>25.11.2023</b> включительно действует бонус <b className={classNames({
+        <p><b>Поздравляем с Новым 2024 годом!</b></p>
+        C <b>31.12.2023</b> по <b>02.01.2024</b> включительно действует бонус <b className={classNames({
             "text-body-emphasis": app.theme === 'dark',
             "text-body-secondary": app.theme === 'light',
         })}>х2</b> на обмен!<br />
