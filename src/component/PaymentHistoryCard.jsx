@@ -53,22 +53,22 @@ const paymentDescription = (p) => {
             return <>
                 {'Торговля с игроком '}
                 <b>{p.data.recipient || p.data.sender}</b>
-                {p.data.desc ? ' - ' + p.data.desc : ''}
-                {p.data.instance ? ' на ' + <b>p.data.instance</b> : ''}
+                {p.data.desc ? <> - {p.data.desc}</> : ''}
+                {p.data.instance ? <> на <b>{p.data.instance}</b></> : ''}
             </>
         case "trade_shop":
             return <>
                 {p.amount > 0 ? 'Продажа игроку ' : 'Покупка у игрока '}
                 <b>{p.data.seller || p.data.buyer}</b>
-                {p.data.desc ? ' - ' + p.data.desc : ''}
-                {p.data.instance ? ' на ' + <b>p.data.instance</b> : ''}
+                {p.data.desc ? <> - {p.data.desc}</> : ''}
+                {p.data.instance ? <> на <b>{p.data.instance}</b></> : ''}
             </>
-        case "interkassa": return 'Пополнение через Interkassa'
-        case "enot": return 'Пополнение через Enot.io'
-        case "liqpay": return 'Пополнение через LiqPay'
-        case "fondy": return 'Пополнение через Fondy'
-        case "fondy_check": return 'Пополнение через Fondy (проходит ручную проверку)'
-        case "paypalych": return 'Пополнение через PayPalych'
+        case "interkassa": return <>Пополнение через <b className="text-success">Interkassa</b></>
+        case "enot": return <>Пополнение через <b className="text-success">Enot.io</b></>
+        case "liqpay": return <>Пополнение через <b className="text-success">LiqPay</b></>
+        case "fondy": return <>Пополнение через <b className="text-success">Fondy</b></>
+        case "fondy_check": return <>Пополнение через <b className="text-success">Fondy</b> (проходит ручную проверку)</>
+        case "paypalych": return <>Пополнение через <b className="text-success">PayPalych</b></>
         case "vote": return 'Голосование за сервер'
         case "promo-code": return 'Активация промо-кода'
         case "admin": return 'Администрация VimeWorld'
