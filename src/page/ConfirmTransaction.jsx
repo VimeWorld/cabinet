@@ -99,6 +99,9 @@ const TransactionConfirmPage = () => {
                 {payment.data.desc && <Row name="Описание">
                     {payment.data.desc}
                 </Row>}
+                {payment.data.instance && <Row name="Сервер / Игра">
+                    {payment.data.instance}
+                </Row>}
             </>
             break
         case "trade_shop":
@@ -113,6 +116,9 @@ const TransactionConfirmPage = () => {
                 <Row name="Предмет">
                     {payment.data.desc}
                 </Row>
+                {payment.data.instance && <Row name="Сервер / Игра">
+                    {payment.data.instance}
+                </Row>}
             </>
             break
         default:
