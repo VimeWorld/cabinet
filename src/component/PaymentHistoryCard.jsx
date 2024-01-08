@@ -6,7 +6,7 @@ import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
 
 const paymentDescription = (p) => {
     if (p.alias.startsWith('up_'))
-        return 'Пополнение через Unitpay'
+        return <>Пополнение через <b>Unitpay</b></>
     switch (p.alias) {
         case "unban":
             return p.data ? <>Снятие бана на сервере: <b>{p.data.server}</b></> : 'Снятие бана'
