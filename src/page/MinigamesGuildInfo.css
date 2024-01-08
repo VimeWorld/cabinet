@@ -41,3 +41,8 @@ h5 {
 h6 {
   font-size: 1rem;
 }
+
+/* Цвет плейсхолдера */
+.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before{
+  color: inherit;
+}

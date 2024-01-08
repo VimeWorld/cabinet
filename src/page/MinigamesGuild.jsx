@@ -55,9 +55,9 @@ const InfoCard = ({ guild }) => {
             .finally(() => setLoading(false))
     }
 
-    let textColor = app.theme === 'dark' ? '#ccc' : '#555'
-    let bgColor = app.theme === 'dark' ? '#212529' : '#fff'
-    let innerCss = infoCss + `
+    const textColor = app.theme === 'dark' ? '#ccc' : '#555'
+    const bgColor = app.theme === 'dark' ? '#212529' : '#fff'
+    const innerCss = infoCss + `
     body{
         color: ${textColor};
         background-color: ${bgColor};
