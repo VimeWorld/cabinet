@@ -209,12 +209,6 @@ const paysystems = [
             message: 'Для РФ и Беларуси',
         },
     },
-    {
-        id: 'interkassa',
-        description: '(Криптовалюты, Perfect Money, AdvCash)',
-        img: <ThemedPaysystemImage img="interkassa-light.png" dark="interkassa-dark.png" />,
-        logos: [],
-    },
     /*{
         id: 'enot',
         description: '(Visa / Mastercard, ЮMoney, Криптовалюты)',
