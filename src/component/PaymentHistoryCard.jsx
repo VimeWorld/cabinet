@@ -69,6 +69,8 @@ const paymentDescription = (p) => {
         case "fondy": return <>Пополнение через <b className="text-success">Fondy</b></>
         case "fondy_check": return <>Пополнение через <b className="text-success">Fondy</b> (проходит ручную проверку)</>
         case "paypalych": return <>Пополнение через <b className="text-success">PayPalych</b></>
+        case "tome.ge": return <>Пополнение через <b className="text-success">Tome</b></>
+        case "cryptomus": return <>Пополнение через <b className="text-success">Cryptomus</b></>
         case "vote": return 'Голосование за сервер'
         case "promo-code": return 'Активация промо-кода'
         case "admin": return 'Администрация VimeWorld'

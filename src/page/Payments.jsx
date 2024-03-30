@@ -191,7 +191,7 @@ const logos = {
 const paysystems = [
     {
         id: 'fondy',
-        description: '(Visa / Mastercard / Google Pay / Apple Pay)',
+        description: 'Visa / Mastercard, Google Pay / Apple Pay',
         img: <ThemedPaysystemImage img="fondy-main-light.svg" dark="fondy-main-dark.svg" />,
         logos: ['visa', 'mastercard', 'googlepay'],
         filter: {
@@ -200,19 +200,9 @@ const paysystems = [
         },
     },
     {
-        id: 'paypalych',
-        description: '(Visa / Mastercard / МИР, Криптовалюты)',
-        img: <ThemedPaysystemImage img="paypalych-light.svg" dark="paypalych-dark.svg" />,
-        logos: ['visa', 'mastercard'],
-        filter: {
-            test: user => ['RU', 'BY'].includes(user.client_country),
-            message: 'Для РФ и Беларуси',
-        },
-    },
-    /*{
-        id: 'enot',
-        description: '(Visa / Mastercard, ЮMoney, Криптовалюты)',
-        img: <ThemedPaysystemImage img="enot-light.svg" dark="enot-dark.svg" />,
+        id: 'unitpay',
+        description: 'Банковская карта, Yandex Pay',
+        img: <ThemedPaysystemImage img="unitpay.svg" dark="unitpay-dark.svg" />,
         logos: ['visa', 'mastercard', 'mir'],
         filter: {
             test: user => ['RU', 'BY'].includes(user.client_country),
@@ -220,10 +210,27 @@ const paysystems = [
         },
     },
     {
-        id: 'unitpay',
-        description: '(Visa / Mastercard, Qiwi, СБП, Yandex Pay)',
-        img: <ThemedPaysystemImage img="unitpay.svg" dark="unitpay-dark.svg" />,
-        logos: ['visa', 'mastercard', 'mir', 'sbp', 'googlepay'],
+        id: 'paypalych',
+        description: 'Банковская карта, СБП',
+        img: <ThemedPaysystemImage img="paypalych-light.svg" dark="paypalych-dark.svg" />,
+        logos: ['visa', 'mastercard'],
+    },
+    {
+        id: 'cryptomus',
+        description: 'Криптовалюты',
+        img: <ThemedPaysystemImage img="cryptomus-light.svg" dark="cryptomus-dark.svg" />,
+    },
+    /*{
+        id: 'tome',
+        description: 'Банковская карта, СБП',
+        img: <ThemedPaysystemImage img="tome-light.svg" dark="tome-dark.svg" />,
+        logos: ['visa', 'mastercard'],
+    },
+    {
+        id: 'enot',
+        description: '(Visa / Mastercard, ЮMoney, Криптовалюты)',
+        img: <ThemedPaysystemImage img="enot-light.svg" dark="enot-dark.svg" />,
+        logos: ['visa', 'mastercard', 'mir'],
         filter: {
             test: user => ['RU', 'BY'].includes(user.client_country),
             message: 'Для РФ и Беларуси',
