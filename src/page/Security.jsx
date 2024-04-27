@@ -6,6 +6,7 @@ import useApp from "../hook/useApp"
 import { useTitle } from "../hook/useTitle"
 import { fetchApi } from "../lib/api"
 import Notifications from "../lib/notifications"
+import { QRCodeSVG } from "qrcode.react"
 
 const PasswordCard = () => {
     const {
@@ -226,11 +227,7 @@ const ModalSetupMfa = ({ show, close, onEnable }) => {
                     </div>}
                     {secret && <>
                         <div className="col-12 col-sm-6 text-center">
-                            <img
-                                className="rounded"
-                                width="200px"
-                                height="200px"
-                                src={"https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=" + encodeURIComponent(otpurl)} />
+                            <QRCodeSVG className="m-2" value={otpurl} size={200} />
                         </div>
                         <div className="col-12 col-sm-6 d-flex flex-column align-items-middle justify-content-center">
                             <div className="mb-sm-4">
