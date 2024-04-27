@@ -17,7 +17,7 @@ const Vimers = ({ amount }) => {
 const User = ({ username }) => {
     return <div className="d-flex justify-content-end align-items-center">
         <img
-            src={"https://skin.vimeworld.com/helm/3d/" + username + "/" + rowHeight + ".png"}
+            src={"https://skin.vimeworld.com/helm/3d/" + username + "/" + (rowHeight*2) + ".png"}
             alt={username}
             height={rowHeight}
             width={rowHeight}

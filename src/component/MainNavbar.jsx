@@ -70,7 +70,7 @@ const UserBox = () => {
                 height="26"
                 className="m-n1"
                 alt={app.user.username}
-                src={`https://skin.vimeworld.com/helm/3d/${app.user.username}/26.png${anticache}`}
+                src={`https://skin.vimeworld.com/helm/3d/${app.user.username}/52.png${anticache}`}
             />
             <span className="ms-2">{app.user.username}</span>
         </span>}>

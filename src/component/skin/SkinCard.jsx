@@ -4,10 +4,11 @@ import useApp from "../../hook/useApp"
 import { fetchApi } from "../../lib/api"
 import { EventBus, EVENT_LOGOUT } from "../../lib/eventbus"
 import Notifications from "../../lib/notifications"
+import { Link } from "react-router-dom"
 
 const SkinViewer3d = lazy(() => import("./SkinViewer3d"))
 
-const maxSizeKb = 50
+const maxSizeKb = 100
 let capeExistsCache = null
 
 EventBus.on(EVENT_LOGOUT, () => {
@@ -48,7 +49,10 @@ const ModalSkin = ({ show, close }) => {
                             Notifications.error(`Максимальный размер скина ${maxSizeKb}кб`)
                             break
                         case "invalid_dimension":
-                            Notifications.error('Размеры скина должны быть 64x64 или 64x32')
+                            Notifications.error('Размеры скина должны быть 64x64, 64x32 или 128x128')
+                            break
+                        case 'not_prime':
+                            Notifications.error('Вы должны иметь Prime для загрузки скина 128x128')
                             break
                         case "not_png":
                             Notifications.error('Файл скина должен быть .png файлом')
@@ -71,7 +75,7 @@ const ModalSkin = ({ show, close }) => {
             <Modal.Body>
                 <p>
                     Скин должен быть в формате <code>.png</code>.
-                    Размеры скина должны быть <code>64x64</code> или <code>64х32</code>.
+                    Размеры скина должны быть <code>64x64</code> или <code>64х32</code>. Игроки с <Link to="/minigames/prime">Prime</Link> могут устанавливать скины <code>128x128</code>.
                 </p>
 
                 <input ref={file} className="form-control mb-3" type="file" required accept="image/png" />

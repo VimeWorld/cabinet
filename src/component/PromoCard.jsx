@@ -48,6 +48,9 @@ export const PromoCard = () => {
                     case 'not_exists':
                         setError('promo', { message: 'Такого промо-кода не существует' }, { shouldFocus: true })
                         break
+                    case 'already_prime':
+                        setError('promo', { message: 'Этот промо-код активирует подписку Prime, но у вас она уже активна' }, { shouldFocus: true })
+                        break
                     default:
                         Notifications.error(body.response.title)
                 }

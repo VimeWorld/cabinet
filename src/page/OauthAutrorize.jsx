@@ -94,7 +94,7 @@ const ConsentScreen = ({ data }) => {
 
     return <>
         <div className="mb-3 d-flex justify-content-between align-items-center" style={{ height: 80 }}>
-            <img width="80" height="80" src={`https://skin.vimeworld.com/helm/3d/${app.user.username}/80.png`} />
+            <img width="80" height="80" src={`https://skin.vimeworld.com/helm/3d/${app.user.username}/160.png`} />
             <i className="bi bi-arrow-left-right fs-2 opacity-25" />
             {logo}
         </div>

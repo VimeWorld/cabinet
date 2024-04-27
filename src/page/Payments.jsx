@@ -219,6 +219,7 @@ const paysystems = [
         id: 'cryptomus',
         description: 'Криптовалюты',
         img: <ThemedPaysystemImage img="cryptomus-light.svg" dark="cryptomus-dark.svg" />,
+        logos: [],
     },
     /*{
         id: 'tome',

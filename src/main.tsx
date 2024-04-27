@@ -24,6 +24,7 @@ import TransactionConfirmPage from './page/ConfirmTransaction'
 import { AccountDeletedStatePage, AccountDeleteRequestPage } from './page/AccountDelete'
 import DiscordLinkPage from './page/Discord'
 import OauthAuthorizePage from './page/OauthAutrorize'
+import MinigamesPrimePage from './page/MinigamesPrime'
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path='/' Component={Root} >
@@ -43,6 +44,7 @@ const router = createBrowserRouter(createRoutesFromElements(
             <Route path='/payments' Component={PaymentsPage} />
             <Route path='/security' Component={SecurityPage} />
             <Route path='/bans' Component={BansPage} />
+            <Route path='/minigames/prime' Component={MinigamesPrimePage} />
             <Route path='/minigames/donate' Component={MinigamesDonatePage} />
             <Route path='/minigames/guild' Component={MinigamesGuildPage} />
         </Route>

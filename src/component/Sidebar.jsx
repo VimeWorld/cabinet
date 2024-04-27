@@ -94,6 +94,7 @@ const Sidebar = () => {
                     </ul>
                     <div className="nav-header p-1 mb-1">Minigames</div>
                     <ul className="nav nav-pills flex-column">
+                        <MenuItem to="/minigames/prime" icon="bi-star">Подписка Prime</MenuItem>
                         <MenuItem to="/minigames/donate" icon="bi-cash-coin">Изменение статуса</MenuItem>
                         <MenuItem to="/minigames/guild" icon="bi-people">Управление гильдией</MenuItem>
                     </ul>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { IdPagination } from "../component/Pagination"
 
 interface Pagination {
@@ -26,7 +26,7 @@ const useLoadPages = (
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
-    const load = () => {
+    const load = useCallback(() => {
         if (loading || !loadRequested.current) return
         setLoading(true)
         request(id).then(response => {
@@ -42,7 +42,7 @@ const useLoadPages = (
         }).finally(() =>
             setLoading(false)
         )
-    }
+    }, [id, loading])
 
     useEffect(load, [id])
 

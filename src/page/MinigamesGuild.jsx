@@ -147,7 +147,7 @@ const AvatarCard = ({ guild }) => {
         if (loading) return
         const avatar = file.current.files[0]
 
-        const maxSizeKb = 100
+        const maxSizeKb = 500
         if (avatar.size >= maxSizeKb * 1024) {
             Notifications.error(`Максимальный размер аватара ${maxSizeKb}кб`)
             return
@@ -169,6 +169,9 @@ const AvatarCard = ({ guild }) => {
                         case 'not_guild_owner':
                             Notifications.error('Вы не являетесь лидером гильдии')
                             break
+                        case 'not_prime':
+                            Notifications.error('Вы должны иметь Prime для загрузки GIF аватара')
+                            break
                         case "too_large":
                             Notifications.error(`Максимальный размер аватара ${maxSizeKb}кб`)
                             break
@@ -176,7 +179,7 @@ const AvatarCard = ({ guild }) => {
                             Notifications.error('Размеры аватара должны быть 140x140')
                             break
                         case "not_an_image":
-                            Notifications.error('Файл аватара должен быть .png или .jpg изображением')
+                            Notifications.error('Файл аватара должен быть .png, .jpg или .gif изображением')
                             break
                         default:
                             Notifications.error(body.response.title)
@@ -201,7 +204,7 @@ const AvatarCard = ({ guild }) => {
                     </div>
                     <div className='flex-grow-1 ms-sm-4 ms-md-0 ms-lg-4 d-flex align-items-center justify-content-center flex-column'>
                         <div className='flex-grow-1 w-100 py-3'>
-                            <label htmlFor='avatar_file' className='mb-1'>Аватар должен быть 140х140 в формате <code>.png</code> или <code>.jpg</code></label>
+                            <label htmlFor='avatar_file' className='mb-1'>Аватар должен быть 140x140 в формате <code>.png</code>, <code>.jpg</code> или <code>.gif</code> (только для Prime).</label>
                             <input ref={file} className="form-control" type="file" id="avatar_file" required accept=".jpeg,.jpg,.png" />
                         </div>
                         <div className='flex-shrink-1 text-end w-100'>

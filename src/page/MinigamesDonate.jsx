@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Form, OverlayTrigger, ProgressBar, Spinner, Tooltip } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import useApp from "../hook/useApp"
@@ -8,6 +8,7 @@ import { fetchApi } from "../lib/api"
 import { EventBus, EVENT_MINIGAMES_PROFILE_UPDATED } from "../lib/eventbus"
 import { ruPluralizeVimers } from "../lib/i18n"
 import Notifications from "../lib/notifications"
+import useMinigamesProfile from "../hook/userMinigamesProfile"
 
 const max = 5000
 const segments = [{
@@ -237,7 +238,7 @@ const TableRankComparison = () => {
             </tr>
             <tr>
                 <td>
-                    Создание своих серверов
+                    Создание приватных игр
                     <OverlayTrigger overlay={<Tooltip>
                         С помощью команды
                         <br />
@@ -475,62 +476,24 @@ const KindnessRowCard = ({ profile }) => {
 
 const MinigamesDonatePage = () => {
     useTitle('Статус на MiniGames')
-    const [loading, setLoading] = useState(true)
-    const [profile, setProfile] = useState(null)
-    const [error, setError] = useState(false)
-    const { app } = useApp()
+    const profile = useMinigamesProfile()
 
-    useEffect(() => {
-        setLoading(true)
-        setError(false)
-        setProfile(null)
-        fetchApi('/server/minigames/profile')
-            .then(r => r.json())
-            .then(body => {
-                if (body.success)
-                    setProfile(body.response)
-                else if (body.error && body.response.type === 'no_profile_exists')
-                    setProfile({
-                        id: -1,
-                        donated: 0,
-                        exp: 0,
-                        coins: 8000,
-                        last_seen: "1970-01-01T03:00:00+03:00",
-                        rank: "",
-                        rank_donate: "",
-                        rank_donate_expire: "1970-01-01T03:00:00+03:00",
-                        rank_full: "",
-                        username: app.user.username,
-                        online: 0,
-                    })
-                else
-                    setError(true)
-            })
-            .catch(() => setError(true))
-            .finally(() => setLoading(false))
-    }, [])
-
-    useEffect(() => {
-        return EventBus.on(EVENT_MINIGAMES_PROFILE_UPDATED, update => setProfile(update))
-    }, [])
-
-    if (!profile)
+    if (!profile.profile)
         return <div className='card'>
             <div className="card-header">
                 <h4 className="mb-0">Статус на MiniGames</h4>
                 <span>Обмен вимеров на коины и получение донатного статуса</span>
             </div>
             <div className='card-body'>
-                {loading && <div className='text-center'><Spinner variant='secondary' /></div>}
-                {error && <div className='text-center text-danger'>При загрузке произошла ошибка</div>}
-                {!loading && !error && <div className='text-center text-body-secondary'>Вы еще ни разу не заходили на MiniGames</div>}
+                {profile.loading && <div className='text-center'><Spinner variant='secondary' /></div>}
+                {profile.error && <div className='text-center text-danger'>При загрузке произошла ошибка</div>}
             </div>
         </div>
 
     return <>
         <div className='row mb-4'>
             <div className='col'>
-                <KindnessRowCard profile={profile} />
+                <KindnessRowCard profile={profile.profile} />
             </div>
         </div>
     </>
