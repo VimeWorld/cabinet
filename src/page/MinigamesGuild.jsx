@@ -147,7 +147,7 @@ const AvatarCard = ({ guild }) => {
         if (loading) return
         const avatar = file.current.files[0]
 
-        const maxSizeKb = 500
+        const maxSizeKb = 1000
         if (avatar.size >= maxSizeKb * 1024) {
             Notifications.error(`Максимальный размер аватара ${maxSizeKb}кб`)
             return
@@ -205,7 +205,7 @@ const AvatarCard = ({ guild }) => {
                     <div className='flex-grow-1 ms-sm-4 ms-md-0 ms-lg-4 d-flex align-items-center justify-content-center flex-column'>
                         <div className='flex-grow-1 w-100 py-3'>
                             <label htmlFor='avatar_file' className='mb-1'>Аватар должен быть 140x140 в формате <code>.png</code>, <code>.jpg</code> или <code>.gif</code> (только для Prime).</label>
-                            <input ref={file} className="form-control" type="file" id="avatar_file" required accept=".jpeg,.jpg,.png" />
+                            <input ref={file} className="form-control" type="file" id="avatar_file" required accept=".jpeg,.jpg,.png,.gif" />
                         </div>
                         <div className='flex-shrink-1 text-end w-100'>
                             {guild.avatar && <>

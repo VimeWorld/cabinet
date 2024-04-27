@@ -8,7 +8,7 @@ import { Link } from "react-router-dom"
 
 const SkinViewer3d = lazy(() => import("./SkinViewer3d"))
 
-const maxSizeKb = 100
+const maxSizeKb = 150
 let capeExistsCache = null
 
 EventBus.on(EVENT_LOGOUT, () => {
