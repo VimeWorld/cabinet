@@ -213,7 +213,11 @@ const paysystems = [
         id: 'paypalych',
         description: 'Банковская карта, СБП',
         img: <ThemedPaysystemImage img="paypalych-light.svg" dark="paypalych-dark.svg" />,
-        logos: ['visa', 'mastercard'],
+        logos: ['sbp'],
+        filter: {
+            test: user => ['RU'].includes(user.client_country),
+            message: 'Для РФ',
+        },
     },
     {
         id: 'cryptomus',
@@ -221,7 +225,7 @@ const paysystems = [
         img: <ThemedPaysystemImage img="cryptomus-light.svg" dark="cryptomus-dark.svg" />,
         logos: [],
     },
-    /*{
+    {
         id: 'tome',
         description: 'Банковская карта, СБП',
         img: <ThemedPaysystemImage img="tome-light.svg" dark="tome-dark.svg" />,
@@ -236,7 +240,17 @@ const paysystems = [
             test: user => ['RU', 'BY'].includes(user.client_country),
             message: 'Для РФ и Беларуси',
         },
-    },*/
+    },
+    {
+        id: 'freekassa',
+        description: 'Банковская карта P2P от 1000 вим, ЮMoney, Steam',
+        img: <ThemedPaysystemImage img="freekassa-light.svg" dark="freekassa-dark.svg" />,
+        logos: ['visa', 'mastercard', 'mir'],
+        filter: {
+            test: user => ['RU', 'UA'].includes(user.client_country),
+            message: 'Для Украины и РФ',
+        },
+    },
 ]
 
 const PaysystemListElement = ({ paysystem, checked, onChange }) => {
@@ -313,10 +327,16 @@ const PayCard = () => {
     const [showHidden, setShowHidden] = useState(false)
 
     const [psVisible, logoList, hasHidden] = useMemo(() => {
-        const psVisible = paysystems.filter(p => !p.filter || p.filter.test(app.user))
-        const hasHidden = paysystems.length !== psVisible.length
+        // Список и порядок определяется сервером
+        const list = app.user.config.payment_methods.map(name => {
+            return paysystems.find(p => p.id === name)
+        }).filter(p => p)
+        console.log(list)
+
+        const psVisible = list.filter(p => !p.filter || p.filter.test(app.user))
+        const hasHidden = list.length !== psVisible.length
         if (showHidden)
-            paysystems.filter(p => !psVisible.find(p0 => p0.id === p.id))
+            list.filter(p => !psVisible.find(p0 => p0.id === p.id))
                 .forEach(p => psVisible.push(p))
         const logoList = new Set([].concat(...psVisible.map(p => p.logos)))
         return [psVisible, logoList, hasHidden]

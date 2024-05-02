@@ -21,6 +21,7 @@ interface AppContextType {
 
 interface ConfigType {
     exchange_bonus: boolean;
+    payment_methods: string[];
 }
 
 interface UserType {
