@@ -251,6 +251,16 @@ const paysystems = [
             message: 'Для Украины и РФ',
         },
     },
+    {
+        id: 'tebex',
+        description: 'Банковская карта, Google Pay, Apple Pay, PayPal',
+        img: <ThemedPaysystemImage img="tebex-light.svg" dark="tebex-dark.svg" />,
+        logos: ['visa', 'mastercard', 'googlepay'],
+        filter: {
+            test: user => !['RU', 'BY'].includes(user.client_country),
+            message: 'Недоступно в РФ и Беларуси',
+        },
+    },
 ]
 
 const PaysystemListElement = ({ paysystem, checked, onChange }) => {
@@ -331,7 +341,6 @@ const PayCard = () => {
         const list = app.user.config.payment_methods.map(name => {
             return paysystems.find(p => p.id === name)
         }).filter(p => p)
-        console.log(list)
 
         const psVisible = list.filter(p => !p.filter || p.filter.test(app.user))
         const hasHidden = list.length !== psVisible.length
