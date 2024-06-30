@@ -74,6 +74,7 @@ const paymentDescription = (p) => {
         case "tome.ge": return <>Пополнение через <b className="text-success">Tome</b></>
         case "cryptomus": return <>Пополнение через <b className="text-success">Cryptomus</b></>
         case "tebex": return <>Пополнение через <b className="text-success">Tebex</b></>
+        case "stripe": return <>Пополнение через <b className="text-success">Stripe</b></>
         case "vote": return 'Голосование за сервер'
         case "promo-code": return 'Активация промо-кода'
         case "admin": return 'Администрация VimeWorld'

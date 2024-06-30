@@ -261,6 +261,16 @@ const paysystems = [
             message: 'Недоступно в РФ и Беларуси',
         },
     },
+    {
+        id: 'stripe',
+        description: 'Банковская карта, Google Pay, Apple Pay, PayPal',
+        img: <ThemedPaysystemImage img="stripe.svg" dark="stripe.svg" />,
+        logos: ['visa', 'mastercard', 'googlepay'],
+        filter: {
+            test: user => !['RU', 'BY'].includes(user.client_country),
+            message: 'Недоступно в РФ и Беларуси',
+        },
+    },
 ]
 
 const PaysystemListElement = ({ paysystem, checked, onChange }) => {
