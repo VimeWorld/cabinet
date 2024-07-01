@@ -263,12 +263,22 @@ const paysystems = [
     },
     {
         id: 'stripe',
-        description: 'Банковская карта, Google Pay, Apple Pay, PayPal',
+        description: 'Банковская карта, Google Pay, Apple Pay',
         img: <ThemedPaysystemImage img="stripe.svg" dark="stripe.svg" />,
         logos: ['visa', 'mastercard', 'googlepay'],
         filter: {
             test: user => !['RU', 'BY'].includes(user.client_country),
             message: 'Недоступно в РФ и Беларуси',
+        },
+    },
+    {
+        id: 'tinkoff',
+        description: 'Банковская карта, СБП, Yandex Pay, Mir Pay',
+        img: <ThemedPaysystemImage img="tinkoff.svg" dark="tinkoff-dark.svg" />,
+        logos: ['visa', 'mastercard', 'mir', 'sbp'],
+        filter: {
+            test: user => ['RU', 'BY'].includes(user.client_country),
+            message: 'Для РФ и Беларуси',
         },
     },
 ]
