@@ -10,7 +10,9 @@ import { ruPluralizeVimers } from "../lib/i18n"
 import Notifications from "../lib/notifications"
 import useMinigamesProfile from "../hook/userMinigamesProfile"
 
-const max = 5000
+const max = 100000
+// скейлим большие привилегии
+const progress_max = 25000;
 const segments = [{
     name: 'VIP',
     limit: 200,
@@ -36,6 +38,30 @@ const segments = [{
     limit: 5000,
     barColor: 'rgb(33 150 243 / 80%)',
     duration: 'навсегда',
+}, {
+    name: 'Divine',
+    limit: 25000,
+    progress_limit: 10000,
+    barColor: 'rgb(247 129 194 / 80%)',
+    duration: 'навсегда',
+}, {
+    name: 'Thane',
+    limit: 50000,
+    progress_limit: 15000,
+    barColor: 'rgb(247 129 194 / 65%)',
+    duration: 'навсегда',
+}, {
+    name: 'Elite',
+    limit: 75000,
+    progress_limit: 20000,
+    barColor: 'rgb(247 129 194 / 50%)',
+    duration: 'навсегда',
+}, {
+    name: 'Eternal',
+    limit: 100000,
+    progress_limit: 25000,
+    barColor: 'rgb(247 129 194 / 35%)',
+    duration: 'навсегда',
 }]
 
 const ranks = {
@@ -58,6 +84,26 @@ const ranks = {
         name: "Immortal",
         rich: <b style={{ color: "#E800D5" }}>Immortal</b>,
     },
+    "divine": {
+        name: "Divine",
+        rich: <b style={{ color: "#B451FF" }}>Divine</b>,
+    },
+    "thane": {
+        name: "Thane",
+        rich: <b style={{ color: "#30FF87" }}>Thane</b>,
+    },
+    "elite": {
+        name: "Elite",
+        rich: <b style={{ color: "#FFA51E" }}>Elite</b>,
+    },
+    "eternal": {
+        name: "Eternal",
+        rich: <b style={{ color: "#2688ED" }}>Eternal</b>,
+    },
+    "vime": {
+        name: "Vime",
+        rich: <b className="text-primary">Vime</b>,
+    },
     "helper": {
         name: "Хелпер",
         rich: <b className="text-primary">Хелпер</b>,
@@ -71,16 +117,16 @@ const ranks = {
         rich: <b className="text-primary">Проверенный модератор</b>,
     },
     "chief": {
-        name: "Главный модератор",
-        rich: <b className="text-primary">Главный модератор</b>,
+        name: "Администратор",
+        rich: <b className="text-primary">Администратор</b>,
     },
     "admin": {
-        name: "Администратор",
-        rich: <b className="text-danger">Администратор</b>,
+        name: "Гл. Администратор",
+        rich: <b className="text-danger">Гл. Администратор</b>,
     },
     "youtube": {
-        name: "Ютубер",
-        rich: <b className="text-danger">Ютубер</b>,
+        name: "Media",
+        rich: <b className="text-danger">Media</b>,
     },
     "dev": {
         name: "Разработчик",
@@ -116,6 +162,10 @@ const TableRankComparison = () => {
                 <th width="120px" style={{ color: "#00DADA" }}>Premium</th>
                 <th width="120px" style={{ color: "#FFBA2D" }}>Holy</th>
                 <th width="120px" style={{ color: "#E800D5" }}>Immortal</th>
+                <th width="120px" style={{ color: "#B451FF" }}>Divine</th>
+                <th width="120px" style={{ color: "#30FF87" }}>Thane</th>
+                <th width="120px" style={{ color: "#FFA51E" }}>Elite</th>
+                <th width="120px" style={{ color: "#2688ED" }}>Eternal</th>
             </tr>
         </thead>
         <tbody>
@@ -125,6 +175,10 @@ const TableRankComparison = () => {
                 <td>x<b>3</b></td>
                 <td>x<b>4</b></td>
                 <td>x<b>5</b></td>
+                <td>x<b>6</b></td>
+                <td>x<b>7</b></td>
+                <td>x<b>8</b></td>
+                <td>x<b>9</b></td>
             </tr>
             <tr>
                 <td>Приставка перед ником</td>
@@ -141,6 +195,46 @@ const TableRankComparison = () => {
                         <i className="bi bi-info-circle ms-2 text-primary"></i>
                     </OverlayTrigger>
                 </b></td>
+                <td style={{ whiteSpace: 'nowrap' }}><b style={{ color: "#B451FF" }}>
+                    [свой]
+                    <OverlayTrigger overlay={<Tooltip>
+                        Вы сами можете изменять свой префикс с помощью команды
+                        <br />
+                        <code>/prefix &lt;новый префикс&gt;</code>
+                    </Tooltip>}>
+                        <i className="bi bi-info-circle ms-2 text-primary"></i>
+                    </OverlayTrigger>
+                </b></td>
+                <td style={{ whiteSpace: 'nowrap' }}><b style={{ color: "#30FF87" }}>
+                    [свой]
+                    <OverlayTrigger overlay={<Tooltip>
+                        Вы сами можете изменять свой префикс с помощью команды
+                        <br />
+                        <code>/prefix &lt;новый префикс&gt;</code>
+                    </Tooltip>}>
+                        <i className="bi bi-info-circle ms-2 text-primary"></i>
+                    </OverlayTrigger>
+                </b></td>
+                <td style={{ whiteSpace: 'nowrap' }}><b style={{ color: "#FFA51E" }}>
+                    [свой]
+                    <OverlayTrigger overlay={<Tooltip>
+                        Вы сами можете изменять свой префикс с помощью команды
+                        <br />
+                        <code>/prefix &lt;новый префикс&gt;</code>
+                    </Tooltip>}>
+                        <i className="bi bi-info-circle ms-2 text-primary"></i>
+                    </OverlayTrigger>
+                </b></td>
+                <td style={{ whiteSpace: 'nowrap' }}><b style={{ color: "#2688ED" }}>
+                    [свой]
+                    <OverlayTrigger overlay={<Tooltip>
+                        Вы сами можете изменять свой префикс с помощью команды
+                        <br />
+                        <code>/prefix &lt;новый префикс&gt;</code>
+                    </Tooltip>}>
+                        <i className="bi bi-info-circle ms-2 text-primary"></i>
+                    </OverlayTrigger>
+                </b></td>
             </tr>
             <tr>
                 <td>Шанс выпадения сундуков в играх</td>
@@ -148,6 +242,10 @@ const TableRankComparison = () => {
                 <td>180%</td>
                 <td>230%</td>
                 <td>300%</td>
+                <td>350%</td>
+                <td>400%</td>
+                <td>470%</td>
+                <td>550%</td>
             </tr>
             <tr>
                 <td>Количество друзей</td>
@@ -155,6 +253,10 @@ const TableRankComparison = () => {
                 <td>50</td>
                 <td>80</td>
                 <td>150</td>
+                <td>200</td>
+                <td>250</td>
+                <td>300</td>
+                <td>400</td>
             </tr>
             <tr>
                 <td>Количество игроков в группе</td>
@@ -162,6 +264,10 @@ const TableRankComparison = () => {
                 <td>7</td>
                 <td>8</td>
                 <td>10</td>
+                <td>11</td>
+                <td>12</td>
+                <td>13</td>
+                <td>14</td>
             </tr>
             <tr>
                 <td>Количество ежедневных заданий</td>
@@ -169,9 +275,17 @@ const TableRankComparison = () => {
                 <td>4</td>
                 <td>5</td>
                 <td>6</td>
+                <td>7</td>
+                <td>8</td>
+                <td>9</td>
+                <td>10</td>
             </tr>
             <tr>
                 <td>Вход на переполненный сервер</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
@@ -183,6 +297,10 @@ const TableRankComparison = () => {
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
             </tr>
             <tr>
                 <td>Просмотр игр</td>
@@ -190,10 +308,18 @@ const TableRankComparison = () => {
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
             </tr>
             <tr>
                 <td>Создание своей гильдии</td>
                 <td>{checkOff}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
@@ -228,12 +354,20 @@ const TableRankComparison = () => {
                 <td>{checkOff}</td>
                 <td>{checkOff}</td>
                 <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
             </tr>
             <tr>
                 <td>Оповещение о заходе в лобби</td>
                 <td>{checkOff}</td>
                 <td>{checkOff}</td>
                 <td>{checkOff}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
                 <td>{checkOn}</td>
             </tr>
             <tr>
@@ -251,9 +385,17 @@ const TableRankComparison = () => {
                 <td>{checkOff}</td>
                 <td>{checkOff}</td>
                 <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
             </tr>
             <tr>
                 <td>Получение удовольствия</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
@@ -314,10 +456,10 @@ const ExchangeCoins = ({ profile }) => {
     return <form onSubmit={handleSubmit(onSubmit)}>
         <h5 className="mb-3">Обмен вимеров на коины</h5>
 
-        <p>Сумма обменов: <b className="text-success">{ruPluralizeVimers(profile.donated)}</b></p>
+        <p>Всего вы потратили <b className="text-success">{ruPluralizeVimers(profile.donated)}</b></p>
 
         <p>
-            Работает система накопления.
+            Влияет на получение донатного статуса.
             Все обмены суммируются и вы сможете получить статус, когда количество ваших обменов достигнет определенной суммы.
         </p>
 
@@ -401,7 +543,7 @@ const ExchangeBonusMessage = () => {
 }
 
 const KindnessRowCard = ({ profile }) => {
-    const progress = profile.donated / max
+    const progress = profile.donated / progress_max;
     const expireDate = Date.parse(profile.rank_donate_expire)
 
     const donatedTooltip = <Tooltip>
@@ -411,7 +553,7 @@ const KindnessRowCard = ({ profile }) => {
     return <div className='card'>
         <div className="card-header">
             <h4 className="mb-0">Статус на MiniGames</h4>
-            <span>Обмен вимеров на коины и получение донатного статуса</span>
+            <span>Система накоплений потраченных вимеров позволяет вам получать новые статусы на сервере MiniGames. Тратьте вимеры на донат на режимах, на подписку Prime или в обмен на коины, и получайте новые донатные статусы.</span>
         </div>
         <ProgressBar style={{ borderRadius: 0 }}>
             <OverlayTrigger overlay={donatedTooltip}>
@@ -419,7 +561,7 @@ const KindnessRowCard = ({ profile }) => {
             </OverlayTrigger>
             {segments.map((curr, idx) => {
                 const start = Math.max(progress, idx === 0 ? 0 : segments[idx - 1].limit / max)
-                const end = curr.limit / max
+                const end = (curr.progress_limit ? curr.progress_limit : curr.limit) / progress_max
 
                 if (start >= end)
                     return null
@@ -482,7 +624,7 @@ const MinigamesDonatePage = () => {
         return <div className='card'>
             <div className="card-header">
                 <h4 className="mb-0">Статус на MiniGames</h4>
-                <span>Обмен вимеров на коины и получение донатного статуса</span>
+                <span>Система накоплений потраченных вимеров позволяет вам получать новые статусы на сервере MiniGames. Тратьте вимеры на донат на режимах, на подписку Prime или в обмен на коины, и получайте новые донатные статусы.</span>
             </div>
             <div className='card-body'>
                 {profile.loading && <div className='text-center'><Spinner variant='secondary' /></div>}
