@@ -173,8 +173,8 @@ const ColorChange = ({ profile, count, initialColors, colorsFinished }) => {
                         <p>Разным рангам доступно разное количество цветов:</p>
                         <div className="text-center">
                             <p><span className="fw-bold" style={{ "color": getRank("thane").color }}>Thane</span> - 1 цвет <i>(без градиента)</i></p>
-                            <p><span className="fw-bold" style={{ "color": getRank("elite").color }}>Elite</span> - 1 цвет <i>(градиент)</i></p>
-                            <p><span className="fw-bold" style={{ "color": getRank("eternal").color }}>Eternal</span> - 1 цвет <i>(градиент)</i></p>
+                            <p><span className="fw-bold" style={{ "color": getRank("elite").color }}>Elite</span> - 2 цвета <i>(градиент)</i></p>
+                            <p><span className="fw-bold" style={{ "color": getRank("eternal").color }}>Eternal</span> - 4 цвета <i>(градиент)</i></p>
                         </div>
                         <div className="text-center text-danger" style={{ "font-size": "13px" }}>Не пытайтесь поставить полностью чёрный или полностью белый цвет. Они запрещены, и при попытке их поставить ничего не произойдёт.</div>
                     </div>
