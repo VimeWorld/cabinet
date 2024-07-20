@@ -19,6 +19,7 @@ import PaymentsPage from './page/Payments'
 import SecurityPage from './page/Security'
 import MinigamesGuildPage from './page/MinigamesGuild'
 import MinigamesDonatePage from './page/MinigamesDonate'
+import MinigamesColorPage from './page/MinigamesColor'
 import BansPage from './page/Bans'
 import TransactionConfirmPage from './page/ConfirmTransaction'
 import { AccountDeletedStatePage, AccountDeleteRequestPage } from './page/AccountDelete'
@@ -47,6 +48,7 @@ const router = createBrowserRouter(createRoutesFromElements(
             <Route path='/minigames/prime' Component={MinigamesPrimePage} />
             <Route path='/minigames/donate' Component={MinigamesDonatePage} />
             <Route path='/minigames/guild' Component={MinigamesGuildPage} />
+            <Route path='/minigames/color' Component={MinigamesColorPage} />
         </Route>
         <Route path="*" Component={NotFoundPage} />
     </Route>

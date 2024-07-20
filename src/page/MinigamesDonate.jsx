@@ -11,8 +11,6 @@ import Notifications from "../lib/notifications"
 import useMinigamesProfile from "../hook/userMinigamesProfile"
 
 const max = 100000
-// скейлим большие привилегии
-const progress_max = 25000;
 const segments = [{
     name: 'VIP',
     limit: 200,
@@ -40,26 +38,22 @@ const segments = [{
     duration: 'навсегда',
 }, {
     name: 'Divine',
-    limit: 25000,
-    progress_limit: 10000,
+    limit: 10000,
     barColor: 'rgb(247 129 194 / 80%)',
     duration: 'навсегда',
 }, {
     name: 'Thane',
-    limit: 50000,
-    progress_limit: 15000,
+    limit: 25000,
     barColor: 'rgb(247 129 194 / 65%)',
     duration: 'навсегда',
 }, {
     name: 'Elite',
-    limit: 75000,
-    progress_limit: 20000,
+    limit: 50000,
     barColor: 'rgb(247 129 194 / 50%)',
     duration: 'навсегда',
 }, {
     name: 'Eternal',
     limit: 100000,
-    progress_limit: 25000,
     barColor: 'rgb(247 129 194 / 35%)',
     duration: 'навсегда',
 }]
@@ -175,10 +169,10 @@ const TableRankComparison = () => {
                 <td>x<b>3</b></td>
                 <td>x<b>4</b></td>
                 <td>x<b>5</b></td>
+                <td>x<b>5.5</b></td>
                 <td>x<b>6</b></td>
+                <td>x<b>6.5</b></td>
                 <td>x<b>7</b></td>
-                <td>x<b>8</b></td>
-                <td>x<b>9</b></td>
             </tr>
             <tr>
                 <td>Приставка перед ником</td>
@@ -543,7 +537,7 @@ const ExchangeBonusMessage = () => {
 }
 
 const KindnessRowCard = ({ profile }) => {
-    const progress = profile.donated / progress_max;
+    const progress = profile.donated / max;
     const expireDate = Date.parse(profile.rank_donate_expire)
 
     const donatedTooltip = <Tooltip>
@@ -561,7 +555,7 @@ const KindnessRowCard = ({ profile }) => {
             </OverlayTrigger>
             {segments.map((curr, idx) => {
                 const start = Math.max(progress, idx === 0 ? 0 : segments[idx - 1].limit / max)
-                const end = (curr.progress_limit ? curr.progress_limit : curr.limit) / progress_max
+                const end = curr.limit / max
 
                 if (start >= end)
                     return null
