@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import Notifications from "../lib/notifications";
 import { fetchApi } from "../lib/api";
 import { getRank } from '../lib/vimeworld';
+import { gradientStyles } from "../lib/gradient";
 
 const DefaultColor = "#eeeeee";
 
@@ -60,15 +61,7 @@ const ColorChange = ({ profile, count, initialColors, colorsFinished }) => {
     const [usernameStyle, setUsernameStyle] = useState({});
     useEffect(() => {
         const colors = colorConfigs.filter(config => config.enabled).map(config => config.color);
-        let style = {};
-        if (colors.length > 1) {
-            style.backgroundImage = `linear-gradient(to right, ${colors.join(',')})`;
-            style.WebkitBackgroundClip = 'text';
-            style.backgroundClip = 'text';
-            style.color = 'transparent';
-        } else if (colors.length === 1) {
-            style.color = colors[0];
-        }
+        let style = gradientStyles(colors);
         style.fontSize = '32px';
         setUsernameStyle(style);
     }, [colorConfigs]);

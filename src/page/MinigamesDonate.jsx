@@ -9,6 +9,8 @@ import { EventBus, EVENT_MINIGAMES_PROFILE_UPDATED } from "../lib/eventbus"
 import { ruPluralizeVimers } from "../lib/i18n"
 import Notifications from "../lib/notifications"
 import useMinigamesProfile from "../hook/userMinigamesProfile"
+import { gradientStyles } from "../lib/gradient"
+import { getRank } from "../lib/vimeworld"
 
 const max = 100000
 const segments = [{
@@ -144,7 +146,7 @@ const ranks = {
     },
 }
 
-const TableRankComparison = () => {
+const TableRankComparison = ({ profile }) => {
     const checkOff = <i className="bi bi-check-circle-fill text-secondary opacity-75"></i>
     const checkOn = <i className="bi bi-check-circle-fill text-success"></i>
 
@@ -173,6 +175,21 @@ const TableRankComparison = () => {
                 <td>x<b>6</b></td>
                 <td>x<b>6.5</b></td>
                 <td>x<b>7</b></td>
+            </tr>
+            <tr>
+                <td>Цвет ника<OverlayTrigger overlay={<Tooltip>
+                        Начиная с группы <span className="fw-bold" style={{ "color": getRank("thane").color }}>Thane</span> вы можете менять цвет своего ника на странице "Изменение цвета"
+                    </Tooltip>}>
+                        <i className="bi bi-info-circle ms-2 text-primary"></i>
+                    </OverlayTrigger></td>
+                <td><span style={gradientStyles(getRank('vip').gradient)}>{profile.username}</span></td>
+                <td><span style={gradientStyles(getRank('premium').gradient)}>{profile.username}</span></td>
+                <td><span style={gradientStyles(getRank('holy').gradient)}>{profile.username}</span></td>
+                <td><span style={gradientStyles(getRank('immortal').gradient)}>{profile.username}</span></td>
+                <td><span style={gradientStyles(getRank('divine').gradient)}>{profile.username}</span></td>
+                <td><span style={gradientStyles(getRank('thane').gradient)}>{profile.username}</span></td>
+                <td><span style={gradientStyles(getRank('elite').gradient)}>{profile.username}</span></td>
+                <td><span style={gradientStyles(getRank('eternal').gradient)}>{profile.username}</span></td>
             </tr>
             <tr>
                 <td>Приставка перед ником</td>
@@ -605,7 +622,7 @@ const KindnessRowCard = ({ profile }) => {
             <h4>Возможности статусов</h4>
         </div>
         <div className="card-table table-responsive">
-            <TableRankComparison />
+            <TableRankComparison profile={profile} />
         </div>
     </div>
 }
