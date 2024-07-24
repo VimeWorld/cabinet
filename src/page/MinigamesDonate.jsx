@@ -193,10 +193,10 @@ const TableRankComparison = ({ profile }) => {
             </tr>
             <tr>
                 <td>Приставка перед ником</td>
-                <td><b style={{ color: "#00BE00" }}>[V]</b></td>
-                <td><b style={{ color: "#00DADA" }}>[P]</b></td>
-                <td><b style={{ color: "#FFBA2D" }}>[H]</b></td>
-                <td style={{ whiteSpace: 'nowrap' }}><b style={{ color: "#E800D5" }}>
+                <td><b style={{ color: "#3DFF80" }}>[V]</b></td>
+                <td><b style={{ color: "#3DECFF" }}>[P]</b></td>
+                <td><b style={{ color: "#FFF8A9" }}>[H]</b></td>
+                <td style={{ whiteSpace: 'nowrap' }}><b style={{ color: "#FF70D1" }}>
                     [свой]
                     <OverlayTrigger overlay={<Tooltip>
                         Вы сами можете изменять свой префикс с помощью команды
