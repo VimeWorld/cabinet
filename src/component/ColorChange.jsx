@@ -169,7 +169,7 @@ const ColorChange = ({ profile, count, initialColors, colorsFinished }) => {
                             <p><span className="fw-bold" style={{ "color": getRank("elite").color }}>Elite</span> - 2 цвета <i>(градиент)</i></p>
                             <p><span className="fw-bold" style={{ "color": getRank("eternal").color }}>Eternal</span> - 4 цвета <i>(градиент)</i></p>
                         </div>
-                        <div className="text-center text-danger" style={{ "font-size": "13px" }}>Не пытайтесь поставить полностью чёрный или полностью белый цвет. Они запрещены, и при попытке их поставить ничего не произойдёт.</div>
+                        <div className="text-center text-danger" style={{ "font-size": "13px" }}>Не пытайтесь поставить полностью черный или полностью белый цвет. Они запрещены, и при попытке их поставить ничего не произойдет.</div>
                     </div>
                 </div>
             </div>
