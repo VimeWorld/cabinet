@@ -8,7 +8,7 @@ import { Link } from "react-router-dom"
 
 const SkinViewer3d = lazy(() => import("./SkinViewer3d"))
 
-const maxSizeKb = 150
+const maxSizeKb = 1024
 let capeExistsCache = null
 
 EventBus.on(EVENT_LOGOUT, () => {
@@ -54,6 +54,9 @@ const ModalSkin = ({ show, close }) => {
                         case 'not_prime':
                             Notifications.error('Вы должны иметь Prime для загрузки скина 128x128')
                             break
+                        case 'not_hd_sub':
+                            Notifications.error('Вы должны иметь HD подписку для загрузки скина 1024x1024/1024x512')
+                            break
                         case "not_png":
                             Notifications.error('Файл скина должен быть .png файлом')
                             break
@@ -76,6 +79,7 @@ const ModalSkin = ({ show, close }) => {
                 <p>
                     Скин должен быть в формате <code>.png</code>.
                     Размеры скина должны быть <code>64x64</code> или <code>64х32</code>. Игроки с <Link to="/minigames/prime">Prime</Link> могут устанавливать скины <code>128x128</code>.
+                    <br />Игроки с <Link to="/minigames/hd_sub">HD подпиской</Link> могут устанавливать скины 1024x1024 и 1024x512
                 </p>
 
                 <input ref={file} className="form-control mb-3" type="file" required accept="image/png" />
@@ -166,6 +170,9 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
                         case "invalid_dimension":
                             Notifications.error('Размеры плаща должны быть 22х17 или 64х32')
                             break
+                        case 'not_hd_sub':
+                            Notifications.error('Вы должны иметь HD подписку для загрузки плаща 1024x512')
+                            break
                         case "not_png":
                             Notifications.error('Файл плаща должен быть .png файлом')
                             break
@@ -193,6 +200,7 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
                 <p>
                     Плащ должен быть в формате <code>.png</code>.
                     Размеры плаща должны быть <code>22х17</code> или <code>64х32</code>.
+                    <br />Игроки с <Link to="/minigames/hd_sub">HD подпиской</Link> могут устанавливать плащи 1024x512
                 </p>
 
                 <input ref={file} className="form-control" type="file" required accept="image/png" />
