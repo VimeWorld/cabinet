@@ -9,6 +9,7 @@ import { fetchApi } from "../lib/api"
 import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
 import { ruPluralizeVimers } from "../lib/i18n"
 import Notifications from "../lib/notifications"
+import { ConfirmModal } from "../component/ConfirmModal"
 
 const TransferCard = () => {
     const { app, fetchAuth } = useApp()
@@ -281,6 +282,16 @@ const paysystems = [
             message: 'Для РФ и Беларуси',
         },
     },
+    {
+        id: 'paypal',
+        description: 'PayPal, Банковская карта, Google Pay',
+        img: <ThemedPaysystemImage img="paypal.svg" dark="paypal.svg" />,
+        logos: ['visa', 'mastercard', 'googlepay'],
+        filter: {
+            test: user => !['RU', 'BY'].includes(user.client_country),
+            message: 'Недоступно в РФ и Беларуси',
+        },
+    },
 ]
 
 const PaysystemListElement = ({ paysystem, checked, onChange }) => {
@@ -355,6 +366,13 @@ const PayCard = () => {
     const [amount, setAmount] = useState('')
     const [loading, setLoading] = useState(false)
     const [showHidden, setShowHidden] = useState(false)
+    const [showConfirmBuy, setShowConfirmBuy] = useState(false)
+    const [paypalButtons, setPayPalButtons] = useState(undefined)
+    useEffect(() => {
+        if (paypalButtons) {
+            paypalButtons.render('#paypal-buttons')
+        }
+    }, [paypalButtons])
 
     const [psVisible, logoList, hasHidden] = useMemo(() => {
         // Список и порядок определяется сервером
@@ -384,7 +402,7 @@ const PayCard = () => {
                 amount: parseInt(amount),
             }
         }).then(r => r.json())
-            .then(body => {
+            .then(async body => {
                 if (body.success) {
                     if (body.response.method === 'url') {
                         window.location.href = body.response.data
@@ -403,6 +421,50 @@ const PayCard = () => {
                         document.body.appendChild(form)
                         form.submit()
                         document.body.removeChild(form)
+                    } else if (body.response.method == 'paypal') {
+                        const data = body.response.data
+                        if (paypal && paypal.Buttons) {
+                            setShowConfirmBuy(true)
+                            const buttonsContainer = document.getElementById('paypal-buttons');
+                            if (buttonsContainer) {
+                              buttonsContainer.innerHTML = '';
+                            }
+                            const buttonsComponent = paypal.Buttons({
+                                style: {
+                                  tagline: false,
+                                  height: 40,
+                                },
+                                createOrder: async () => {
+                                      return data.paypal_order_id;
+                                },
+                                onApprove: async (paypalData, actions) => {
+                                    try {
+                                      const captureResult = await (await fetchApi('/payment/paypal/capture', {
+                                          method: 'POST',
+                                          body: {
+                                                order_id: data.order_id,
+                                                paypal_order: data.paypal_order_id,
+                                          }
+                                      })).json()
+                  
+                                      if (captureResult.success) {
+                                        Notifications.success('Вы успешно пополнили баланс, ожидайте до 5-и минут')
+                                      } else {
+                                        Notifications.error('При пополнении произошла ошибка')
+                                      }
+                                      setShowConfirmBuy(false)
+                                    } catch (error) {
+                                      console.error('Error during onApprove for one-time purchase:', error);
+                                    }
+                                },
+                                onError: (error) => {
+                                  console.error('Error during PayPal payment:', error);
+                                  Notifications.error('Ошибка сервера, попробуйте позже')
+                                  setShowConfirmBuy(false)
+                                },
+                              });
+                            setPayPalButtons(buttonsComponent);
+                        }
                     }
                 } else {
                     switch (body.response.type) {
@@ -485,6 +547,13 @@ const PayCard = () => {
                     return <Fragment key={e}>{logos[e]}</Fragment>
                 })}
             </div>
+            <ConfirmModal show={showConfirmBuy} close={() => setShowConfirmBuy(false)}
+                confirmText={undefined}
+                cancelText={undefined}
+                title="Оплата PayPal"
+            >
+                <div id="paypal-buttons" className="card-body" style={{ position: "relative", zIndex: 0, backgroundColor: 'white', padding: '5px', borderRadius: '5px' }}></div>
+            </ConfirmModal>
         </div>
     </div>
 }

@@ -13,10 +13,10 @@ export const ConfirmModal = ({
             {children}
         </Modal.Body>
         <Modal.Footer>
-            <button className="btn btn-secondary" onClick={() => {
+            {cancelText && <button className="btn btn-secondary" onClick={() => {
                 onCancel?.()
                 close()
-            }}>{cancelText}</button>
+            }}>{cancelText}</button>}
 
             {confirmText && <button className={"btn " + confirmClass} onClick={() => {
                 onConfirm?.()

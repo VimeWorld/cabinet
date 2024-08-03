@@ -79,6 +79,7 @@ const paymentDescription = (p) => {
         case "stripe": return <>Пополнение через <b className="text-success">Stripe</b></>
         case "tinkoff": return <>Пополнение через <b className="text-success">Tinkoff</b></>
         case "yookassa": return <>Пополнение через <b className="text-success">YooKassa</b></>
+        case "paypal": return <>Пополнение через <b className="text-success">PayPal</b></>
         case "vote": return 'Голосование за сервер'
         case "promo-code": return 'Активация промо-кода'
         case "admin": return 'Администрация VimeWorld'
