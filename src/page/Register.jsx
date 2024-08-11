@@ -7,6 +7,7 @@ import { fetchApi } from "../lib/api"
 import useInvisibleRecaptcha from "../hook/useInvisibleRecaptcha"
 import OuterPage from "../component/OuterPage"
 import { useTitle } from "../hook/useTitle"
+import Cookies from 'js-cookie';
 
 const RegisterSuccessPage = () => {
     return <OuterPage>
@@ -58,6 +59,8 @@ const RegisterPage = () => {
         setLoading(true)
 
         try {
+            const refCode = Cookies.get('ref');
+            const uniqueCode = Cookies.get('vw-unique-code');
             const recaptchaValue = await getRecaptchaValue()
             const response = await fetchApi('/register', {
                 method: 'POST',
@@ -66,6 +69,8 @@ const RegisterPage = () => {
                     password: data.password,
                     email: data.email,
                     recaptcha_response: recaptchaValue,
+                    ref_code: (refCode ? refCode : ""),
+                    unique_code: (uniqueCode ? uniqueCode : ""),
                 }
             })
             const body = await response.json()
