@@ -69,14 +69,14 @@ const ServerBansCard = ({ name, url }) => {
             <div className="text-end mt-3">
                 <button className="btn btn-primary" onClick={() => setShowConfirmUnban(true)}>Снять бан</button>
 
-                {bans.unban.price <= app.user.cash ?
+                {bans.unban.price <= app.user.cash + app.user.cash_bonuses ?
                     <ConfirmModal show={showConfirmUnban} close={() => setShowConfirmUnban(false)}
                         confirmText={"Снять бан"}
                         onConfirm={unban}
                         title={"Подтверждение"}
                     >
                         Вы действительно хотите купить снятие бана за <b className="text-success">{ruPluralizeVimers(bans.unban.price)}</b>?<br />
-                        Ваш баланс <b className="text-success">{ruPluralizeVimers(app.user.cash)}</b>
+                        Ваш баланс <b className="text-success">{ruPluralizeVimers(app.user.cash + app.user.cash_bonuses)}</b>
                     </ConfirmModal>
                     :
                     <ConfirmModal show={showConfirmUnban} close={() => setShowConfirmUnban(false)}
@@ -85,7 +85,7 @@ const ServerBansCard = ({ name, url }) => {
                         title="Недостаточно вимеров"
                     >
                         У вас недостаточно вимеров для снятия бана.<br />
-                        Ваш баланс <b className="text-success">{ruPluralizeVimers(app.user.cash)}</b><br />
+                        Ваш баланс <b className="text-success">{ruPluralizeVimers(app.user.cash + app.user.cash_bonuses)}</b><br />
                         Стоимость снятия бана <b className="text-success">{ruPluralizeVimers(bans.unban.price)}</b>
                     </ConfirmModal>
                 }

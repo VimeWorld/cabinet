@@ -29,6 +29,7 @@ interface UserType {
     username: string;
     email: string;
     cash: number;
+    cash_bonuses: number;
     reg_time: string;
     mfa: 'disabled' | 'needed' | 'completed';
     account_deleted: boolean;

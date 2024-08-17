@@ -218,14 +218,14 @@ const PrimeCardBody = ({ profile }) => {
         <p>Подписка активируется сразу после покупки и действует в течение выбранного периода времени.</p>
         <div>Подписка не продлевается автоматически, поэтому не забудьте продлить ее вовремя.</div>
 
-        {app.user.cash < selectedPlan.price ?
+        {app.user.cash + app.user.cash_bonuses < selectedPlan.price ?
             <ConfirmModal show={showConfirmBuy} close={() => setShowConfirmBuy(false)}
                 confirmText={"Пополнить счет"}
                 onConfirm={() => navigate("/payments")}
                 title="Недостаточно вимеров"
             >
                 <p>У вас недостаточно вимеров для покупки Prime на {selectedPlan.title}.</p>
-                Ваш баланс <b className="text-success">{ruPluralizeVimers(app.user.cash)}</b>
+                Ваш баланс <b className="text-success">{ruPluralizeVimers(app.user.cash + app.user.cash_bonuses)}</b>
             </ConfirmModal>
             :
             <ConfirmModal show={showConfirmBuy} close={() => setShowConfirmBuy(false)}
@@ -236,7 +236,7 @@ const PrimeCardBody = ({ profile }) => {
                 <p>
                     Вы действительно хотите {profile.prime_active ? 'продлить' : 'купить'} подписку Prime на {selectedPlan.title} за <b className="text-success">{ruPluralizeVimers(selectedPlan.price)}</b>?
                 </p>
-                Ваш баланс <b className="text-success">{ruPluralizeVimers(app.user.cash)}</b>
+                Ваш баланс <b className="text-success">{ruPluralizeVimers(app.user.cash + app.user.cash_bonuses)}</b>
             </ConfirmModal>
         }
     </>

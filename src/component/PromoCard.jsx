@@ -38,7 +38,7 @@ export const PromoCard = () => {
                     </>)
                     reset()
                     if (pages.id === 0) pages.load()
-                    if (body.response.action === 'vimer') fetchAuth()
+                    if (body.response.action === 'vimer' || body.response.action === 'bonus') fetchAuth()
                     return
                 }
                 switch (body.response.type) {

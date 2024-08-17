@@ -137,12 +137,13 @@ export const PaymentHistoryCard = () => {
                     </td></tr>}
 
                     {pages.items?.map(p => {
+                        const bonusAmount = p.amount_bonuses == 0 ? undefined : <b style={{ "color": "#faa700" }}>{p.amount_bonuses > 0 ? '+' : ''}{p.amount_bonuses}</b>
                         const amount = p.amount > 0
                             ? <b className="text-success">+{p.amount}</b>
                             : <b className="text-danger">{p.amount}</b>
                         return <tr key={p.id}>
                             <td className="fit">{new Date(Date.parse(p.date)).toLocaleString()}</td>
-                            <td className="fit">{amount}</td>
+                            <td className="fit">{amount}{bonusAmount ? ", " : ""}{bonusAmount ? bonusAmount : ""}</td>
                             <td className="description">{paymentDescription(p)}</td>
                         </tr>
                     })}

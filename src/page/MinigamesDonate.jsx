@@ -490,7 +490,7 @@ const ExchangeCoins = ({ profile }) => {
                                 return 'Количество вимеров должно быть целым'
                             if (val < 1)
                                 return 'Минимум 1 вимер'
-                            if (val > app.user.cash)
+                            if (val > app.user.cash + app.user.cash_bonuses)
                                 return 'У вас недостаточно вимеров'
                         }
                     })}
