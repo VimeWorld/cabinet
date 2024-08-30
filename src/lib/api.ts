@@ -1,4 +1,6 @@
-let cachedToken = localStorage.getItem('at') || ''
+import Cookies from 'js-cookie';
+
+let cachedToken = localStorage.getItem('at') || Cookies.get('vw-auth-token') || ''
 
 interface ApiRequestInit extends Omit<RequestInit, 'headers'> {
     headers?: Record<string, string>;
