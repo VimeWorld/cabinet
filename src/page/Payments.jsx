@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useMemo, useState } from "react"
-import { Form, OverlayTrigger, Placeholder, Popover, Spinner } from "react-bootstrap"
+import { Form, OverlayTrigger, Placeholder, Popover, Spinner, Tooltip } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import { BalanceCard } from "../component/BalanceCard"
 import { PaymentHistoryCard } from "../component/PaymentHistoryCard"
@@ -7,7 +7,7 @@ import useApp from "../hook/useApp"
 import { useTitle } from "../hook/useTitle"
 import { fetchApi } from "../lib/api"
 import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
-import { ruPluralizeVimers } from "../lib/i18n"
+import { ruPluralizeVimers, ruPluralize } from "../lib/i18n"
 import Notifications from "../lib/notifications"
 import { ConfirmModal } from "../component/ConfirmModal"
 
@@ -294,6 +294,33 @@ const paysystems = [
     },
 ]
 
+const bonusRewards = [
+    {
+        from: 25000,
+        rewardPercents: 15
+    },
+    {
+        from: 15000,
+        rewardPercents: 11
+    },
+    {
+        from: 7000,
+        rewardPercents: 9
+    },
+    {
+        from: 3000,
+        rewardPercents: 7
+    },
+    {
+        from: 1000,
+        rewardPercents: 6
+    },
+    {
+        from: 500,
+        rewardPercents: 5
+    }
+]
+
 const PaysystemListElement = ({ paysystem, checked, onChange }) => {
     const { app } = useApp()
     const filtered = paysystem.filter && !paysystem.filter.test(app.user)
@@ -364,10 +391,16 @@ const PriceCalculator = ({ amount }) => {
 const PayCard = () => {
     const { app } = useApp()
     const [amount, setAmount] = useState('')
+    const [amountBonuses, setAmountBonuses] = useState(0);
+    const [bonusesTip, setBonusesTip] = useState(undefined);
     const [loading, setLoading] = useState(false)
     const [showHidden, setShowHidden] = useState(false)
     const [showConfirmBuy, setShowConfirmBuy] = useState(false)
     const [paypalButtons, setPayPalButtons] = useState(undefined)
+    useEffect(() => {
+        setAmountBonuses(getBonusReward(Number(amount)));
+        setBonusesTip(getTip(Number(amount)));
+    }, [amount]);
     useEffect(() => {
         if (paypalButtons) {
             paypalButtons.render('#paypal-buttons')
@@ -515,6 +548,14 @@ const PayCard = () => {
                         {!loading && 'Пополнить'}
                     </button>
                 </div>
+                <div className="d-flex gap-2 mb-1">
+                    <span style={{ "color": "#faa700" }}>+{amountBonuses} {ruPluralize(amountBonuses, ['бонусный вимер', 'бонусных вимера', 'бонусных вимеров'], false)}</span><OverlayTrigger overlay={<Tooltip>
+                        За пополнения вы бесплатно получаете бонусные вимеры<br />{bonusRewards.map(reward => (<>от <b className="text-success">{reward.from}</b> вимеров <b style={{ "color": "#faa700" }}>+{reward.rewardPercents}%</b><br /></>))}
+                    </Tooltip>}>
+                        <i className="bi bi-info-circle ms-2 text-primary"></i>
+                    </OverlayTrigger>
+                </div>
+                <div className="d-flex gap-2 mb-1">{bonusesTip}</div>
                 <ul className="list-group list-group-flush">
                     {psVisible.map(e => {
                         return <PaysystemListElement
@@ -556,6 +597,32 @@ const PayCard = () => {
             </ConfirmModal>
         </div>
     </div>
+}
+
+export function getBonusReward(amount) {
+    let reward = bonusRewards.find(reward => amount >= reward.from);
+    if (!reward) {
+        return 0;
+    }
+    return Math.ceil(amount * (reward.rewardPercents / 100.0));
+}
+
+export function getTip(amount) {
+    let nextReward = undefined;
+    for (let i = 0; i < bonusRewards.length; i++) {
+        let reward = bonusRewards[i];
+        if (amount >= reward.from) {
+            if (i <= 0) {
+                return undefined;
+            }
+            nextReward = bonusRewards[i - 1];
+            break;
+        }
+    }
+    if (!nextReward) {
+        nextReward = bonusRewards[bonusRewards.length - 1];
+    }
+    return <><span>Пополните баланс ещё на <b className="text-success">{ruPluralizeVimers(nextReward.from - amount)}</b> чтобы получить награду в <span style={{ "color": "#faa700" }}>{ruPluralize(Math.ceil(nextReward.from * (nextReward.rewardPercents / 100)), ['бонусный вимер', 'бонусных вимера', 'бонусных вимеров'])}</span></span></>;
 }
 
 const PaymentsPage = () => {
