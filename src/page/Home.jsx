@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { BalanceCard } from "../component/BalanceCard"
 import { PromoCard } from "../component/PromoCard"
+import { AdditionalUsernamesCard } from "../component/AdditionalUsernamesCard"
 import SkinCard from "../component/skin/SkinCard"
 import useApp from "../hook/useApp"
 import { useTitle } from "../hook/useTitle"
@@ -56,9 +57,12 @@ const HomePage = () => {
                 <SkinCard />
             </div>
         </div>
-        <div className="row mb-4">
-            <div className="col">
+        <div className="row mb-4 gy-4">
+            <div className="col-lg-6 col-12">
                 <PromoCard />
+            </div>
+            <div className="col-lg-6 col-12">
+                <AdditionalUsernamesCard />
             </div>
         </div>
     </>

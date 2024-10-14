@@ -23,6 +23,8 @@ const paymentDescription = (p) => {
             return <>Покупка привилегий на сервере <b>{p.data.server}</b></>
         case "coins":
             return <>Обмен на коины (<b>{p.data}</b> шт.)</>
+        case "username-buy":
+            return <>Покупка ника (<b>{p.data}</b>)</>
         case "prime":
             return <>Покупка Prime на <b>{p.data}</b> дней</>
         case "hd_sub":
