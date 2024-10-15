@@ -48,7 +48,7 @@ export const AdditionalUsernamesCard = () => {
                         Notifications.error('Слишком частая смена ника')
                         break
                     case 'insufficient_donate':
-                        Notifications.error('ОБТ: Доступно от доната Elite')
+                        Notifications.error('ОБТ: Доступно от доната Thane')
                         break
                     default:
                         Notifications.error(body.response.title)
@@ -84,7 +84,7 @@ export const AdditionalUsernamesCard = () => {
                         setError('username_additional', { message: 'Недостаточно вимеров для покупки' }, { shouldFocus: true })
                         break
                     case 'insufficient_donate':
-                        Notifications.error('ОБТ: Доступно от доната Elite')
+                        Notifications.error('ОБТ: Доступно от доната Thane')
                         break
                     default:
                         Notifications.error(body.response.title)
@@ -145,7 +145,7 @@ export const AdditionalUsernamesCard = () => {
                                 <div className="ms-3">
                                     <button className="btn btn-primary text-nowrap" type="submit" disabled={activateLoading}>
                                         {activateLoading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                                        {activateLoading ? ' Загрузка...' : 'Купить | 1999 вим.'}
+                                        {activateLoading ? ' Загрузка...' : 'Купить | 999 вим.'}
                                     </button>
                                 </div>
                             </div>
