@@ -48,7 +48,7 @@ export const AdditionalUsernamesCard = () => {
                         Notifications.error('Слишком частая смена ника')
                         break
                     case 'insufficient_donate':
-                        Notifications.error('ОБТ: Доступно от доната Thane')
+                        Notifications.error('ОБТ: Доступно от доната Divine')
                         break
                     default:
                         Notifications.error(body.response.title)
@@ -84,7 +84,7 @@ export const AdditionalUsernamesCard = () => {
                         setError('username_additional', { message: 'Недостаточно вимеров для покупки' }, { shouldFocus: true })
                         break
                     case 'insufficient_donate':
-                        Notifications.error('ОБТ: Доступно от доната Thane')
+                        Notifications.error('ОБТ: Доступно от доната Divine')
                         break
                     default:
                         Notifications.error(body.response.title)

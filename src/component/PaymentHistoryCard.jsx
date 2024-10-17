@@ -25,6 +25,8 @@ const paymentDescription = (p) => {
             return <>Обмен на коины (<b>{p.data}</b> шт.)</>
         case "username-buy":
             return <>Покупка ника (<b>{p.data}</b>)</>
+        case "username-update-case":
+            return <>Смена регистра ника (<b>{p.data.from}</b> на <b>{p.data.to}</b>)</>
         case "prime":
             return <>Покупка Prime на <b>{p.data}</b> дней</>
         case "hd_sub":
