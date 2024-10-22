@@ -1,9 +1,99 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { fetchApi } from "../lib/api"
-import { Form, Spinner } from "react-bootstrap"
+import { Button, Form, Spinner, Modal, OverlayTrigger, Tooltip } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import useApp from "../hook/useApp"
 import Notifications from "../lib/notifications"
+
+const ModalUpdateCase = ({ show, close, username }) => {
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({
+        mode: 'onChange',
+        defaultValues: {
+            new_nickname: username,
+        }
+    })
+    const [loading, setLoading] = useState(false)
+    useEffect(() => {
+        reset(formValues => ({
+            ...formValues,
+            new_nickname: username
+        }));
+    }, [username]);
+
+    const onSubmit = data => {
+        if (loading) {
+            return;
+        }
+        setLoading(true)
+        fetchApi('/user/nickname/update_case', {
+            method: 'POST',
+            body: {'nickname': username, 'new_nickname': data.new_nickname},
+        }).then(r => r.json())
+            .then(body => {
+                close();
+                if (body.success) {
+                    Notifications.success(<>
+                        Никнейм успешно изменен
+                    </>)
+                    window.location.reload(false);
+                    return
+                }
+                switch (body.response.type) {
+                    case 'invalid_username':
+                        Notifications.error('Некорректный никнейм')
+                        break
+                    case 'throttle':
+                        Notifications.error('Слишком частая смена ника')
+                        break
+                    case 'insufficient_donate':
+                        Notifications.error('ОБТ: Доступно от доната Divine')
+                        break
+                    default:
+                        Notifications.error(body.response.title)
+                }
+            })
+            .catch(() => Notifications.error('Невозможно подключиться к серверу'))
+            .finally(() => setLoading(false))
+    }
+
+    return <Modal show={show} onHide={close}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Modal.Header closeButton>
+                <Modal.Title>Изменение регистра никнейма</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <p>
+                    Здесь вы можете изменить регистр своего никнейма. Поменяйте регистр нужных букв в своем никнейме и нажмите Изменить. Стоимость изменения <code>499 вимеров</code>.
+                </p>
+
+                <Form.Group className="mb-3" controlId="new_nickname">
+                    <Form.Label>Введите новый никнейм</Form.Label>
+                    <Form.Control type="text" defaultValue={username} {...register('new_nickname', {
+                        validate: (val) => {
+                            if (val.toLowerCase() !== username.toLowerCase())
+                                return 'Никнеймы должны совпадать'
+                        },
+                    })} isInvalid={!!errors.new_nickname} />
+                    {errors.new_nickname && <Form.Control.Feedback type="invalid">{errors.new_nickname.message}</Form.Control.Feedback>}
+                </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={close}>
+                    Закрыть
+                </Button>
+                <Button type="submit" variant="primary" disabled={loading}>
+                    {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
+                    {loading ? ' Загрузка...' : 'Изменить (499 вим.)'}
+                </Button>
+            </Modal.Footer>
+        </form>
+    </Modal>
+}
 
 export const AdditionalUsernamesCard = () => {
     const { app, updateApp } = useApp()
@@ -11,6 +101,8 @@ export const AdditionalUsernamesCard = () => {
     const [loading, setLoading] = useState(true);
     const [activateLoading, setActivateLoading] = useState(false);
     const [activateInstall, setActivateInstall] = useState(false);
+    const [nicknameUpdateCase, setNicknameUpdateCase] = useState(null);
+    const [showModalUpdateCase, setShowModalUpdateCase] = useState(false)
     const {
         register,
         handleSubmit,
@@ -117,12 +209,26 @@ export const AdditionalUsernamesCard = () => {
             <table className="table">
                 <tbody>
                     <tr key={app.user.username}>
-                            <td className="fit">{app.user.username}</td>
+                            <td className="fit">{app.user.username}<OverlayTrigger overlay={<Tooltip>
+                        Изменить регистр никнейма
+                    </Tooltip>}>
+                        <button type="button" className="btn" onClick={() => {
+                            setNicknameUpdateCase(app.user.username);
+                            setShowModalUpdateCase(true);
+                        }}><i className="bi bi-pencil text-primary"></i></button>
+                    </OverlayTrigger></td>
                             <td className="fit"><button type="button" className="btn btn-outline-success" disabled={true}><i className="bi bi-check" /></button></td>
                     </tr>
                     {!loading && additionalUsernames.map(username => {
                         return <tr key={username.username}>
-                            <td className="fit">{username.username}</td>
+                            <td className="fit">{username.username}<OverlayTrigger overlay={<Tooltip>
+                        Изменить регистр никнейма
+                    </Tooltip>}>
+                        <button type="button" className="btn" onClick={() => {
+                            setNicknameUpdateCase(username.username);
+                            setShowModalUpdateCase(true);
+                        }}><i className="bi bi-pencil text-primary"></i></button>
+                    </OverlayTrigger></td>
                             <td className="fit"><button type="button" disabled={activateInstall} onClick={() => installUsername(username.username)} className="btn btn-outline-primary"><i className="bi bi-check" /></button></td>
                         </tr>
                     })}
@@ -150,6 +256,11 @@ export const AdditionalUsernamesCard = () => {
                                 </div>
                             </div>
                 </form>
+                <ModalUpdateCase
+                    show={showModalUpdateCase}
+                    close={() => setShowModalUpdateCase(false)}
+                    username={nicknameUpdateCase}
+                />
             </div>
         </div>
     </div>

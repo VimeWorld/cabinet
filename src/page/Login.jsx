@@ -72,7 +72,7 @@ const LoginPage = () => {
 
             <Form.Group className="mb-3" controlId="login">
                 <Form.Label>Логин</Form.Label>
-                <Form.Control type="text" minLength="3" maxLength="20" required
+                <Form.Control type="text" minLength="1" maxLength="20" required
                     value={login} onChange={e => setLogin(e.target.value)} />
             </Form.Group>
 
