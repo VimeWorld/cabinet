@@ -71,6 +71,14 @@ const paymentDescription = (p) => {
                 {p.data.desc ? <> - {p.data.desc}</> : ''}
                 {p.data.instance ? <> на <b>{p.data.instance}</b></> : ''}
             </>
+        case "collect-hold":
+            return 'VimeCollect Замороженная ставка (' + p.data.data + ')'
+        case "collect-transaction":
+            return <>
+                {p.amount > 0 ? 'VimeCollect Продажа игроку ' : 'VimeCollect Покупка у игрока '}
+                <b>{p.data.seller || p.data.buyer}</b>
+                {p.data.desc ? <> - {p.data.desc}</> : ''}
+            </>
         case "interkassa": return <>Пополнение через <b className="text-success">Interkassa</b></>
         case "enot": return <>Пополнение через <b className="text-success">Enot.io</b></>
         case "liqpay": return <>Пополнение через <b className="text-success">LiqPay</b></>
