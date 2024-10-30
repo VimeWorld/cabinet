@@ -251,7 +251,7 @@ export const AdditionalUsernamesCard = () => {
                                 <div className="ms-3">
                                     <button className="btn btn-primary text-nowrap" type="submit" disabled={activateLoading}>
                                         {activateLoading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                                        {activateLoading ? ' Загрузка...' : 'Купить | 999 вим.'}
+                                        {activateLoading ? ' Загрузка...' : 'Купить | 599 вим.'}
                                     </button>
                                 </div>
                             </div>
