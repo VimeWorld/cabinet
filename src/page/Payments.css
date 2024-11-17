@@ -1,0 +1,49 @@
+.img-container {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    transition: 0.16s ease-in-out;
+  }
+  
+.img-container:hover{
+    transform: scale(1.1);
+}
+.img-container:hover .btn-arrow{
+    transform: translate( -20px, 10px);
+}
+.btn-arrow{
+    transition: 0.10s ease-in-out;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding: 18px;
+}
+  
+  .img-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 150%; /* Увеличиваем ширину, чтобы градиент мог сходить на нет перед выходом */
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    opacity: 0.8;
+    animation: shimmer 3s infinite ease-in-out;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }

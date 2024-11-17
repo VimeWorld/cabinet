@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { BalanceCard } from "../component/BalanceCard"
 import { PromoCard } from "../component/PromoCard"
+import { fetchApi } from "../lib/api"
 import { AdditionalUsernamesCard } from "../component/AdditionalUsernamesCard"
 import SkinCard from "../component/skin/SkinCard"
 import useApp from "../hook/useApp"
 import { useTitle } from "../hook/useTitle"
+import { AlfaBankBanner } from "./Payments"
 
 const PersonalInfoCard = () => {
     const { app } = useApp()
@@ -43,8 +45,21 @@ const PersonalInfoCard = () => {
 
 const HomePage = () => {
     const { app } = useApp()
+    const [alfaLink, setAlfaLink] = useState(undefined)
+    useEffect(() => {
+        fetchApi('/user/alfa_link', {
+            method: 'GET'
+        }).then(r => r.json()).then(body => {
+            if (body.success) {
+                setAlfaLink(body.response.link);
+            }
+        });
+    }, []);
     useTitle(app.user.username)
     return <>
+        <div className="mb-4 gy-4">
+            <AlfaBankBanner alfaLink={alfaLink} />
+        </div>
         <div className="row mb-4 gy-4">
             <div className="col-lg-6 col-12">
                 <PersonalInfoCard />

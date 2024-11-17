@@ -90,6 +90,7 @@ const paymentDescription = (p) => {
         case "tebex": return <>Пополнение через <b className="text-success">Tebex</b></>
         case "stripe": return <>Пополнение через <b className="text-success">Stripe</b></>
         case "tinkoff": return <>Пополнение через <b className="text-success">Tinkoff</b></>
+        case "tinkoff_alfa": return <>Бонус за пополнение по карте <b className="text-success">Альфа-Банка</b></>
         case "yookassa": return <>Пополнение через <b className="text-success">YooKassa</b></>
         case "paypal": return <>Пополнение через <b className="text-success">PayPal</b></>
         case "vote": return 'Голосование за сервер'

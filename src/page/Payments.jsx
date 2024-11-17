@@ -10,6 +10,7 @@ import { EventBus, EVENT_UPDATE_PAYMENTS } from "../lib/eventbus"
 import { ruPluralizeVimers, ruPluralize } from "../lib/i18n"
 import Notifications from "../lib/notifications"
 import { ConfirmModal } from "../component/ConfirmModal"
+import './Payments.css'
 
 const TransferCard = () => {
     const { app, fetchAuth } = useApp()
@@ -388,10 +389,11 @@ const PriceCalculator = ({ amount }) => {
     </>
 }
 
-const PayCard = () => {
+const PayCard = ({alfaLink}) => {
     const { app } = useApp()
     const [amount, setAmount] = useState('')
     const [amountBonuses, setAmountBonuses] = useState(0);
+    const [amountAlfa, setAmountAlfa] = useState(0);
     const [bonusesTip, setBonusesTip] = useState(undefined);
     const [loading, setLoading] = useState(false)
     const [showHidden, setShowHidden] = useState(false)
@@ -399,6 +401,7 @@ const PayCard = () => {
     const [paypalButtons, setPayPalButtons] = useState(undefined)
     useEffect(() => {
         setAmountBonuses(getBonusReward(Number(amount)));
+        setAmountAlfa(parseInt(Number(amount) * 0.15, 10));
         setBonusesTip(getTip(Number(amount)));
     }, [amount]);
     useEffect(() => {
@@ -556,6 +559,7 @@ const PayCard = () => {
                     </OverlayTrigger>
                 </div>
                 <div className="d-flex gap-2 mb-1">{bonusesTip}</div>
+                <div className="d-flex gap-2 mb-1"><a href={alfaLink}>Оформите дебетовую Альфа-Карту и получите ещё <b className="text-success">{amountAlfa} вимеров</b></a></div>
                 <ul className="list-group list-group-flush">
                     {psVisible.map(e => {
                         return <PaysystemListElement
@@ -599,6 +603,29 @@ const PayCard = () => {
     </div>
 }
 
+export const AlfaBankBanner = ({alfaLink}) => {
+    return <div className="card">
+            <a href="https://forum.vimeworld.com/topic/1349397-условия-акции-мир-выгод-с-альфа-картой/#comment-7099693">Условия акции</a>
+            <div className="img-container">
+                <a href={alfaLink}>
+                    <img src={"/assets/image/alfa_banner.png"} className="img-fluid rounded" />
+                    <div class="btn-arrow">
+                        <svg viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg" width="5" height="8" style={{height: '32px', width: 'auto'}}>
+                                <g clip-path="url(#clip0_6913_1829)">
+                                    <path d="M0 8V7.00244H0.997559V6.00049H1.99951V5.00293H2.99707V3.00342H1.99951V2.00146H0.997559V1.00391H0V0.00195312H1.99951V1.00391H2.99707V2.00146H3.99902V3.00342H4.99658V5.00293H3.99902V6.00049H2.99707V7.00244H1.99951V8H0Z" fill="#ffffff"></path>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_6913_1829">
+                                        <rect width="5" height="8" fill="white"></rect>
+                                    </clipPath>
+                                </defs>
+                            </svg>    
+                    </div>
+                </a>
+            </div>
+        </div>
+}
+
 export function getBonusReward(amount) {
     let reward = bonusRewards.find(reward => amount >= reward.from);
     if (!reward) {
@@ -626,11 +653,24 @@ export function getTip(amount) {
 }
 
 const PaymentsPage = () => {
+    const [alfaLink, setAlfaLink] = useState(undefined)
+    useEffect(() => {
+        fetchApi('/user/alfa_link', {
+            method: 'GET'
+        }).then(r => r.json()).then(body => {
+            if (body.success) {
+                setAlfaLink(body.response.link);
+            }
+        });
+    }, []);
     useTitle('Платежи')
     return <>
+        <div className="mb-4">
+            <AlfaBankBanner alfaLink={alfaLink} />
+        </div>
         <div className="row mb-4 gy-4">
             <div className="col-lg-6 col-12">
-                <PayCard />
+                <PayCard alfaLink={alfaLink} />
             </div>
 
             <div className="col-lg-6 col-12">
