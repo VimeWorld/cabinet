@@ -10,9 +10,9 @@ import Notifications from "../lib/notifications"
 import { EVENT_MINIGAMES_PROFILE_UPDATED, EventBus } from "../lib/eventbus"
 
 const plans = [
-    { title: '1 месяц', days: 30, price: 209 },
-    { title: '6 месяцев', days: 180, price: 899, profit: 30 },
-    { title: '12 месяцев', days: 365, price: 1299, profit: 50 },
+    { title: '1 месяц', days: 30, price: 349 },
+    { title: '6 месяцев', days: 180, price: 1499, profit: 30 },
+    { title: '12 месяцев', days: 365, price: 2199, profit: 50 },
 ]
 
 const SubInactiveInfo = () => {
