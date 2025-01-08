@@ -203,6 +203,12 @@ export const AdditionalUsernamesCard = () => {
             <div className="mb-0">
                 <h4 className="mb-0">Никнеймы</h4>
                 <span>Тут вы можете купить дополнительные никнеймы и переключаться между ними</span>
+                <br />
+                <a href="https://collect.vimeworld.com">
+                    <button className="btn btn-primary text-nowrap" type="submit">
+                        Vime Collect
+                    </button>
+                </a>
             </div>
         </div>
         <div className="card-table">
