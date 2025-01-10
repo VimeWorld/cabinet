@@ -364,7 +364,7 @@ const PriceCalculator = ({ amount }) => {
             .catch(() => setError(true))
     }, [])
 
-    amount = Math.min(Math.max(1, amount), 500000)
+    amount = Math.min(Math.max(1, amount), 1500000)
 
     const Currency = ({ id, name }) => {
         if (!rates)
@@ -539,7 +539,7 @@ const PayCard = ({alfaLink}) => {
                         placeholder="Количество"
                         required
                         min="1"
-                        max="500000"
+                        max="1500000"
                     />
                     <OverlayTrigger trigger="click" overlay={<Popover id="vimer-rate">
                         <PriceCalculator amount={amount} />
