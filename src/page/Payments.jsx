@@ -284,6 +284,16 @@ const paysystems = [
         },
     },
     {
+        id: "dolyame",
+        description: "Оплатите 25% от стоимости покупки, а оставшиеся 3 части спишутся автоматически с шагом в две недели. Без процентов и комиссий, как обычная оплата картой",
+        img: <ThemedPaysystemImage img="dolyami-logo-black.svg" dark="dolyami-logo-white.svg" />,
+        logos: ['visa', 'mastercard', 'mir', 'sbp'],
+        filter: {
+            test: user => ['RU', 'BY'].includes(user.client_country),
+            message: 'Для РФ и Беларуси',
+        },
+    },
+    {
         id: 'paypal',
         description: 'PayPal, Банковская карта, Google Pay',
         img: <ThemedPaysystemImage img="paypal.svg" dark="paypal.svg" />,
