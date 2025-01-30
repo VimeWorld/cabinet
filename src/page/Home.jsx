@@ -57,9 +57,6 @@ const HomePage = () => {
     }, []);
     useTitle(app.user.username)
     return <>
-        <div className="mb-4 gy-4">
-            <AlfaBankBanner alfaLink={alfaLink} />
-        </div>
         <div className="row mb-4 gy-4">
             <div className="col-lg-6 col-12">
                 <PersonalInfoCard />

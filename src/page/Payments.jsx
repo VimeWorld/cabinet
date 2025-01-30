@@ -569,7 +569,6 @@ const PayCard = ({alfaLink}) => {
                     </OverlayTrigger>
                 </div>
                 <div className="d-flex gap-2 mb-1">{bonusesTip}</div>
-                <div className="d-flex gap-2 mb-1"><a href={alfaLink}>Оформите дебетовую Альфа-Карту и получите ещё <b className="text-success">{amountAlfa} вимеров</b></a></div>
                 <ul className="list-group list-group-flush">
                     {psVisible.map(e => {
                         return <PaysystemListElement
@@ -675,9 +674,6 @@ const PaymentsPage = () => {
     }, []);
     useTitle('Платежи')
     return <>
-        <div className="mb-4">
-            <AlfaBankBanner alfaLink={alfaLink} />
-        </div>
         <div className="row mb-4 gy-4">
             <div className="col-lg-6 col-12">
                 <PayCard alfaLink={alfaLink} />
