@@ -10,11 +10,11 @@ import Notifications from "../lib/notifications"
 import { EVENT_MINIGAMES_PROFILE_UPDATED, EventBus } from "../lib/eventbus"
 
 const plans = [
-    { title: '7 дней', days: 7, price: Math.floor(59 / 2) },
-    { title: '1 месяц', days: 30, price: Math.floor(199 / 2) },
-    { title: '3 месяца', days: 90, price: Math.floor(499 / 2), profit: 17 },
-    { title: '6 месяцев', days: 180, price: Math.floor(899 / 2), profit: 25 },
-    { title: '12 месяцев', days: 365, price: Math.floor(1499 / 2), profit: 38 },
+    { title: '7 дней', days: 7, price: 59 },
+    { title: '1 месяц', days: 30, price: 199 },
+    { title: '3 месяца', days: 90, price: 499, profit: 17 },
+    { title: '6 месяцев', days: 180, price: 899, profit: 25 },
+    { title: '12 месяцев', days: 365, price: 1499, profit: 38 },
 ]
 
 const features = [

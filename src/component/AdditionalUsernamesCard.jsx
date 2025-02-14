@@ -5,9 +5,6 @@ import { useForm } from "react-hook-form"
 import useApp from "../hook/useApp"
 import Notifications from "../lib/notifications"
 
-const buyUsernamePrice = Math.floor(999 / 2);
-const changeUsernamePrice = Math.floor(499 / 2);
-
 const ModalUpdateCase = ({ show, close, username }) => {
     const {
         register,
@@ -71,7 +68,7 @@ const ModalUpdateCase = ({ show, close, username }) => {
             </Modal.Header>
             <Modal.Body>
                 <p>
-                    Здесь вы можете изменить регистр своего никнейма. Поменяйте регистр нужных букв в своем никнейме и нажмите Изменить. Стоимость изменения <code>{changeUsernamePrice} вимеров</code>.
+                    Здесь вы можете изменить регистр своего никнейма. Поменяйте регистр нужных букв в своем никнейме и нажмите Изменить. Стоимость изменения <code>499 вимеров</code>.
                 </p>
 
                 <Form.Group className="mb-3" controlId="new_nickname">
@@ -91,7 +88,7 @@ const ModalUpdateCase = ({ show, close, username }) => {
                 </Button>
                 <Button type="submit" variant="primary" disabled={loading}>
                     {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                    {loading ? ' Загрузка...' : 'Изменить (' + changeUsernamePrice + ' вим.)'}
+                    {loading ? ' Загрузка...' : 'Изменить (499 вим.)'}
                 </Button>
             </Modal.Footer>
         </form>
@@ -260,7 +257,7 @@ export const AdditionalUsernamesCard = () => {
                                 <div className="ms-3">
                                     <button className="btn btn-primary text-nowrap" type="submit" disabled={activateLoading}>
                                         {activateLoading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                                        {activateLoading ? ' Загрузка...' : 'Купить | ' + buyUsernamePrice + ' вим.'}
+                                        {activateLoading ? ' Загрузка...' : 'Купить | 999 вим.'}
                                     </button>
                                 </div>
                             </div>
