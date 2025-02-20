@@ -130,6 +130,7 @@ const TransferCard = () => {
                             onBlur: onTargetBlur,
                         })}
                         placeholder="Игрок"
+                        autoComplete="off"
                         isInvalid={!!errors.target}
                         isValid={checkedLogin.login && !checkedLogin.error && checkedLogin.login === watch('target')}
                     />
@@ -150,7 +151,6 @@ const TransferCard = () => {
                                     return 'У вас недостаточно вимеров'
                             }
                         })}
-                        autoComplete="off"
                         type="number"
                         min="1"
                         placeholder="Количество"
