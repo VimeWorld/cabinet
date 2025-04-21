@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form"
 import useApp from "../hook/useApp"
 import Notifications from "../lib/notifications"
 
-const buyUsernamePrice = Math.floor(699);
-const changeUsernamePrice = Math.floor(349);
+const buyUsernamePrice = Math.floor(999);
+const changeUsernamePrice = Math.floor(499);
 
 const ModalUpdateCase = ({ show, close, username }) => {
     const {
