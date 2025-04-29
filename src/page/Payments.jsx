@@ -213,12 +213,22 @@ const paysystems = [
     },
     {
         id: 'paypalych',
-        description: 'Банковская карта, СБП',
+        description: 'Зарубежные банковские карты, СБП',
         img: <ThemedPaysystemImage img="paypalych-light.svg" dark="paypalych-dark.svg" />,
         logos: ['sbp'],
         filter: {
-            test: user => ['RU'].includes(user.client_country),
-            message: 'Для РФ',
+            test: user => !['BY', 'UA', 'PL'].includes(user.client_country),
+            message: 'Недоступно в Беларуси, Украине и Польше',
+        },
+    },
+    {
+        id: 'paypalychua',
+        description: 'Украинские банковские карты',
+        img: <ThemedPaysystemImage img="paypalych-light.svg" dark="paypalych-dark.svg" />,
+        logos: ['sbp'],
+        filter: {
+            test: user => ['UA'].includes(user.client_country),
+            message: 'Доступно только в Украине',
         },
     },
     {
