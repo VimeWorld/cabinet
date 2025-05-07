@@ -8,11 +8,12 @@ import { useNavigate } from "react-router-dom"
 import { fetchApi } from "../lib/api"
 import Notifications from "../lib/notifications"
 import { EVENT_MINIGAMES_PROFILE_UPDATED, EventBus } from "../lib/eventbus"
+import useDonatePrices from "../hook/useDonatePrices"
 
 const plans = [
-    { title: '1 месяц', days: 30, price: Math.floor(349) },
-    { title: '6 месяцев', days: 180, price: Math.floor(1499), profit: 30 },
-    { title: '12 месяцев', days: 365, price: Math.floor(2199), profit: 50 },
+    { id: 'hd_sub_30', title: '1 месяц', days: 30 },
+    { id: 'hd_sub_180', title: '6 месяцев', days: 180, profit: 30 },
+    { id: 'hd_sub_365', title: '12 месяцев', days: 365, profit: 50 },
 ]
 
 const SubInactiveInfo = () => {
@@ -52,7 +53,7 @@ const PurchaseOption = ({ title, price, active, profit, onClick }) => {
     </div>
 }
 
-const HdSubCardBody = ({ profile }) => {
+const HdSubCardBody = ({ profile, prices }) => {
     const navigate = useNavigate()
     const { app, fetchAuth } = useApp()
     const [selectedPlan, setSelectedPlan] = useState(plans[0])
@@ -100,7 +101,7 @@ const HdSubCardBody = ({ profile }) => {
                 return <PurchaseOption
                     key={plan.days}
                     title={plan.title}
-                    price={plan.price}
+                    price={prices.prices?.[plan.id]}
                     active={profile.hd_sub_active}
                     profit={plan.profit}
                     onClick={() => selectPlan(plan)}
@@ -137,6 +138,7 @@ const HdSubCardBody = ({ profile }) => {
 
 const MinigamesHdSubPage = () => {
     const profile = useMinigamesProfile()
+    const prices = useDonatePrices()
 
     return <>
         <div className='row mb-4'>
@@ -149,7 +151,7 @@ const MinigamesHdSubPage = () => {
                     <div className='card-body'>
                         {profile.loading && <div className='text-center'><Spinner variant='secondary' /></div>}
                         {profile.error && <div className='text-center text-danger'>При загрузке произошла ошибка</div>}
-                        {profile.profile && <HdSubCardBody profile={profile.profile} />}
+                        {profile.profile && <HdSubCardBody profile={profile.profile} prices={prices} />}
                     </div>
                 </div>
             </div>

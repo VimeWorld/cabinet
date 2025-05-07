@@ -8,13 +8,14 @@ import { useNavigate } from "react-router-dom"
 import { fetchApi } from "../lib/api"
 import Notifications from "../lib/notifications"
 import { EVENT_MINIGAMES_PROFILE_UPDATED, EventBus } from "../lib/eventbus"
+import useDonatePrices from "../hook/useDonatePrices"
 
 const plans = [
-    { title: '7 дней', days: 7, price: Math.floor(59) },
-    { title: '1 месяц', days: 30, price: Math.floor(199) },
-    { title: '3 месяца', days: 90, price: Math.floor(499), profit: 17 },
-    { title: '6 месяцев', days: 180, price: Math.floor(899), profit: 25 },
-    { title: '12 месяцев', days: 365, price: Math.floor(1499), profit: 38 },
+    { id: 'prime_7', title: '7 дней', days: 7 },
+    { id: 'prime_30', title: '1 месяц', days: 30 },
+    { id: 'prime_90', title: '3 месяца', days: 90, profit: 17 },
+    { id: 'prime_180', title: '6 месяцев', days: 180, profit: 25 },
+    { id: 'prime_365', title: '12 месяцев', days: 365, profit: 38 },
 ]
 
 const features = [
@@ -159,7 +160,7 @@ const PurchaseOption = ({ title, price, active, profit, onClick }) => {
     </div>
 }
 
-const PrimeCardBody = ({ profile }) => {
+const PrimeCardBody = ({ profile, prices }) => {
     const navigate = useNavigate()
     const { app, fetchAuth } = useApp()
     const [selectedPlan, setSelectedPlan] = useState(plans[0])
@@ -207,7 +208,7 @@ const PrimeCardBody = ({ profile }) => {
                 return <PurchaseOption
                     key={plan.days}
                     title={plan.title}
-                    price={plan.price}
+                    price={prices.prices?.[plan.id]}
                     active={profile.prime_active}
                     profit={plan.profit}
                     onClick={() => selectPlan(plan)}
@@ -244,6 +245,7 @@ const PrimeCardBody = ({ profile }) => {
 
 const MinigamesPrimePage = () => {
     const profile = useMinigamesProfile()
+    const prices = useDonatePrices()
 
     return <>
         <div className='row mb-4'>
@@ -256,7 +258,7 @@ const MinigamesPrimePage = () => {
                     <div className='card-body'>
                         {profile.loading && <div className='text-center'><Spinner variant='secondary' /></div>}
                         {profile.error && <div className='text-center text-danger'>При загрузке произошла ошибка</div>}
-                        {profile.profile && <PrimeCardBody profile={profile.profile} />}
+                        {profile.profile && <PrimeCardBody profile={profile.profile} prices={prices} />}
                     </div>
                 </div>
             </div>

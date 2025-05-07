@@ -11,6 +11,7 @@ import Notifications from "../lib/notifications"
 import useMinigamesProfile from "../hook/userMinigamesProfile"
 import { gradientStyles } from "../lib/gradient"
 import { getRank } from "../lib/vimeworld"
+import useDonatePrices from "../hook/useDonatePrices"
 
 const max = 100000
 const segments = [{
@@ -416,7 +417,7 @@ const TableRankComparison = ({ profile }) => {
     </table>
 }
 
-const ExchangeCoins = ({ profile }) => {
+const ExchangeCoins = ({ profile, prices }) => {
     const [loading, setLoading] = useState(false)
     const { app, fetchAuth } = useApp()
     const {
@@ -472,6 +473,8 @@ const ExchangeCoins = ({ profile }) => {
         <p>
             Влияет на получение донатного статуса.
             Все обмены суммируются и вы сможете получить статус, когда количество ваших обменов достигнет определенной суммы.
+            <br />
+            {prices.prices?.["rank"] > 1 ? <b style={{ color: "#c154c1" }}>x{prices.prices?.["rank"]} в полосу доброты за обмен вимеров на коины</b> : null}
         </p>
 
         <div className="d-flex justify-content-between align-items-center mb-3">
@@ -553,7 +556,7 @@ const ExchangeBonusMessage = () => {
     </div>
 }
 
-const KindnessRowCard = ({ profile }) => {
+const KindnessRowCard = ({ profile, prices }) => {
     const progress = profile.donated / max;
     const expireDate = Date.parse(profile.rank_donate_expire)
 
@@ -614,7 +617,7 @@ const KindnessRowCard = ({ profile }) => {
                     </ul>
                 </div>
                 <div className="col-lg-6 col-12">
-                    <ExchangeCoins profile={profile} />
+                    <ExchangeCoins profile={profile} prices={prices} />
                 </div>
             </div>
         </div>
@@ -630,6 +633,7 @@ const KindnessRowCard = ({ profile }) => {
 const MinigamesDonatePage = () => {
     useTitle('Статус на MiniGames')
     const profile = useMinigamesProfile()
+    const prices = useDonatePrices()
 
     if (!profile.profile)
         return <div className='card'>
@@ -646,7 +650,7 @@ const MinigamesDonatePage = () => {
     return <>
         <div className='row mb-4'>
             <div className='col'>
-                <KindnessRowCard profile={profile.profile} />
+                <KindnessRowCard profile={profile.profile} prices={prices} />
             </div>
         </div>
     </>

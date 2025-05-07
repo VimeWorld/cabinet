@@ -4,11 +4,9 @@ import { Button, Form, Spinner, Modal, OverlayTrigger, Tooltip } from "react-boo
 import { useForm } from "react-hook-form"
 import useApp from "../hook/useApp"
 import Notifications from "../lib/notifications"
+import useDonatePrices from "../hook/useDonatePrices"
 
-const buyUsernamePrice = Math.floor(999);
-const changeUsernamePrice = Math.floor(499);
-
-const ModalUpdateCase = ({ show, close, username }) => {
+const ModalUpdateCase = ({ show, close, username, prices }) => {
     const {
         register,
         handleSubmit,
@@ -71,7 +69,7 @@ const ModalUpdateCase = ({ show, close, username }) => {
             </Modal.Header>
             <Modal.Body>
                 <p>
-                    Здесь вы можете изменить регистр своего никнейма. Поменяйте регистр нужных букв в своем никнейме и нажмите Изменить. Стоимость изменения <code>{changeUsernamePrice} вимеров</code>.
+                    Здесь вы можете изменить регистр своего никнейма. Поменяйте регистр нужных букв в своем никнейме и нажмите Изменить. Стоимость изменения <code>{prices.prices?.["nickname_update"]} вимеров</code>.
                 </p>
 
                 <Form.Group className="mb-3" controlId="new_nickname">
@@ -91,7 +89,7 @@ const ModalUpdateCase = ({ show, close, username }) => {
                 </Button>
                 <Button type="submit" variant="primary" disabled={loading}>
                     {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                    {loading ? ' Загрузка...' : 'Изменить (' + changeUsernamePrice + ' вим.)'}
+                    {loading ? ' Загрузка...' : `Изменить (${prices.prices?.["nickname_update"]} вим.)`}
                 </Button>
             </Modal.Footer>
         </form>
@@ -100,6 +98,7 @@ const ModalUpdateCase = ({ show, close, username }) => {
 
 export const AdditionalUsernamesCard = () => {
     const { app, updateApp } = useApp()
+    const prices = useDonatePrices()
     const [additionalUsernames, setAdditionalUsernames] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activateLoading, setActivateLoading] = useState(false);
@@ -260,7 +259,7 @@ export const AdditionalUsernamesCard = () => {
                                 <div className="ms-3">
                                     <button className="btn btn-primary text-nowrap" type="submit" disabled={activateLoading}>
                                         {activateLoading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                                        {activateLoading ? ' Загрузка...' : 'Купить | ' + buyUsernamePrice + ' вим.'}
+                                        {activateLoading ? ' Загрузка...' : `Купить | ${prices.prices?.["nickname_create"]} вим.`}
                                     </button>
                                 </div>
                             </div>
@@ -269,6 +268,7 @@ export const AdditionalUsernamesCard = () => {
                     show={showModalUpdateCase}
                     close={() => setShowModalUpdateCase(false)}
                     username={nicknameUpdateCase}
+                    prices={prices}
                 />
             </div>
         </div>
