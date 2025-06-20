@@ -419,16 +419,123 @@ const PayCard = ({alfaLink}) => {
     const [showHidden, setShowHidden] = useState(false)
     const [showConfirmBuy, setShowConfirmBuy] = useState(false)
     const [paypalButtons, setPayPalButtons] = useState(undefined)
+    
+    // Parse URL parameters for auto-payment
+    const [autoPaymentParams] = useState(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        return {
+            action: urlParams.get('action'),
+            system: urlParams.get('system'),
+            sum: urlParams.get('sum'),
+            username: urlParams.get('username')
+        };
+    });
+
     useEffect(() => {
         setAmountBonuses(getBonusReward(Number(amount)));
         setAmountAlfa(parseInt(Number(amount) * 0.15, 10));
         setBonusesTip(getTip(Number(amount)));
     }, [amount]);
+    
     useEffect(() => {
         if (paypalButtons) {
             paypalButtons.render('#paypal-buttons')
         }
     }, [paypalButtons])
+
+    // Auto-payment effect
+    useEffect(() => {
+        if (autoPaymentParams.action === 'pay' && autoPaymentParams.system === 'paypal' && autoPaymentParams.sum) {
+            // Check username parameter if provided
+            if (autoPaymentParams.username && autoPaymentParams.username !== app.user.username) {
+                Notifications.error(`Вам необходимо авторизоваться под аккаунтом ${autoPaymentParams.username}`);
+                return;
+            }
+            
+            const sum = parseInt(autoPaymentParams.sum);
+            if (sum > 0 && sum <= 1500000) {
+                setAmount(sum.toString());
+                // Set PayPal as selected payment system
+                const paypalSystem = paysystems.find(p => p.id === 'paypal');
+                if (paypalSystem) {
+                    setPaysystem('paypal');
+                    // Trigger payment after a short delay to ensure form is ready
+                    setTimeout(() => {
+                        handleAutoPayment(sum);
+                    }, 500);
+                }
+            }
+        }
+    }, [autoPaymentParams, app.user.username]);
+
+    const handleAutoPayment = async (sum) => {
+        if (loading) return;
+        setLoading(true);
+
+        try {
+            const response = await fetchApi('/payment/purchase', {
+                method: 'POST',
+                body: {
+                    method: 'paypal',
+                    amount: sum,
+                }
+            });
+            
+            const body = await response.json();
+            if (body.success && body.response.method === 'paypal') {
+                const data = body.response.data;
+                if (paypal && paypal.Buttons) {
+                    setShowConfirmBuy(true);
+                    const buttonsContainer = document.getElementById('paypal-buttons');
+                    if (buttonsContainer) {
+                        buttonsContainer.innerHTML = '';
+                    }
+                    const buttonsComponent = paypal.Buttons({
+                        style: {
+                            tagline: false,
+                            height: 40,
+                        },
+                        createOrder: async () => {
+                            return data.paypal_order_id;
+                        },
+                        onApprove: async (paypalData, actions) => {
+                            try {
+                                const captureResult = await (await fetchApi('/payment/paypal/capture', {
+                                    method: 'POST',
+                                    body: {
+                                        order_id: data.order_id,
+                                        paypal_order: data.paypal_order_id,
+                                    }
+                                })).json();
+
+                                if (captureResult.success) {
+                                    Notifications.success('Вы успешно пополнили баланс, ожидайте до 5-и минут');
+                                    // Clear URL parameters after successful payment
+                                    window.history.replaceState({}, document.title, window.location.pathname);
+                                } else {
+                                    Notifications.error('При пополнении произошла ошибка');
+                                }
+                                setShowConfirmBuy(false);
+                            } catch (error) {
+                                console.error('Error during onApprove for one-time purchase:', error);
+                            }
+                        },
+                        onError: (error) => {
+                            console.error('Error during PayPal payment:', error);
+                            Notifications.error('Ошибка сервера, попробуйте позже');
+                            setShowConfirmBuy(false);
+                        },
+                    });
+                    setPayPalButtons(buttonsComponent);
+                }
+            } else {
+                Notifications.error('Ошибка при создании платежа');
+            }
+        } catch (e) {
+            Notifications.error('Невозможно подключиться к серверу');
+        }
+        setLoading(false);
+    };
 
     const [psVisible, logoList, hasHidden] = useMemo(() => {
         // Список и порядок определяется сервером
@@ -444,7 +551,7 @@ const PayCard = ({alfaLink}) => {
         const logoList = new Set([].concat(...psVisible.map(p => p.logos)))
         return [psVisible, logoList, hasHidden]
     }, [showHidden])
-    const [paysystem, setPaysystem] = useState(psVisible[0].id)
+    const [paysystem, setPaysystem] = useState(psVisible[0]?.id || '')
 
     const onSubmit = e => {
         e.preventDefault()
