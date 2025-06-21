@@ -181,6 +181,15 @@ const ThemedPaysystemImage = ({ img, dark, light, ...props }) => {
     return <img src={`/assets/image/paysystem/${img}`} {...props} />
 }
 
+const SmallPaysystemImage = ({ img, dark, light }) => {
+    const { app } = useApp()
+
+    if (app.theme === 'light' && light) img = light
+    if (app.theme === 'dark' && dark) img = dark
+
+    return <img src={`/assets/image/paysystem/${img}`} style={{ height: '16px', width: 'auto' }} />
+}
+
 const logos = {
     visa: <ThemedPaysystemImage img="Visa_Brandmark_Blue_RGB_2021.png" />,
     mastercard: <ThemedPaysystemImage img="mastercard-securecode.png" />,
@@ -188,6 +197,13 @@ const logos = {
     iomoney: <ThemedPaysystemImage img="iomoney.svg" />,
     mir: <ThemedPaysystemImage img="mir.svg" />,
     sbp: <ThemedPaysystemImage img="sbp-light.svg" dark="sbp-dark.svg" />,
+}
+
+const smallLogos = {
+    visa: <SmallPaysystemImage img="Visa_Brandmark_Blue_RGB_2021.png" />,
+    mastercard: <SmallPaysystemImage img="mastercard-securecode.png" />,
+    mir: <SmallPaysystemImage img="mir.svg" />,
+    tinkoff: <SmallPaysystemImage img="tinkoff.svg" dark="tinkoff-dark.svg" />,
 }
 
 const paysystems = [
@@ -223,7 +239,7 @@ const paysystems = [
     },
     {
         id: 'paypalychua',
-        description: 'Украинские банковские карты',
+        description: 'Украинские банковские карты (минимум 1000 вим)',
         img: <ThemedPaysystemImage img="paypalych-light.svg" dark="paypalych-dark.svg" />,
         logos: ['sbp'],
         filter: {
@@ -409,8 +425,111 @@ const PriceCalculator = ({ amount }) => {
     </>
 }
 
-const PayCard = ({alfaLink}) => {
+const SavedCard = ({ card, selected, onSelect, onDelete }) => {
     const { app } = useApp()
+    const cardType = card.type.toLowerCase()
+    const cardLogo = cardType === 'мир' ? smallLogos.mir : smallLogos[cardType]
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+
+    const handleDelete = async () => {
+        try {
+            const response = await fetchApi('/payment/saved_card_delete', {
+                method: 'POST',
+                body: {
+                    card_id: card.id
+                }
+            })
+            const body = await response.json()
+            if (body.success && body.response.status === 'D') {
+                Notifications.success('Карта успешно удалена')
+                onDelete(card.id)
+            } else {
+                Notifications.error(body.response.title || 'Ошибка при удалении карты')
+            }
+        } catch (e) {
+            Notifications.error('Невозможно подключиться к серверу')
+        }
+        setShowDeleteConfirm(false)
+    }
+
+    return (
+        <div className="saved-card col-6 col-md-4 px-2">
+            <div 
+                className="card h-100" 
+                style={{ 
+                    background: 'linear-gradient(45deg, #3D3D3D, #434343, #373737)',
+                    aspectRatio: '168/109',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    borderColor: selected ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.3)',
+                    transition: 'border-color 0.2s ease-in-out',
+                    cursor: 'pointer'
+                }}
+                onClick={() => onSelect(card)}
+            >
+                <div className="card-body p-2 p-md-2 d-flex flex-column justify-content-between position-relative">
+                    <div className="d-flex justify-content-between align-items-start">
+                        <div style={{ maxWidth: '20%', opacity: 0.8 }}>{smallLogos.tinkoff}</div>
+                        <button 
+                            className="btn btn-link btn-sm text-white p-0" 
+                            style={{ opacity: 0.7 }}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setShowDeleteConfirm(true)
+                            }}
+                        >
+                            <i className="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                    <div className="d-flex justify-content-start align-items-end">
+                        <div className="text-white">
+                            <div className="small">{card.last4}</div>
+                        </div>
+                    </div>
+                    <div style={{ 
+                        position: 'absolute', 
+                        bottom: '8px', 
+                        right: '28px', 
+                        maxWidth: '20%', 
+                        opacity: 0.8 
+                    }}>{cardLogo}</div>
+                </div>
+            </div>
+            <ConfirmModal 
+                show={showDeleteConfirm} 
+                close={() => setShowDeleteConfirm(false)}
+                confirmText="Удалить"
+                cancelText="Отмена"
+                title="Удаление карты"
+                onConfirm={handleDelete}
+            >
+                <p>Вы уверены, что хотите удалить карту {card.last4}?</p>
+            </ConfirmModal>
+        </div>
+    )
+}
+
+const SavedCards = ({ selectedCard, onSelectCard, savedCards, onCardDelete }) => {
+    if (savedCards.length === 0) return null
+
+    return (
+        <div className="mb-3">
+            <div className="row g-3">
+                {savedCards.map(card => (
+                    <SavedCard 
+                        key={card.id} 
+                        card={card} 
+                        selected={selectedCard?.id === card.id}
+                        onSelect={onSelectCard}
+                        onDelete={onCardDelete}
+                    />
+                ))}
+            </div>
+        </div>
+    )
+}
+
+const PayCard = ({alfaLink}) => {
+    const { app, fetchAuth } = useApp()
     const [amount, setAmount] = useState('')
     const [amountBonuses, setAmountBonuses] = useState(0);
     const [amountAlfa, setAmountAlfa] = useState(0);
@@ -430,6 +549,32 @@ const PayCard = ({alfaLink}) => {
             username: urlParams.get('username')
         };
     });
+    const [saveCard, setSaveCard] = useState(true)
+    const [selectedCard, setSelectedCard] = useState(null)
+    const [savedCards, setSavedCards] = useState([])
+
+    useEffect(() => {
+        // Fetch saved cards when component mounts
+        fetchApi('/payment/saved_cards')
+            .then(r => r.json())
+            .then(body => {
+                if (body.response) {
+                    const cards = body.response.cards.map(card => ({
+                        id: card.card_id,
+                        type: card.pan.startsWith('4') ? 'Visa' : 
+                            card.pan.startsWith('5') ? 'Mastercard' : 
+                            card.pan.startsWith('2') ? 'МИР' : 'Unknown',
+                        last4: card.pan.slice(-4)
+                    }))
+                    setSavedCards(cards)
+                    if (cards.length > 0) {
+                        setSelectedCard(cards[0])
+                        setPaysystem(`tinkoff_${cards[0].card_id}`)
+                    }
+                }
+            })
+            .catch(() => Notifications.error('Невозможно загрузить сохраненные карты'))
+    }, [])
 
     useEffect(() => {
         setAmountBonuses(getBonusReward(Number(amount)));
@@ -553,16 +698,76 @@ const PayCard = ({alfaLink}) => {
     }, [showHidden])
     const [paysystem, setPaysystem] = useState(psVisible[0]?.id || '')
 
+    const handleCardSelect = (card) => {
+        setSelectedCard(card)
+        setPaysystem(`tinkoff_${card.id}`)
+    }
+
+    const handlePaysystemSelect = (paysystemId) => {
+        setPaysystem(paysystemId)
+        if (!paysystemId.startsWith('tinkoff_')) {
+            setSelectedCard(null)
+        }
+    }
+
+    const handleCardDelete = (cardId) => {
+        setSavedCards(cards => cards.filter(card => card.id !== cardId))
+        if (selectedCard?.id === cardId) {
+            setSelectedCard(null)
+            setPaysystem(psVisible[0].id)
+        }
+    }
+
     const onSubmit = e => {
         e.preventDefault()
         if (loading) return
         setLoading(true)
 
+        // Check if we're using a saved card
+        if (paysystem.startsWith('tinkoff_')) {
+            const cardId = selectedCard?.id
+            if (!cardId) {
+                Notifications.error('Карта не выбрана')
+                setLoading(false)
+                return
+            }
+            fetchApi('/payment/saved_card_charge', {
+                method: 'POST',
+                body: {
+                    card_id: cardId,
+                    amount: parseInt(amount)
+                }
+            }).then(r => r.json())
+                .then(body => {
+                    if (body.success) {
+                        if (body.response.status === 'CONFIRMED') {
+                            Notifications.success('Оплата прошла успешно')
+                            setTimeout(() => {
+                                EventBus.emit(EVENT_UPDATE_PAYMENTS)
+                                fetchAuth()
+                            }, 1500)
+                        } else if (body.response.status === 'REJECTED') {
+                            Notifications.error('Оплата была отклонена')
+                        }
+                    } else {
+                        Notifications.error(body.response.title || 'Ошибка при оплате')
+                    }
+                })
+                .catch(e => Notifications.error('Невозможно подключиться к серверу'))
+                .finally(() => {
+                    setLoading(false)
+                    setAmount('')
+                })
+            return
+        }
+
+        // Regular payment flow for non-saved cards
         fetchApi('/payment/purchase', {
             method: 'POST',
             body: {
                 method: paysystem,
                 amount: parseInt(amount),
+                save_card: saveCard
             }
         }).then(r => r.json())
             .then(async body => {
@@ -686,13 +891,29 @@ const PayCard = ({alfaLink}) => {
                     </OverlayTrigger>
                 </div>
                 <div className="d-flex gap-2 mb-1">{bonusesTip}</div>
+                <SavedCards 
+                    selectedCard={selectedCard} 
+                    onSelectCard={handleCardSelect} 
+                    savedCards={savedCards}
+                    onCardDelete={handleCardDelete}
+                />
+                <Form.Check 
+                    type="switch"
+                    id="save-card-switch"
+                    label={<>
+                        Запомнить карту. Это безопасно. Сохраняя карту, вы соглашаетесь с <a href="https://vimeworld.com/link_card">Условиями привязки карты</a>
+                    </>}
+                    className="mb-3"
+                    checked={saveCard}
+                    onChange={(e) => setSaveCard(e.target.checked)}
+                />
                 <ul className="list-group list-group-flush">
                     {psVisible.map(e => {
                         return <PaysystemListElement
                             key={e.id}
                             paysystem={e}
                             checked={paysystem === e.id}
-                            onChange={() => setPaysystem(e.id)}
+                            onChange={() => handlePaysystemSelect(e.id)}
                         />
                     })}
                 </ul>
