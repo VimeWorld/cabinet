@@ -33,9 +33,6 @@ const PersonalInfoCard = () => {
                 <dt className="col-sm-4">Ник</dt>
                 <dd className="col-sm-8 user-select-all">{app.user.username}</dd>
 
-                <dt className="col-sm-4">Email</dt>
-                <dd className="col-sm-8" role="button" onClick={() => setEmailHidden(!emailHidden)}>{email}</dd>
-
                 <dt className="col-sm-4">Регистрация</dt>
                 <dd className="col-sm-8">{regTime}</dd>
             </dl>

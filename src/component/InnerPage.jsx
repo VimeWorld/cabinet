@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom"
 import MainNavbar from "./MainNavbar"
 import Sidebar from "./Sidebar"
+import CookieNotification from "./CookieNotification"
 
 const InnerPage = () => {
     return <>
@@ -15,6 +16,7 @@ const InnerPage = () => {
                 </div>
             </div>
         </div>
+        <CookieNotification />
     </>
 }
 

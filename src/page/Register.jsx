@@ -42,6 +42,7 @@ const RegisterPage = () => {
     })
     const [loading, setLoading] = useState(false)
     const [registered, setRegistered] = useState(false)
+    const [agreedToTerms, setAgreedToTerms] = useState(false)
     const { recaptchaComponent, getRecaptchaValue } = useInvisibleRecaptcha()
 
     if (registered) {
@@ -207,11 +208,22 @@ const RegisterPage = () => {
 
             {recaptchaComponent}
 
-            <p className="text-center text-body-secondary text-small"><small>
-                Нажатием кнопки Регистрация, вы соглашаетесь с <a className="link-secondary" href="https://vime.one/terms">Пользовательским соглашением</a>, <a className="link-secondary" href="https://vime.one/rules">Правилами сервера</a> и признаете, что применяется наша <a className="link-secondary" href="https://vime.one/privacy">Политика конфиденциальности</a>.
-            </small></p>
+            <Form.Group className="mb-3" controlId="terms">
+                <Form.Check
+                    type="checkbox"
+                    checked={agreedToTerms}
+                    onChange={(e) => setAgreedToTerms(e.target.checked)}
+                    isInvalid={!agreedToTerms}
+                    label={
+                        <small>
+                            Я соглашаюсь с <a className="link-secondary" href="https://vime.one/terms">Пользовательским соглашением</a>, <a className="link-secondary" href="https://vime.one/rules">Правилами сервера</a> и признаю, что применяется <a className="link-secondary" href="https://vime.one/privacy">Политика конфиденциальности</a>.
+                        </small>
+                    }
+                />
+                {!agreedToTerms && <Form.Control.Feedback type="invalid">Необходимо согласиться с условиями</Form.Control.Feedback>}
+            </Form.Group>
 
-            <button className="btn btn-lg btn-primary w-100 mt-2 mb-4" type="submit" disabled={loading}>
+            <button className="btn btn-lg btn-primary w-100 mt-2 mb-4" type="submit" disabled={loading || !agreedToTerms}>
                 {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
                 {loading ? ' Загрузка...' : 'Регистрация'}
             </button>
