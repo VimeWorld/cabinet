@@ -470,6 +470,7 @@ const SavedCard = ({ card, selected, onSelect, onDelete }) => {
                     <div className="d-flex justify-content-between align-items-start">
                         <div style={{ maxWidth: '20%', opacity: 0.8 }}>{smallLogos.tinkoff}</div>
                         <button 
+                            type="button"
                             className="btn btn-link btn-sm text-white p-0" 
                             style={{ opacity: 0.7 }}
                             onClick={(e) => {
