@@ -28,12 +28,7 @@ export const fetchApi = async (path: string, options: ApiRequestInit = {}) => {
     }
 
     setHeader(options, 'Accept', 'application/json')
-    let url;
-    if (path === '/register' || path === '/recovery/request') {
-        url = 'https://cpapiru.vimeworld.com/api' + path;
-    } else {
-        url = import.meta.env.VITE_API_ENDPOINT + path
-    }
+    const url = import.meta.env.VITE_API_ENDPOINT + path
     return fetch(url, options)
 }
 
