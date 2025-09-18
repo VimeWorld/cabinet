@@ -235,7 +235,7 @@ const PrimeCardBody = ({ profile, prices }) => {
                 title={"Подтверждение"}
             >
                 <p>
-                    Вы действительно хотите {profile.prime_active ? 'продлить' : 'купить'} подписку Prime на {selectedPlan.title} за <b className="text-success">{ruPluralizeVimers(prices.prices[selectedPlan.id])}</b>?
+                    Вы действительно хотите {profile.prime_active ? 'продлить' : 'купить'} подписку Prime на {selectedPlan.title} за <b className="text-success">{ruPluralizeVimers(prices.prices?.[selectedPlan.id])}</b>?
                 </p>
                 Ваш баланс <b className="text-success">{ruPluralizeVimers(app.user.cash + app.user.cash_bonuses)}</b>
             </ConfirmModal>
