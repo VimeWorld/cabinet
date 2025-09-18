@@ -219,7 +219,7 @@ const PrimeCardBody = ({ profile, prices }) => {
         <p>Подписка активируется сразу после покупки и действует в течение выбранного периода времени.</p>
         <div>Подписка не продлевается автоматически, поэтому не забудьте продлить ее вовремя.</div>
 
-        {app.user.cash + app.user.cash_bonuses < selectedPlan.price ?
+        {app.user.cash + app.user.cash_bonuses < prices.prices[selectedPlan.id] ?
             <ConfirmModal show={showConfirmBuy} close={() => setShowConfirmBuy(false)}
                 confirmText={"Пополнить счет"}
                 onConfirm={() => navigate("/payments")}
@@ -235,7 +235,7 @@ const PrimeCardBody = ({ profile, prices }) => {
                 title={"Подтверждение"}
             >
                 <p>
-                    Вы действительно хотите {profile.prime_active ? 'продлить' : 'купить'} подписку Prime на {selectedPlan.title} за <b className="text-success">{ruPluralizeVimers(selectedPlan.price)}</b>?
+                    Вы действительно хотите {profile.prime_active ? 'продлить' : 'купить'} подписку Prime на {selectedPlan.title} за <b className="text-success">{ruPluralizeVimers(prices.prices[selectedPlan.id])}</b>?
                 </p>
                 Ваш баланс <b className="text-success">{ruPluralizeVimers(app.user.cash + app.user.cash_bonuses)}</b>
             </ConfirmModal>
