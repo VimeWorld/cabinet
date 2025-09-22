@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react"
 import { Button, Modal, OverlayTrigger, Spinner, Tooltip } from "react-bootstrap"
 import useApp from "../../hook/useApp"
+import useMinigamesProfile from "../../hook/userMinigamesProfile"
 import { fetchApi } from "../../lib/api"
 import { EventBus, EVENT_LOGOUT } from "../../lib/eventbus"
 import Notifications from "../../lib/notifications"
@@ -125,10 +126,12 @@ const ModalSkin = ({ show, close }) => {
     </Modal>
 }
 
-const ModalCape = ({ show, close, exists, onChanged }) => {
+const ModalCape = ({ show, close, exists, onChanged, profile }) => {
     const { fetchAuth, updateApp } = useApp()
     const file = useRef()
     const [loading, setLoading] = useState(false)
+
+    const capeAvailable = exists || profile.hd_sub_active || profile.cape_status > 0;
 
     const onSubmit = e => {
         e.preventDefault()
@@ -189,10 +192,10 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
     return <Modal show={show} onHide={close}>
         <form onSubmit={onSubmit}>
             <Modal.Header closeButton>
-                <Modal.Title>{exists ? 'Изменение' : 'Покупка'} плаща</Modal.Title>
+                <Modal.Title>{capeAvailable ? 'Изменение' : 'Покупка'} плаща</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {!exists && <p>
+                {!capeAvailable && <p>
                     Стоимость плаща <b className="text-success">50 вимеров</b>.
                     После покупки вы сможете менять плащ сколько угодно раз.
                 </p>}
@@ -211,7 +214,7 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
                 </Button>
                 <Button type="submit" variant="primary" disabled={loading}>
                     {loading && <Spinner className="align-baseline" as="span" size="sm" aria-hidden="true" />}
-                    {loading ? ' Загрузка...' : exists ? 'Изменить' : 'Купить'}
+                    {loading ? ' Загрузка...' : capeAvailable ? 'Изменить' : 'Купить'}
                 </Button>
             </Modal.Footer>
         </form>
@@ -220,6 +223,7 @@ const ModalCape = ({ show, close, exists, onChanged }) => {
 
 const SkinCard = () => {
     const { app } = useApp()
+    const profile = useMinigamesProfile()
     const [capeExists, setCapeExists] = useState(capeExistsCache)
     const [showModalCape, setShowModalCape] = useState(false)
     const [showModalSkin, setShowModalSkin] = useState(false)
@@ -271,15 +275,16 @@ const SkinCard = () => {
                     className="btn btn-outline-primary"
                     onClick={() => setShowModalCape(true)}
                     disabled={capeExists === null}>
-                    {capeExists === null ? 'Загрузка...' : capeExists ? 'Изменить плащ' : 'Купить плащ'}
+                    {capeExists === null || !profile.profile ? 'Загрузка...' : (capeExists || profile.profile.hd_sub_active || profile.profile.cape_status != 0) ? 'Изменить плащ' : 'Купить плащ'}
                 </button>
             </div>
-            <ModalCape
+            {profile.profile && capeExists !== null && <ModalCape
                 show={showModalCape}
                 close={() => setShowModalCape(false)}
                 exists={capeExists}
                 onChanged={() => setCapeExists(true)}
-            />
+                profile={profile.profile}
+            />}
             <ModalSkin
                 show={showModalSkin}
                 close={() => setShowModalSkin(false)}

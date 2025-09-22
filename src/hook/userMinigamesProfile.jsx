@@ -38,6 +38,10 @@ const useMinigamesProfile = () => {
                         prime_active: false,
                         prime_from: "1970-01-01T03:00:00+03:00",
                         prime_to: "1970-01-01T03:00:00+03:00",
+                        hd_sub_active: false,
+                        hd_sub_from: "1970-01-01T03:00:00+03:00",
+                        hd_sub_to: "1970-01-01T03:00:00+03:00",
+                        cape_status: 0,
                     })
                 else
                     setError(true)
