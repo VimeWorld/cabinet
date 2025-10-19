@@ -749,6 +749,8 @@ const PayCard = ({alfaLink}) => {
                             }, 1500)
                         } else if (body.response.status === 'REJECTED') {
                             Notifications.error('Оплата была отклонена')
+                        } else if (body.response.status === 'REDIRECT') {
+                            window.location.href = body.response.redirect
                         }
                     } else {
                         Notifications.error(body.response.title || 'Ошибка при оплате')
