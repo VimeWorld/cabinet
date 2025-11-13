@@ -240,7 +240,7 @@ const MinigamesExclusivesPage = () => {
             <div className='card'>
                 <div className="card-header">
                     <h4 className="mb-0">Эксклюзивы MiniGames</h4>
-                    <span>Эксклюзивные возможности для игроков</span>
+                    <span>Эксклюзивные возможности для игроков. Покупается навсегда. Каждую возможность можно включать и выключать по кнопке. Также эффекты ника можно сочетать между собой</span>
                 </div>
                 <div className='card-body'>
                     {(prices.loading || loadingServices) ? (
