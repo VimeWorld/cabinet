@@ -1,0 +1,81 @@
+.shimmer-username-container {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.shimmer-username {
+    font-size: 32px;
+    font-weight: bold;
+    color: #f0f0f0;
+    position: relative;
+    z-index: 1;
+}
+
+.shimmer-username-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150%;
+    height: 150%;
+    background: linear-gradient(
+        135deg,
+        transparent 0%,
+        transparent 45%,
+        rgba(255, 255, 255, 0.6) 48%,
+        rgba(255, 255, 255, 0.6) 52%,
+        transparent 55%,
+        transparent 100%
+    );
+    background-size: 200% 200%;
+    animation: shimmer 2s linear infinite;
+    z-index: 2;
+    pointer-events: none;
+    transform-origin: 0 0;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) translateY(-100%);
+    }
+    100% {
+        transform: translateX(50%) translateY(50%);
+    }
+}
+
+.rainbow-username-container {
+    display: inline-block;
+}
+
+.rainbow-username {
+    font-size: 32px;
+    font-weight: bold;
+    background: linear-gradient(
+        90deg,
+        #ff0000 0%,
+        #ff7f00 14.28%,
+        #ffff00 28.56%,
+        #00ff00 42.84%,
+        #0000ff 57.12%,
+        #4b0082 71.4%,
+        #9400d3 85.68%,
+        #ff0000 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow 3s linear infinite;
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes rainbow {
+    0% {
+        background-position: 200% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+

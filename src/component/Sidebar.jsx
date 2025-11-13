@@ -99,6 +99,7 @@ const Sidebar = () => {
                         <MenuItem to="/minigames/donate" icon="bi-cash-coin">Изменение статуса</MenuItem>
                         <MenuItem to="/minigames/color" icon="bi-palette-fill">Изменение цвета</MenuItem>
                         <MenuItem to="/minigames/guild" icon="bi-people">Управление гильдией</MenuItem>
+                        <MenuItem to="/minigames/exclusives" icon="bi-gem">Эксклюзивы</MenuItem>
                     </ul>
                 </div>
             </Offcanvas.Body>

@@ -102,6 +102,8 @@ const paymentDescription = (p) => {
         case "promo-code": return 'Активация промо-кода'
         case "admin": return 'Администрация VimeWorld'
         case "cloak": return 'Покупка плаща'
+        case "rainbow": return 'Покупка Цветного ника'
+        case "shimmer": return 'Покупка Шиммера'
     }
     return 'Неизвестная операция ' + p.alias
 }
