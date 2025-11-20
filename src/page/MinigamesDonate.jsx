@@ -432,9 +432,7 @@ const ExchangeCoins = ({ profile, prices }) => {
         mode: 'onChange',
     })
 
-    let exchangeRate = 250
-    if (app.user.config.exchange_bonus)
-        exchangeRate = 500
+    let exchangeRate = 36000
 
     const onSubmit = async data => {
         if (loading)
