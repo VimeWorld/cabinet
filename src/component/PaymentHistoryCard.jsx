@@ -80,9 +80,13 @@ const paymentDescription = (p) => {
                 {p.data.desc ? <> - {p.data.desc}</> : ''}
             </>
         case "mg-hold":
-            return 'Замороженная ставка (' + p.data.data + ')'
+            return 'Замороженная операция (' + p.data.data + ')'
         case "mg-transaction":
-            return 'Покупка на аукционе (' + p.data.desc + ')'
+            return <>
+                {p.amount > 0 ? 'Пополнение (' : 'Списание ('}
+                {p.data.desc}
+                {')'}
+            </>
         case "interkassa": return <>Пополнение через <b className="text-success">Interkassa</b></>
         case "enot": return <>Пополнение через <b className="text-success">Enot.io</b></>
         case "liqpay": return <>Пополнение через <b className="text-success">LiqPay</b></>
