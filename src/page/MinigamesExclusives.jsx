@@ -32,6 +32,36 @@ const RainbowPreview = () => {
     );
 };
 
+const ShakingPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/shaking.gif" 
+            alt="Трясущийся эффект" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
+const WavingPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/waving.gif" 
+            alt="Волновой эффект" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
+const AberrationPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/aberration.gif" 
+            alt="Эффект с помехами" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
 const ExclusiveProductCard = ({ title, description, price, PreviewComponent, onBuy, onToggle, disabled, isBought, isActive }) => {
     const showPrice = !isBought;
     const buttonText = isBought ? (isActive ? 'Выключить' : 'Включить') : 'Купить';
@@ -83,17 +113,32 @@ const MinigamesExclusivesPage = () => {
     const [loadingServices, setLoadingServices] = useState(false);
     const [showConfirmShimmer, setShowConfirmShimmer] = useState(false);
     const [showConfirmRainbow, setShowConfirmRainbow] = useState(false);
+    const [showConfirmShaking, setShowConfirmShaking] = useState(false);
+    const [showConfirmWaving, setShowConfirmWaving] = useState(false);
+    const [showConfirmAberration, setShowConfirmAberration] = useState(false);
     const [loadingShimmer, setLoadingShimmer] = useState(false);
     const [loadingRainbow, setLoadingRainbow] = useState(false);
+    const [loadingShaking, setLoadingShaking] = useState(false);
+    const [loadingWaving, setLoadingWaving] = useState(false);
+    const [loadingAberration, setLoadingAberration] = useState(false);
 
     const shimmerPrice = prices.prices?.shimmer;
     const rainbowPrice = prices.prices?.rainbow;
+    const shakingPrice = prices.prices?.shaking;
+    const wavingPrice = prices.prices?.waving;
+    const aberrationPrice = prices.prices?.aberration;
 
 
     const shimmerBought = userServices?.shimmer_buyed || false;
     const shimmerActive = userServices?.shimmer_active || false;
     const rainbowBought = userServices?.rainbow_buyed || false;
     const rainbowActive = userServices?.rainbow_active || false;
+    const shakingBought = userServices?.shaking_buyed || false;
+    const shakingActive = userServices?.shaking_active || false;
+    const wavingBought = userServices?.waving_buyed || false;
+    const wavingActive = userServices?.waving_active || false;
+    const aberrationBought = userServices?.aberration_buyed || false;
+    const aberrationActive = userServices?.aberration_active || false;
 
     const loadUserServices = useCallback(() => {
         setLoadingServices(true);
@@ -118,17 +163,23 @@ const MinigamesExclusivesPage = () => {
         });
     }, [loadUserServices]);
 
-    const buyShimmer = () => {
-        if (loadingShimmer) return;
-        setLoadingShimmer(true);
+    const buyService = (service, {
+        loading,
+        setLoading,
+        setShowConfirm,
+        successMessage,
+    }) => {
+        if (loading) return;
+        setLoading(true);
 
-        fetchApi('/server/minigames/buy_shimmer', {
+        fetchApi('/server/minigames/buy_service', {
             method: 'POST',
+            body: { service },
         })
             .then(r => r.json())
             .then(body => {
                 if (body.success) {
-                    Notifications.success('Вы успешно купили Шиммер');
+                    Notifications.success(successMessage);
                     setUserServices(body.response);
                     fetchAuth();
                 } else if (body.response?.type === "insufficient_funds") {
@@ -140,83 +191,109 @@ const MinigamesExclusivesPage = () => {
             })
             .catch(() => Notifications.error('Невозможно подключиться к серверу'))
             .finally(() => {
-                setLoadingShimmer(false);
-                setShowConfirmShimmer(false);
+                setLoading(false);
+                setShowConfirm(false);
             });
     };
 
-    const buyRainbow = () => {
-        if (loadingRainbow) return;
-        setLoadingRainbow(true);
+    const toggleService = (service, {
+        loading,
+        setLoading,
+        enabledMessage,
+        disabledMessage,
+    }) => {
+        if (loading) return;
+        setLoading(true);
 
-        fetchApi('/server/minigames/buy_rainbow', {
+        fetchApi('/server/minigames/toggle_service', {
             method: 'POST',
+            body: { service },
         })
             .then(r => r.json())
             .then(body => {
                 if (body.success) {
-                    Notifications.success('Вы успешно купили Цветной ник');
+                    const newActive = body.response?.[`${service}_active`];
                     setUserServices(body.response);
-                    fetchAuth();
-                } else if (body.response?.type === "insufficient_funds") {
-                    Notifications.error('У вас недостаточно вимеров');
-                    fetchAuth();
+                    Notifications.success(newActive ? enabledMessage : disabledMessage);
                 } else {
                     Notifications.error('Произошла ошибка');
                 }
             })
             .catch(() => Notifications.error('Невозможно подключиться к серверу'))
             .finally(() => {
-                setLoadingRainbow(false);
-                setShowConfirmRainbow(false);
+                setLoading(false);
             });
     };
 
-    const toggleShimmer = () => {
-        if (loadingShimmer) return;
-        setLoadingShimmer(true);
+    const buyShimmer = () => buyService('shimmer', {
+        loading: loadingShimmer,
+        setLoading: setLoadingShimmer,
+        setShowConfirm: setShowConfirmShimmer,
+        successMessage: 'Вы успешно купили Шиммер',
+    });
 
-        fetchApi('/server/minigames/toggle_shimmer', {
-            method: 'POST',
-        })
-            .then(r => r.json())
-            .then(body => {
-                if (body.success) {
-                    const newActive = body.response.shimmer_active;
-                    setUserServices(body.response);
-                    Notifications.success(newActive ? 'Шиммер включен' : 'Шиммер выключен');
-                } else {
-                    Notifications.error('Произошла ошибка');
-                }
-            })
-            .catch(() => Notifications.error('Невозможно подключиться к серверу'))
-            .finally(() => {
-                setLoadingShimmer(false);
-            });
-    };
+    const buyRainbow = () => buyService('rainbow', {
+        loading: loadingRainbow,
+        setLoading: setLoadingRainbow,
+        setShowConfirm: setShowConfirmRainbow,
+        successMessage: 'Вы успешно купили Цветной ник',
+    });
 
-    const toggleRainbow = () => {
-        if (loadingRainbow) return;
-        setLoadingRainbow(true);
+    const buyShaking = () => buyService('shaking', {
+        loading: loadingShaking,
+        setLoading: setLoadingShaking,
+        setShowConfirm: setShowConfirmShaking,
+        successMessage: 'Вы успешно купили трясущийся ник',
+    });
 
-        fetchApi('/server/minigames/toggle_rainbow', {
-            method: 'POST',
-        })
-            .then(r => r.json())
-            .then(body => {
-                if (body.success) {
-                    const newActive = body.response.rainbow_active;
-                    setUserServices(body.response);
-                    Notifications.success(newActive ? 'Цветной ник включен' : 'Цветной ник выключен');
-                } else {
-                    Notifications.error('Произошла ошибка');
-                }
-            })
-            .catch(() => Notifications.error('Невозможно подключиться к серверу'))
-            .finally(() => {
-                setLoadingRainbow(false);
-            });
-    };
+    const buyWaving = () => buyService('waving', {
+        loading: loadingWaving,
+        setLoading: setLoadingWaving,
+        setShowConfirm: setShowConfirmWaving,
+        successMessage: 'Вы успешно купили волновой ник',
+    });
+
+    const buyAberration = () => buyService('aberration', {
+        loading: loadingAberration,
+        setLoading: setLoadingAberration,
+        setShowConfirm: setShowConfirmAberration,
+        successMessage: 'Вы успешно купили ник с помехами',
+    });
+
+    const toggleShimmer = () => toggleService('shimmer', {
+        loading: loadingShimmer,
+        setLoading: setLoadingShimmer,
+        enabledMessage: 'Шиммер включен',
+        disabledMessage: 'Шиммер выключен',
+    });
+
+    const toggleRainbow = () => toggleService('rainbow', {
+        loading: loadingRainbow,
+        setLoading: setLoadingRainbow,
+        enabledMessage: 'Цветной ник включен',
+        disabledMessage: 'Цветной ник выключен',
+    });
+
+    const toggleShaking = () => toggleService('shaking', {
+        loading: loadingShaking,
+        setLoading: setLoadingShaking,
+        enabledMessage: 'Трясущийся ник включен',
+        disabledMessage: 'Трясущийся ник выключен',
+    });
+
+    const toggleWaving = () => toggleService('waving', {
+        loading: loadingWaving,
+        setLoading: setLoadingWaving,
+        enabledMessage: 'Волновой ник включен',
+        disabledMessage: 'Волновой ник выключен',
+    });
+
+    const toggleAberration = () => toggleService('aberration', {
+        loading: loadingAberration,
+        setLoading: setLoadingAberration,
+        enabledMessage: 'Ник с помехами включен',
+        disabledMessage: 'Ник с помехами выключен',
+    });
 
     if (!profile.profile) {
         return (
@@ -268,6 +345,39 @@ const MinigamesExclusivesPage = () => {
                                 disabled={loadingRainbow}
                                 isBought={rainbowBought}
                                 isActive={rainbowActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Трясущийся ник"
+                                description="Ник с эффектом тряски"
+                                price={shakingPrice}
+                                PreviewComponent={ShakingPreview}
+                                onBuy={() => setShowConfirmShaking(true)}
+                                onToggle={toggleShaking}
+                                disabled={loadingShaking}
+                                isBought={shakingBought}
+                                isActive={shakingActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Волновой ник"
+                                description="Ник с эффектом волны"
+                                price={wavingPrice}
+                                PreviewComponent={WavingPreview}
+                                onBuy={() => setShowConfirmWaving(true)}
+                                onToggle={toggleWaving}
+                                disabled={loadingWaving}
+                                isBought={wavingBought}
+                                isActive={wavingActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник с помехами"
+                                description="Ник с эффектом помех и искажений"
+                                price={aberrationPrice}
+                                PreviewComponent={AberrationPreview}
+                                onBuy={() => setShowConfirmAberration(true)}
+                                onToggle={toggleAberration}
+                                disabled={loadingAberration}
+                                isBought={aberrationBought}
+                                isActive={aberrationActive}
                             />
                         </div>
                     )}
@@ -321,6 +431,84 @@ const MinigamesExclusivesPage = () => {
                 >
                     <p>
                         Вы действительно хотите купить Цветной ник за <b className="text-success">{ruPluralizeVimers(rainbowPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!shakingBought && shakingPrice && (totalBalance < shakingPrice ? (
+                <ConfirmModal 
+                    show={showConfirmShaking} 
+                    close={() => setShowConfirmShaking(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки трясущегося ника.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmShaking} 
+                    close={() => setShowConfirmShaking(false)}
+                    confirmText="Купить"
+                    onConfirm={buyShaking}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить трясущийся ник за <b className="text-success">{ruPluralizeVimers(shakingPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!wavingBought && wavingPrice && (totalBalance < wavingPrice ? (
+                <ConfirmModal 
+                    show={showConfirmWaving} 
+                    close={() => setShowConfirmWaving(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки волнового ника.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmWaving} 
+                    close={() => setShowConfirmWaving(false)}
+                    confirmText="Купить"
+                    onConfirm={buyWaving}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить волновой ник за <b className="text-success">{ruPluralizeVimers(wavingPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!aberrationBought && aberrationPrice && (totalBalance < aberrationPrice ? (
+                <ConfirmModal 
+                    show={showConfirmAberration} 
+                    close={() => setShowConfirmAberration(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника с помехами.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmAberration} 
+                    close={() => setShowConfirmAberration(false)}
+                    confirmText="Купить"
+                    onConfirm={buyAberration}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник с помехами за <b className="text-success">{ruPluralizeVimers(aberrationPrice)}</b>?
                     </p>
                     Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
                 </ConfirmModal>
