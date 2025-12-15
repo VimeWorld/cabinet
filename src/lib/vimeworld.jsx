@@ -78,6 +78,28 @@ const ranks = {
             "#ff4161"
         ]
     },
+    celestial: {
+        name: "Celestial",
+        prefix: "Celestial",
+        color: "#96c6ff",
+        gradient: [
+            "#e0f3ff",
+            "#bfdfff",
+            "#96c6ff",
+            "#6895d6"
+        ]
+    },
+    absolute: {
+        name: "Absolute",
+        prefix: "Absolute",
+        color: "#f200ff",
+        gradient: [
+            "#f200ff",
+            "#972a6e",
+            "#632f59",
+            "#dd57bc"
+        ]
+    },
     vime: {
         name: "Vime",
         prefix: "Vime",

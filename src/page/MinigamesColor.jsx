@@ -21,6 +21,12 @@ const MinigamesColorPage = () => {
         },
         "eternal": {
             "allowedColors": 4,
+        },
+        "celestial": {
+            "allowedColors": 5,
+        },
+        "absolute": {
+            "allowedColors": 6,
         }
     };
 
