@@ -62,36 +62,6 @@ const AberrationPreview = () => {
     );
 };
 
-const FlipPreview = () => {
-    return (
-        <img 
-            src="/assets/image/exclusives/rainbow.gif" 
-            alt="Переворачивающиеся буквы" 
-            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
-        />
-    );
-};
-
-const HeartsPreview = () => {
-    return (
-        <img 
-            src="/assets/image/exclusives/rainbow.gif" 
-            alt="Ник с сердечками" 
-            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
-        />
-    );
-};
-
-const GradientPreview = () => {
-    return (
-        <img 
-            src="/assets/image/exclusives/rainbow.gif" 
-            alt="Ник с градиентом" 
-            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
-        />
-    );
-};
-
 const ExclusiveProductCard = ({ title, description, price, PreviewComponent, onBuy, onToggle, disabled, isBought, isActive }) => {
     const showPrice = !isBought;
     const buttonText = isBought ? (isActive ? 'Выключить' : 'Включить') : 'Купить';
@@ -146,26 +116,17 @@ const MinigamesExclusivesPage = () => {
     const [showConfirmShaking, setShowConfirmShaking] = useState(false);
     const [showConfirmWaving, setShowConfirmWaving] = useState(false);
     const [showConfirmAberration, setShowConfirmAberration] = useState(false);
-    const [showConfirmFlip, setShowConfirmFlip] = useState(false);
-    const [showConfirmHearts, setShowConfirmHearts] = useState(false);
-    const [showConfirmGradient, setShowConfirmGradient] = useState(false);
     const [loadingShimmer, setLoadingShimmer] = useState(false);
     const [loadingRainbow, setLoadingRainbow] = useState(false);
     const [loadingShaking, setLoadingShaking] = useState(false);
     const [loadingWaving, setLoadingWaving] = useState(false);
     const [loadingAberration, setLoadingAberration] = useState(false);
-    const [loadingFlip, setLoadingFlip] = useState(false);
-    const [loadingHearts, setLoadingHearts] = useState(false);
-    const [loadingGradient, setLoadingGradient] = useState(false);
 
     const shimmerPrice = prices.prices?.shimmer;
     const rainbowPrice = prices.prices?.rainbow;
     const shakingPrice = prices.prices?.shaking;
     const wavingPrice = prices.prices?.waving;
     const aberrationPrice = prices.prices?.aberration;
-    const flipPrice = prices.prices?.flip;
-    const heartsPrice = prices.prices?.hearts;
-    const gradientPrice = prices.prices?.gradient;
 
 
     const shimmerBought = userServices?.shimmer_buyed || false;
@@ -178,12 +139,6 @@ const MinigamesExclusivesPage = () => {
     const wavingActive = userServices?.waving_active || false;
     const aberrationBought = userServices?.aberration_buyed || false;
     const aberrationActive = userServices?.aberration_active || false;
-    const flipBought = userServices?.flip_buyed || false;
-    const flipActive = userServices?.flip_active || false;
-    const heartsBought = userServices?.hearts_buyed || false;
-    const heartsActive = userServices?.hearts_active || false;
-    const gradientBought = userServices?.gradient_buyed || false;
-    const gradientActive = userServices?.gradient_active || false;
 
     const loadUserServices = useCallback(() => {
         setLoadingServices(true);
@@ -305,27 +260,6 @@ const MinigamesExclusivesPage = () => {
         successMessage: 'Вы успешно купили ник с помехами',
     });
 
-    const buyFlip = () => buyService('flip', {
-        loading: loadingFlip,
-        setLoading: setLoadingFlip,
-        setShowConfirm: setShowConfirmFlip,
-        successMessage: 'Вы успешно купили ник с переворачивающимися буквами',
-    });
-
-    const buyHearts = () => buyService('hearts', {
-        loading: loadingHearts,
-        setLoading: setLoadingHearts,
-        setShowConfirm: setShowConfirmHearts,
-        successMessage: 'Вы успешно купили ник с сердечками',
-    });
-
-    const buyGradient = () => buyService('gradient', {
-        loading: loadingGradient,
-        setLoading: setLoadingGradient,
-        setShowConfirm: setShowConfirmGradient,
-        successMessage: 'Вы успешно купили ник с градиентом',
-    });
-
     const toggleShimmer = () => toggleService('shimmer', {
         loading: loadingShimmer,
         setLoading: setLoadingShimmer,
@@ -359,27 +293,6 @@ const MinigamesExclusivesPage = () => {
         setLoading: setLoadingAberration,
         enabledMessage: 'Ник с помехами включен',
         disabledMessage: 'Ник с помехами выключен',
-    });
-
-    const toggleFlip = () => toggleService('flip', {
-        loading: loadingFlip,
-        setLoading: setLoadingFlip,
-        enabledMessage: 'Ник с переворачивающимися буквами включен',
-        disabledMessage: 'Ник с переворачивающимися буквами выключен',
-    });
-
-    const toggleHearts = () => toggleService('hearts', {
-        loading: loadingHearts,
-        setLoading: setLoadingHearts,
-        enabledMessage: 'Ник с сердечками включен',
-        disabledMessage: 'Ник с сердечками выключен',
-    });
-
-    const toggleGradient = () => toggleService('gradient', {
-        loading: loadingGradient,
-        setLoading: setLoadingGradient,
-        enabledMessage: 'Ник с градиентом включен',
-        disabledMessage: 'Ник с градиентом выключен',
     });
 
     if (!profile.profile) {
@@ -465,39 +378,6 @@ const MinigamesExclusivesPage = () => {
                                 disabled={loadingAberration}
                                 isBought={aberrationBought}
                                 isActive={aberrationActive}
-                            />
-                            <ExclusiveProductCard
-                                title="Переворачивающийся ник"
-                                description="Ник с переворачивающимися буквами"
-                                price={flipPrice}
-                                PreviewComponent={FlipPreview}
-                                onBuy={() => setShowConfirmFlip(true)}
-                                onToggle={toggleFlip}
-                                disabled={loadingFlip}
-                                isBought={flipBought}
-                                isActive={flipActive}
-                            />
-                            <ExclusiveProductCard
-                                title="Ник с сердечками"
-                                description="Ник с сердечками"
-                                price={heartsPrice}
-                                PreviewComponent={HeartsPreview}
-                                onBuy={() => setShowConfirmHearts(true)}
-                                onToggle={toggleHearts}
-                                disabled={loadingHearts}
-                                isBought={heartsBought}
-                                isActive={heartsActive}
-                            />
-                            <ExclusiveProductCard
-                                title="Ник с градиентом"
-                                description="Ник с переливающимся градиентом"
-                                price={gradientPrice}
-                                PreviewComponent={GradientPreview}
-                                onBuy={() => setShowConfirmGradient(true)}
-                                onToggle={toggleGradient}
-                                disabled={loadingGradient}
-                                isBought={gradientBought}
-                                isActive={gradientActive}
                             />
                         </div>
                     )}
@@ -629,84 +509,6 @@ const MinigamesExclusivesPage = () => {
                 >
                     <p>
                         Вы действительно хотите купить ник с помехами за <b className="text-success">{ruPluralizeVimers(aberrationPrice)}</b>?
-                    </p>
-                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
-                </ConfirmModal>
-            ))}
-
-            {!flipBought && flipPrice && (totalBalance < flipPrice ? (
-                <ConfirmModal 
-                    show={showConfirmFlip} 
-                    close={() => setShowConfirmFlip(false)}
-                    confirmText="Пополнить счет"
-                    onConfirm={() => navigate("/payments")}
-                    title="Недостаточно вимеров"
-                >
-                    <p>У вас недостаточно вимеров для покупки ника с переворачивающимися буквами.</p>
-                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
-                </ConfirmModal>
-            ) : (
-                <ConfirmModal 
-                    show={showConfirmFlip} 
-                    close={() => setShowConfirmFlip(false)}
-                    confirmText="Купить"
-                    onConfirm={buyFlip}
-                    title="Подтверждение покупки"
-                >
-                    <p>
-                        Вы действительно хотите купить ник с переворачивающимися буквами за <b className="text-success">{ruPluralizeVimers(flipPrice)}</b>?
-                    </p>
-                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
-                </ConfirmModal>
-            ))}
-
-            {!heartsBought && heartsPrice && (totalBalance < heartsPrice ? (
-                <ConfirmModal 
-                    show={showConfirmHearts} 
-                    close={() => setShowConfirmHearts(false)}
-                    confirmText="Пополнить счет"
-                    onConfirm={() => navigate("/payments")}
-                    title="Недостаточно вимеров"
-                >
-                    <p>У вас недостаточно вимеров для покупки ника с сердечками.</p>
-                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
-                </ConfirmModal>
-            ) : (
-                <ConfirmModal 
-                    show={showConfirmHearts} 
-                    close={() => setShowConfirmHearts(false)}
-                    confirmText="Купить"
-                    onConfirm={buyHearts}
-                    title="Подтверждение покупки"
-                >
-                    <p>
-                        Вы действительно хотите купить ник с сердечками за <b className="text-success">{ruPluralizeVimers(heartsPrice)}</b>?
-                    </p>
-                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
-                </ConfirmModal>
-            ))}
-
-            {!gradientBought && gradientPrice && (totalBalance < gradientPrice ? (
-                <ConfirmModal 
-                    show={showConfirmGradient} 
-                    close={() => setShowConfirmGradient(false)}
-                    confirmText="Пополнить счет"
-                    onConfirm={() => navigate("/payments")}
-                    title="Недостаточно вимеров"
-                >
-                    <p>У вас недостаточно вимеров для покупки ника с градиентом.</p>
-                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
-                </ConfirmModal>
-            ) : (
-                <ConfirmModal 
-                    show={showConfirmGradient} 
-                    close={() => setShowConfirmGradient(false)}
-                    confirmText="Купить"
-                    onConfirm={buyGradient}
-                    title="Подтверждение покупки"
-                >
-                    <p>
-                        Вы действительно хотите купить ник с градиентом за <b className="text-success">{ruPluralizeVimers(gradientPrice)}</b>?
                     </p>
                     Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
                 </ConfirmModal>
