@@ -65,7 +65,7 @@ const AberrationPreview = () => {
 const FlipPreview = () => {
     return (
         <img 
-            src="/assets/image/exclusives/rainbow.gif" 
+            src="/assets/image/exclusives/flip.gif" 
             alt="Переворачивающиеся буквы" 
             style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
         />
@@ -75,7 +75,7 @@ const FlipPreview = () => {
 const HeartsPreview = () => {
     return (
         <img 
-            src="/assets/image/exclusives/rainbow.gif" 
+            src="/assets/image/exclusives/hearts.gif" 
             alt="Ник с сердечками" 
             style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
         />
@@ -85,7 +85,7 @@ const HeartsPreview = () => {
 const GradientPreview = () => {
     return (
         <img 
-            src="/assets/image/exclusives/rainbow.gif" 
+            src="/assets/image/exclusives/gradient.gif" 
             alt="Ник с градиентом" 
             style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
         />
