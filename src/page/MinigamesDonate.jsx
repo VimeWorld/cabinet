@@ -69,6 +69,16 @@ const segments = [{
     limit: 500000,
     barColor: 'rgb(75 0 130 / 35%)',
     duration: 'навсегда',
+}, {
+    name: 'Imperial',
+    limit: 1000000,
+    barColor: 'rgb(38 0 63 / 35%)',
+    duration: 'навсегда',
+}, {
+    name: 'Ultimate',
+    limit: 2500000,
+    barColor: 'rgb(10 0 17 / 35%)',
+    duration: 'навсегда',
 }]
 
 const ranks = {
@@ -114,6 +124,14 @@ const ranks = {
     "absolute": {
         name: "Absolute",
         rich: <b style={{ color: "#f200ff" }}>Absolute</b>,
+    },
+    "imperial": {
+        name: "Imperial",
+        rich: <b style={{ color: "#fdbd05" }}>Imperial</b>,
+    },
+    "ultimate": {
+        name: "Ultimate",
+        rich: <b style={{ color: "#4f4f4f" }}>Ultimate</b>,
     },
     "vime": {
         name: "Vime",
@@ -183,6 +201,8 @@ const TableRankComparison = ({ profile }) => {
                 <th width="120px" style={{ color: "#2688ED" }}>Eternal</th>
                 <th width="120px" style={{ color: "#96c6ff" }}>Celestial</th>
                 <th width="120px" style={{ color: "#f200ff" }}>Absolute</th>
+                <th width="120px" style={{ color: "#fdbd05" }}>Imperial</th>
+                <th width="120px" style={{ color: "#4f4f4f" }}>Ultimate</th>
             </tr>
         </thead>
         <tbody>
@@ -198,6 +218,8 @@ const TableRankComparison = ({ profile }) => {
                 <td>x<b>7</b></td>
                 <td>x<b>8.5</b></td>
                 <td>x<b>10</b></td>
+                <td>x<b>11</b></td>
+                <td>x<b>12</b></td>
             </tr>
             <tr>
                 <td>Цвет ника<OverlayTrigger overlay={<Tooltip>
@@ -215,6 +237,8 @@ const TableRankComparison = ({ profile }) => {
                 <td><span style={gradientStyles(getRank('eternal').gradient)}>{profile.username}</span></td>
                 <td><span style={gradientStyles(getRank('celestial').gradient)}>{profile.username}</span></td>
                 <td><span style={gradientStyles(getRank('absolute').gradient)}>{profile.username}</span></td>
+                <td><span style={gradientStyles(getRank('imperial').gradient)}>{profile.username}</span></td>
+                <td><span style={gradientStyles(getRank('ultimate').gradient)}>{profile.username}</span></td>
             </tr>
             <tr>
                 <td>Приставка перед ником</td>
@@ -291,6 +315,26 @@ const TableRankComparison = ({ profile }) => {
                         <i className="bi bi-info-circle ms-2 text-primary"></i>
                     </OverlayTrigger>
                 </b></td>
+                <td style={{ whiteSpace: 'nowrap' }}><b style={{ color: "#fdbd05" }}>
+                    [свой]
+                    <OverlayTrigger overlay={<Tooltip>
+                        Вы сами можете изменять свой префикс с помощью команды
+                        <br />
+                        <code>/prefix &lt;новый префикс&gt;</code>
+                    </Tooltip>}>
+                        <i className="bi bi-info-circle ms-2 text-primary"></i>
+                    </OverlayTrigger>
+                </b></td>
+                <td style={{ whiteSpace: 'nowrap' }}><b style={{ color: "#4f4f4f" }}>
+                    [свой]
+                    <OverlayTrigger overlay={<Tooltip>
+                        Вы сами можете изменять свой префикс с помощью команды
+                        <br />
+                        <code>/prefix &lt;новый префикс&gt;</code>
+                    </Tooltip>}>
+                        <i className="bi bi-info-circle ms-2 text-primary"></i>
+                    </OverlayTrigger>
+                </b></td>
             </tr>
             <tr>
                 <td>Шанс выпадения сундуков в играх</td>
@@ -303,6 +347,8 @@ const TableRankComparison = ({ profile }) => {
                 <td>470%</td>
                 <td>550%</td>
                 <td>650%</td>
+                <td>750%</td>
+                <td>750%</td>
                 <td>750%</td>
             </tr>
             <tr>
@@ -317,6 +363,8 @@ const TableRankComparison = ({ profile }) => {
                 <td>400</td>
                 <td>500</td>
                 <td>600</td>
+                <td>700</td>
+                <td>800</td>
             </tr>
             <tr>
                 <td>Количество игроков в группе</td>
@@ -330,6 +378,8 @@ const TableRankComparison = ({ profile }) => {
                 <td>14</td>
                 <td>16</td>
                 <td>18</td>
+                <td>19</td>
+                <td>20</td>
             </tr>
             <tr>
                 <td>Количество ежедневных заданий</td>
@@ -343,9 +393,13 @@ const TableRankComparison = ({ profile }) => {
                 <td>10</td>
                 <td>11</td>
                 <td>12</td>
+                <td>13</td>
+                <td>14</td>
             </tr>
             <tr>
                 <td>Вход на переполненный сервер</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
@@ -369,6 +423,8 @@ const TableRankComparison = ({ profile }) => {
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
             </tr>
             <tr>
                 <td>Просмотр игр</td>
@@ -382,10 +438,14 @@ const TableRankComparison = ({ profile }) => {
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
             </tr>
             <tr>
                 <td>Создание своей гильдии</td>
                 <td>{checkOff}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
@@ -432,12 +492,16 @@ const TableRankComparison = ({ profile }) => {
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
             </tr>
             <tr>
                 <td>Оповещение о заходе в лобби</td>
                 <td>{checkOff}</td>
                 <td>{checkOff}</td>
                 <td>{checkOff}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
@@ -467,9 +531,13 @@ const TableRankComparison = ({ profile }) => {
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
             </tr>
             <tr>
                 <td>Получение удовольствия</td>
+                <td>{checkOn}</td>
+                <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>
                 <td>{checkOn}</td>

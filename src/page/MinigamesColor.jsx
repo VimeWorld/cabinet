@@ -27,6 +27,12 @@ const MinigamesColorPage = () => {
         },
         "absolute": {
             "allowedColors": 6,
+        },
+        "imperial": {
+            "allowedColors": 6,
+        },
+        "ultimate": {
+            "allowedColors": 6,
         }
     };
 

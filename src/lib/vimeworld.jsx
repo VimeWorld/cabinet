@@ -100,6 +100,28 @@ const ranks = {
             "#dd57bc"
         ]
     },
+    imperial: {
+        name: "Imperial",
+        prefix: "Imperial",
+        color: "#fdbd05",
+        gradient: [
+            "#fdbd05",
+            "#ffa630",
+            "#fffabd",
+            "#fdbd05"
+        ]
+    },
+    ultimate: {
+        name: "Ultimate",
+        prefix: "Ultimate",
+        color: "#4f4f4f",
+        gradient: [
+            "#4f4f4f",
+            "#737272",
+            "#fbf7ff",
+            "#3a3a3a"
+        ]
+    },
     vime: {
         name: "Vime",
         prefix: "Vime",
