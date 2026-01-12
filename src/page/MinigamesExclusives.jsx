@@ -92,6 +92,16 @@ const GradientPreview = () => {
     );
 };
 
+const ClownsPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/clowns.gif" 
+            alt="Ник клоуны" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
 const ExclusiveProductCard = ({ title, description, price, PreviewComponent, onBuy, onToggle, disabled, isBought, isActive }) => {
     const showPrice = !isBought;
     const buttonText = isBought ? (isActive ? 'Выключить' : 'Включить') : 'Купить';
@@ -149,6 +159,7 @@ const MinigamesExclusivesPage = () => {
     const [showConfirmFlip, setShowConfirmFlip] = useState(false);
     const [showConfirmHearts, setShowConfirmHearts] = useState(false);
     const [showConfirmGradient, setShowConfirmGradient] = useState(false);
+    const [showConfirmClowns, setShowConfirmClowns] = useState(false);
     const [loadingShimmer, setLoadingShimmer] = useState(false);
     const [loadingRainbow, setLoadingRainbow] = useState(false);
     const [loadingShaking, setLoadingShaking] = useState(false);
@@ -157,6 +168,7 @@ const MinigamesExclusivesPage = () => {
     const [loadingFlip, setLoadingFlip] = useState(false);
     const [loadingHearts, setLoadingHearts] = useState(false);
     const [loadingGradient, setLoadingGradient] = useState(false);
+    const [loadingClowns, setLoadingClowns] = useState(false);
 
     const shimmerPrice = prices.prices?.shimmer;
     const rainbowPrice = prices.prices?.rainbow;
@@ -166,6 +178,7 @@ const MinigamesExclusivesPage = () => {
     const flipPrice = prices.prices?.flip;
     const heartsPrice = prices.prices?.hearts;
     const gradientPrice = prices.prices?.gradient;
+    const clownsPrice = prices.prices?.clowns;
 
 
     const shimmerBought = userServices?.shimmer_buyed || false;
@@ -184,6 +197,8 @@ const MinigamesExclusivesPage = () => {
     const heartsActive = userServices?.hearts_active || false;
     const gradientBought = userServices?.gradient_buyed || false;
     const gradientActive = userServices?.gradient_active || false;
+    const clownsBought = userServices?.clowns_buyed || false;
+    const clownsActive = userServices?.clowns_active || false;
 
     const loadUserServices = useCallback(() => {
         setLoadingServices(true);
@@ -326,6 +341,13 @@ const MinigamesExclusivesPage = () => {
         successMessage: 'Вы успешно купили ник с градиентом',
     });
 
+    const buyClowns = () => buyService('clowns', {
+        loading: loadingClowns,
+        setLoading: setLoadingClowns,
+        setShowConfirm: setShowConfirmClowns,
+        successMessage: 'Вы успешно купили ник клоуны',
+    });
+
     const toggleShimmer = () => toggleService('shimmer', {
         loading: loadingShimmer,
         setLoading: setLoadingShimmer,
@@ -380,6 +402,13 @@ const MinigamesExclusivesPage = () => {
         setLoading: setLoadingGradient,
         enabledMessage: 'Ник с градиентом включен',
         disabledMessage: 'Ник с градиентом выключен',
+    });
+
+    const toggleClowns = () => toggleService('clowns', {
+        loading: loadingClowns,
+        setLoading: setLoadingClowns,
+        enabledMessage: 'Ник клоуны включен',
+        disabledMessage: 'Ник клоуны выключен',
     });
 
     if (!profile.profile) {
@@ -498,6 +527,17 @@ const MinigamesExclusivesPage = () => {
                                 disabled={loadingGradient}
                                 isBought={gradientBought}
                                 isActive={gradientActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Клоуны"
+                                description="Ник клоуны"
+                                price={clownsPrice}
+                                PreviewComponent={ClownsPreview}
+                                onBuy={() => setShowConfirmClowns(true)}
+                                onToggle={toggleClowns}
+                                disabled={loadingClowns}
+                                isBought={clownsBought}
+                                isActive={clownsActive}
                             />
                         </div>
                     )}
@@ -707,6 +747,32 @@ const MinigamesExclusivesPage = () => {
                 >
                     <p>
                         Вы действительно хотите купить ник с градиентом за <b className="text-success">{ruPluralizeVimers(gradientPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!clownsBought && clownsPrice && (totalBalance < clownsPrice ? (
+                <ConfirmModal 
+                    show={showConfirmClowns} 
+                    close={() => setShowConfirmClowns(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника клоуны.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmClowns} 
+                    close={() => setShowConfirmClowns(false)}
+                    confirmText="Купить"
+                    onConfirm={buyClowns}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник клоуны за <b className="text-success">{ruPluralizeVimers(clownsPrice)}</b>?
                     </p>
                     Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
                 </ConfirmModal>
