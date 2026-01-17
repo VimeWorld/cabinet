@@ -102,6 +102,16 @@ const ClownsPreview = () => {
     );
 };
 
+const EzPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/ez.gif" 
+            alt="Ник с EZ" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
 const ExclusiveProductCard = ({ title, description, price, PreviewComponent, onBuy, onToggle, disabled, isBought, isActive }) => {
     const showPrice = !isBought;
     const buttonText = isBought ? (isActive ? 'Выключить' : 'Включить') : 'Купить';
@@ -160,6 +170,7 @@ const MinigamesExclusivesPage = () => {
     const [showConfirmHearts, setShowConfirmHearts] = useState(false);
     const [showConfirmGradient, setShowConfirmGradient] = useState(false);
     const [showConfirmClowns, setShowConfirmClowns] = useState(false);
+    const [showConfirmEz, setShowConfirmEz] = useState(false);
     const [loadingShimmer, setLoadingShimmer] = useState(false);
     const [loadingRainbow, setLoadingRainbow] = useState(false);
     const [loadingShaking, setLoadingShaking] = useState(false);
@@ -169,6 +180,7 @@ const MinigamesExclusivesPage = () => {
     const [loadingHearts, setLoadingHearts] = useState(false);
     const [loadingGradient, setLoadingGradient] = useState(false);
     const [loadingClowns, setLoadingClowns] = useState(false);
+    const [loadingEz, setLoadingEz] = useState(false);
 
     const shimmerPrice = prices.prices?.shimmer;
     const rainbowPrice = prices.prices?.rainbow;
@@ -179,6 +191,7 @@ const MinigamesExclusivesPage = () => {
     const heartsPrice = prices.prices?.hearts;
     const gradientPrice = prices.prices?.gradient;
     const clownsPrice = prices.prices?.clowns;
+    const ezPrice = prices.prices?.ez;
 
 
     const shimmerBought = userServices?.shimmer_buyed || false;
@@ -199,6 +212,8 @@ const MinigamesExclusivesPage = () => {
     const gradientActive = userServices?.gradient_active || false;
     const clownsBought = userServices?.clowns_buyed || false;
     const clownsActive = userServices?.clowns_active || false;
+    const ezBought = userServices?.ez_buyed || false;
+    const ezActive = userServices?.ez_active || false;
 
     const loadUserServices = useCallback(() => {
         setLoadingServices(true);
@@ -348,6 +363,13 @@ const MinigamesExclusivesPage = () => {
         successMessage: 'Вы успешно купили ник клоуны',
     });
 
+    const buyEz = () => buyService('ez', {
+        loading: loadingEz,
+        setLoading: setLoadingEz,
+        setShowConfirm: setShowConfirmEz,
+        successMessage: 'Вы успешно купили ник с EZ',
+    });
+
     const toggleShimmer = () => toggleService('shimmer', {
         loading: loadingShimmer,
         setLoading: setLoadingShimmer,
@@ -409,6 +431,13 @@ const MinigamesExclusivesPage = () => {
         setLoading: setLoadingClowns,
         enabledMessage: 'Ник клоуны включен',
         disabledMessage: 'Ник клоуны выключен',
+    });
+
+    const toggleEz = () => toggleService('ez', {
+        loading: loadingEz,
+        setLoading: setLoadingEz,
+        enabledMessage: 'Ник с EZ включен',
+        disabledMessage: 'Ник с EZ выключен',
     });
 
     if (!profile.profile) {
@@ -538,6 +567,17 @@ const MinigamesExclusivesPage = () => {
                                 disabled={loadingClowns}
                                 isBought={clownsBought}
                                 isActive={clownsActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник с EZ"
+                                description="Ник с EZ"
+                                price={ezPrice}
+                                PreviewComponent={EzPreview}
+                                onBuy={() => setShowConfirmEz(true)}
+                                onToggle={toggleEz}
+                                disabled={loadingEz}
+                                isBought={ezBought}
+                                isActive={ezActive}
                             />
                         </div>
                     )}
@@ -773,6 +813,32 @@ const MinigamesExclusivesPage = () => {
                 >
                     <p>
                         Вы действительно хотите купить ник клоуны за <b className="text-success">{ruPluralizeVimers(clownsPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!ezBought && ezPrice && (totalBalance < ezPrice ? (
+                <ConfirmModal 
+                    show={showConfirmEz} 
+                    close={() => setShowConfirmEz(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника с EZ.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmEz} 
+                    close={() => setShowConfirmEz(false)}
+                    confirmText="Купить"
+                    onConfirm={buyEz}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник с EZ за <b className="text-success">{ruPluralizeVimers(ezPrice)}</b>?
                     </p>
                     Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
                 </ConfirmModal>
