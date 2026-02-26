@@ -104,6 +104,7 @@ const paymentDescription = (p) => {
         case "paypal": return <>Пополнение через <b className="text-success">PayPal</b></>
         case "vote": return 'Голосование за сервер'
         case "promo-code": return 'Активация промо-кода'
+        case "vimers-queue": return "Получение награды"
         case "admin": return 'Администрация VimeWorld'
         case "cloak": return 'Покупка плаща'
         case "rainbow": return 'Покупка Цветного ника'

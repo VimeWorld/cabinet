@@ -112,6 +112,46 @@ const EzPreview = () => {
     );
 };
 
+const TntPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/tnt.gif" 
+            alt="Ник с TNT" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
+const GrassPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/grass.gif" 
+            alt="Ник с травой" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
+const BlockPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/block.gif" 
+            alt="Ник с блоком" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
+const AfkPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/afk.gif" 
+            alt="Ник с AFK" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
 const ExclusiveProductCard = ({ title, description, price, PreviewComponent, onBuy, onToggle, disabled, isBought, isActive }) => {
     const showPrice = !isBought;
     const buttonText = isBought ? (isActive ? 'Выключить' : 'Включить') : 'Купить';
@@ -171,6 +211,10 @@ const MinigamesExclusivesPage = () => {
     const [showConfirmGradient, setShowConfirmGradient] = useState(false);
     const [showConfirmClowns, setShowConfirmClowns] = useState(false);
     const [showConfirmEz, setShowConfirmEz] = useState(false);
+    const [showConfirmTnt, setShowConfirmTnt] = useState(false);
+    const [showConfirmGrass, setShowConfirmGrass] = useState(false);
+    const [showConfirmBlock, setShowConfirmBlock] = useState(false);
+    const [showConfirmAfk, setShowConfirmAfk] = useState(false);
     const [loadingShimmer, setLoadingShimmer] = useState(false);
     const [loadingRainbow, setLoadingRainbow] = useState(false);
     const [loadingShaking, setLoadingShaking] = useState(false);
@@ -181,6 +225,10 @@ const MinigamesExclusivesPage = () => {
     const [loadingGradient, setLoadingGradient] = useState(false);
     const [loadingClowns, setLoadingClowns] = useState(false);
     const [loadingEz, setLoadingEz] = useState(false);
+    const [loadingTnt, setLoadingTnt] = useState(false);
+    const [loadingGrass, setLoadingGrass] = useState(false);
+    const [loadingBlock, setLoadingBlock] = useState(false);
+    const [loadingAfk, setLoadingAfk] = useState(false);
 
     const shimmerPrice = prices.prices?.shimmer;
     const rainbowPrice = prices.prices?.rainbow;
@@ -192,6 +240,10 @@ const MinigamesExclusivesPage = () => {
     const gradientPrice = prices.prices?.gradient;
     const clownsPrice = prices.prices?.clowns;
     const ezPrice = prices.prices?.ez;
+    const tntPrice = prices.prices?.tnt;
+    const grassPrice = prices.prices?.grass;
+    const blockPrice = prices.prices?.block;
+    const afkPrice = prices.prices?.afk;
 
 
     const shimmerBought = userServices?.shimmer_buyed || false;
@@ -214,6 +266,14 @@ const MinigamesExclusivesPage = () => {
     const clownsActive = userServices?.clowns_active || false;
     const ezBought = userServices?.ez_buyed || false;
     const ezActive = userServices?.ez_active || false;
+    const tntBought = userServices?.tnt_buyed || false;
+    const tntActive = userServices?.tnt_active || false;
+    const grassBought = userServices?.grass_buyed || false;
+    const grassActive = userServices?.grass_active || false;
+    const blockBought = userServices?.block_buyed || false;
+    const blockActive = userServices?.block_active || false;
+    const afkBought = userServices?.afk_buyed || false;
+    const afkActive = userServices?.afk_active || false;
 
     const loadUserServices = useCallback(() => {
         setLoadingServices(true);
@@ -370,6 +430,34 @@ const MinigamesExclusivesPage = () => {
         successMessage: 'Вы успешно купили ник с EZ',
     });
 
+    const buyTnt = () => buyService('tnt', {
+        loading: loadingTnt,
+        setLoading: setLoadingTnt,
+        setShowConfirm: setShowConfirmTnt,
+        successMessage: 'Вы успешно купили ник с TNT',
+    });
+
+    const buyGrass = () => buyService('grass', {
+        loading: loadingGrass,
+        setLoading: setLoadingGrass,
+        setShowConfirm: setShowConfirmGrass,
+        successMessage: 'Вы успешно купили ник с травой',
+    });
+
+    const buyBlock = () => buyService('block', {
+        loading: loadingBlock,
+        setLoading: setLoadingBlock,
+        setShowConfirm: setShowConfirmBlock,
+        successMessage: 'Вы успешно купили ник с блоком',
+    });
+
+    const buyAfk = () => buyService('afk', {
+        loading: loadingAfk,
+        setLoading: setLoadingAfk,
+        setShowConfirm: setShowConfirmAfk,
+        successMessage: 'Вы успешно купили ник с AFK',
+    });
+
     const toggleShimmer = () => toggleService('shimmer', {
         loading: loadingShimmer,
         setLoading: setLoadingShimmer,
@@ -438,6 +526,34 @@ const MinigamesExclusivesPage = () => {
         setLoading: setLoadingEz,
         enabledMessage: 'Ник с EZ включен',
         disabledMessage: 'Ник с EZ выключен',
+    });
+
+    const toggleTnt = () => toggleService('tnt', {
+        loading: loadingTnt,
+        setLoading: setLoadingTnt,
+        enabledMessage: 'Ник с TNT включен',
+        disabledMessage: 'Ник с TNT выключен',
+    });
+
+    const toggleGrass = () => toggleService('grass', {
+        loading: loadingGrass,
+        setLoading: setLoadingGrass,
+        enabledMessage: 'Ник с травой включен',
+        disabledMessage: 'Ник с травой выключен',
+    });
+
+    const toggleBlock = () => toggleService('block', {
+        loading: loadingBlock,
+        setLoading: setLoadingBlock,
+        enabledMessage: 'Ник с блоком включен',
+        disabledMessage: 'Ник с блоком выключен',
+    });
+
+    const toggleAfk = () => toggleService('afk', {
+        loading: loadingAfk,
+        setLoading: setLoadingAfk,
+        enabledMessage: 'Ник с AFK включен',
+        disabledMessage: 'Ник с AFK выключен',
     });
 
     if (!profile.profile) {
@@ -578,6 +694,50 @@ const MinigamesExclusivesPage = () => {
                                 disabled={loadingEz}
                                 isBought={ezBought}
                                 isActive={ezActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник с TNT"
+                                description="Ник с TNT"
+                                price={tntPrice}
+                                PreviewComponent={TntPreview}
+                                onBuy={() => setShowConfirmTnt(true)}
+                                onToggle={toggleTnt}
+                                disabled={loadingTnt}
+                                isBought={tntBought}
+                                isActive={tntActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник с травой"
+                                description="Ник с травой"
+                                price={grassPrice}
+                                PreviewComponent={GrassPreview}
+                                onBuy={() => setShowConfirmGrass(true)}
+                                onToggle={toggleGrass}
+                                disabled={loadingGrass}
+                                isBought={grassBought}
+                                isActive={grassActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник с блоком"
+                                description="Ник с блоком"
+                                price={blockPrice}
+                                PreviewComponent={BlockPreview}
+                                onBuy={() => setShowConfirmBlock(true)}
+                                onToggle={toggleBlock}
+                                disabled={loadingBlock}
+                                isBought={blockBought}
+                                isActive={blockActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник с AFK"
+                                description="Ник с AFK"
+                                price={afkPrice}
+                                PreviewComponent={AfkPreview}
+                                onBuy={() => setShowConfirmAfk(true)}
+                                onToggle={toggleAfk}
+                                disabled={loadingAfk}
+                                isBought={afkBought}
+                                isActive={afkActive}
                             />
                         </div>
                     )}
@@ -839,6 +999,110 @@ const MinigamesExclusivesPage = () => {
                 >
                     <p>
                         Вы действительно хотите купить ник с EZ за <b className="text-success">{ruPluralizeVimers(ezPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!tntBought && tntPrice && (totalBalance < tntPrice ? (
+                <ConfirmModal 
+                    show={showConfirmTnt} 
+                    close={() => setShowConfirmTnt(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника с TNT.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmTnt} 
+                    close={() => setShowConfirmTnt(false)}
+                    confirmText="Купить"
+                    onConfirm={buyTnt}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник с TNT за <b className="text-success">{ruPluralizeVimers(tntPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!grassBought && grassPrice && (totalBalance < grassPrice ? (
+                <ConfirmModal 
+                    show={showConfirmGrass} 
+                    close={() => setShowConfirmGrass(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника с травой.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmGrass} 
+                    close={() => setShowConfirmGrass(false)}
+                    confirmText="Купить"
+                    onConfirm={buyGrass}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник с травой за <b className="text-success">{ruPluralizeVimers(grassPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!blockBought && blockPrice && (totalBalance < blockPrice ? (
+                <ConfirmModal 
+                    show={showConfirmBlock} 
+                    close={() => setShowConfirmBlock(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника с блоком.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmBlock} 
+                    close={() => setShowConfirmBlock(false)}
+                    confirmText="Купить"
+                    onConfirm={buyBlock}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник с блоком за <b className="text-success">{ruPluralizeVimers(blockPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!afkBought && afkPrice && (totalBalance < afkPrice ? (
+                <ConfirmModal 
+                    show={showConfirmAfk} 
+                    close={() => setShowConfirmAfk(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника с AFK.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmAfk} 
+                    close={() => setShowConfirmAfk(false)}
+                    confirmText="Купить"
+                    onConfirm={buyAfk}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник с AFK за <b className="text-success">{ruPluralizeVimers(afkPrice)}</b>?
                     </p>
                     Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
                 </ConfirmModal>
