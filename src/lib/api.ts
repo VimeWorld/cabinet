@@ -22,7 +22,7 @@ export const fetchApi = async (path: string, options: ApiRequestInit = {}) => {
     if (cachedToken)
         setHeader(options, 'Authorization', 'Bearer ' + cachedToken)
 
-    if (isObject(options.body) && !(options.body instanceof FormData)) {
+    if (isObject(options.body) && !(options.body instanceof FormData) && !(options.body instanceof Blob)) {
         options.body = JSON.stringify(options.body)
         setHeader(options, 'Content-Type', 'application/json')
     }

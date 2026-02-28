@@ -32,12 +32,9 @@ const ModalSkin = ({ show, close }) => {
         }
 
         setLoading(true)
-        const formData = new FormData()
-        formData.append('file', skinFile)
-        formData.append('type', skinType)
-        fetchApi('/user/skin', {
-            method: 'POST',
-            body: formData,
+        fetchApi('/user/skin?type=' + skinType, {
+            method: 'PUT',
+            body: skinFile,
         }).then(r => r.json())
             .then(body => {
                 if (body.success) {
@@ -143,11 +140,9 @@ const ModalCape = ({ show, close, exists, onChanged, profile }) => {
         }
 
         setLoading(true)
-        const formData = new FormData()
-        formData.append('file', skinFile)
         fetchApi('/user/cape', {
-            method: 'POST',
-            body: formData,
+            method: 'PUT',
+            body: skinFile,
         }).then(r => r.json())
             .then(body => {
                 if (body.success) {
