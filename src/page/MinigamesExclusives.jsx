@@ -152,6 +152,26 @@ const AfkPreview = () => {
     );
 };
 
+const SlNick1Preview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/sl_nick1.gif" 
+            alt="Нож" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
+const SlNick2Preview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/sl_nick2.gif" 
+            alt="Призрак" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
 const ExclusiveProductCard = ({ title, description, price, PreviewComponent, onBuy, onToggle, disabled, isBought, isActive }) => {
     const showPrice = !isBought;
     const buttonText = isBought ? (isActive ? 'Выключить' : 'Включить') : 'Купить';
@@ -215,6 +235,8 @@ const MinigamesExclusivesPage = () => {
     const [showConfirmGrass, setShowConfirmGrass] = useState(false);
     const [showConfirmBlock, setShowConfirmBlock] = useState(false);
     const [showConfirmAfk, setShowConfirmAfk] = useState(false);
+    const [showConfirmSlNick1, setShowConfirmSlNick1] = useState(false);
+    const [showConfirmSlNick2, setShowConfirmSlNick2] = useState(false);
     const [loadingShimmer, setLoadingShimmer] = useState(false);
     const [loadingRainbow, setLoadingRainbow] = useState(false);
     const [loadingShaking, setLoadingShaking] = useState(false);
@@ -229,6 +251,8 @@ const MinigamesExclusivesPage = () => {
     const [loadingGrass, setLoadingGrass] = useState(false);
     const [loadingBlock, setLoadingBlock] = useState(false);
     const [loadingAfk, setLoadingAfk] = useState(false);
+    const [loadingSlNick1, setLoadingSlNick1] = useState(false);
+    const [loadingSlNick2, setLoadingSlNick2] = useState(false);
 
     const shimmerPrice = prices.prices?.shimmer;
     const rainbowPrice = prices.prices?.rainbow;
@@ -244,6 +268,8 @@ const MinigamesExclusivesPage = () => {
     const grassPrice = prices.prices?.grass;
     const blockPrice = prices.prices?.block;
     const afkPrice = prices.prices?.afk;
+    const slNick1Price = prices.prices?.sl_nick1;
+    const slNick2Price = prices.prices?.sl_nick2;
 
 
     const shimmerBought = userServices?.shimmer_buyed || false;
@@ -274,6 +300,10 @@ const MinigamesExclusivesPage = () => {
     const blockActive = userServices?.block_active || false;
     const afkBought = userServices?.afk_buyed || false;
     const afkActive = userServices?.afk_active || false;
+    const slNick1Bought = userServices?.sl_nick1_buyed || false;
+    const slNick1Active = userServices?.sl_nick1_active || false;
+    const slNick2Bought = userServices?.sl_nick2_buyed || false;
+    const slNick2Active = userServices?.sl_nick2_active || false;
 
     const loadUserServices = useCallback(() => {
         setLoadingServices(true);
@@ -458,6 +488,20 @@ const MinigamesExclusivesPage = () => {
         successMessage: 'Вы успешно купили ник с AFK',
     });
 
+    const buySlNick1 = () => buyService('sl_nick1', {
+        loading: loadingSlNick1,
+        setLoading: setLoadingSlNick1,
+        setShowConfirm: setShowConfirmSlNick1,
+        successMessage: 'Вы успешно купили ник Нож',
+    });
+
+    const buySlNick2 = () => buyService('sl_nick2', {
+        loading: loadingSlNick2,
+        setLoading: setLoadingSlNick2,
+        setShowConfirm: setShowConfirmSlNick2,
+        successMessage: 'Вы успешно купили ник Призрак',
+    });
+
     const toggleShimmer = () => toggleService('shimmer', {
         loading: loadingShimmer,
         setLoading: setLoadingShimmer,
@@ -554,6 +598,20 @@ const MinigamesExclusivesPage = () => {
         setLoading: setLoadingAfk,
         enabledMessage: 'Ник с AFK включен',
         disabledMessage: 'Ник с AFK выключен',
+    });
+
+    const toggleSlNick1 = () => toggleService('sl_nick1', {
+        loading: loadingSlNick1,
+        setLoading: setLoadingSlNick1,
+        enabledMessage: 'Ник Нож включен',
+        disabledMessage: 'Ник Нож выключен',
+    });
+
+    const toggleSlNick2 = () => toggleService('sl_nick2', {
+        loading: loadingSlNick2,
+        setLoading: setLoadingSlNick2,
+        enabledMessage: 'Ник Призрак включен',
+        disabledMessage: 'Ник Призрак выключен',
     });
 
     if (!profile.profile) {
@@ -738,6 +796,28 @@ const MinigamesExclusivesPage = () => {
                                 disabled={loadingAfk}
                                 isBought={afkBought}
                                 isActive={afkActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Нож"
+                                description="Ник Нож"
+                                price={slNick1Price}
+                                PreviewComponent={SlNick1Preview}
+                                onBuy={() => setShowConfirmSlNick1(true)}
+                                onToggle={toggleSlNick1}
+                                disabled={loadingSlNick1}
+                                isBought={slNick1Bought}
+                                isActive={slNick1Active}
+                            />
+                            <ExclusiveProductCard
+                                title="Призрак"
+                                description="Ник Призрак"
+                                price={slNick2Price}
+                                PreviewComponent={SlNick2Preview}
+                                onBuy={() => setShowConfirmSlNick2(true)}
+                                onToggle={toggleSlNick2}
+                                disabled={loadingSlNick2}
+                                isBought={slNick2Bought}
+                                isActive={slNick2Active}
                             />
                         </div>
                     )}
@@ -1103,6 +1183,58 @@ const MinigamesExclusivesPage = () => {
                 >
                     <p>
                         Вы действительно хотите купить ник с AFK за <b className="text-success">{ruPluralizeVimers(afkPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!slNick1Bought && slNick1Price && (totalBalance < slNick1Price ? (
+                <ConfirmModal 
+                    show={showConfirmSlNick1} 
+                    close={() => setShowConfirmSlNick1(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника Нож.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmSlNick1} 
+                    close={() => setShowConfirmSlNick1(false)}
+                    confirmText="Купить"
+                    onConfirm={buySlNick1}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник Нож за <b className="text-success">{ruPluralizeVimers(slNick1Price)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!slNick2Bought && slNick2Price && (totalBalance < slNick2Price ? (
+                <ConfirmModal 
+                    show={showConfirmSlNick2} 
+                    close={() => setShowConfirmSlNick2(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника Призрак.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmSlNick2} 
+                    close={() => setShowConfirmSlNick2(false)}
+                    confirmText="Купить"
+                    onConfirm={buySlNick2}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник Призрак за <b className="text-success">{ruPluralizeVimers(slNick2Price)}</b>?
                     </p>
                     Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
                 </ConfirmModal>
