@@ -172,6 +172,36 @@ const SlNick2Preview = () => {
     );
 };
 
+const SweetPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/sweet.gif" 
+            alt="Ник с клубничками" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
+const DiamondPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/diamond.gif" 
+            alt="Ник с алмазами" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
+const PufferfishPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/pufferfish.gif" 
+            alt="Ник с рыбой фугу" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
 const ExclusiveProductCard = ({ title, description, price, PreviewComponent, onBuy, onToggle, disabled, isBought, isActive }) => {
     const showPrice = !isBought;
     const buttonText = isBought ? (isActive ? 'Выключить' : 'Включить') : 'Купить';
@@ -237,6 +267,9 @@ const MinigamesExclusivesPage = () => {
     const [showConfirmAfk, setShowConfirmAfk] = useState(false);
     const [showConfirmSlNick1, setShowConfirmSlNick1] = useState(false);
     const [showConfirmSlNick2, setShowConfirmSlNick2] = useState(false);
+    const [showConfirmSweet, setShowConfirmSweet] = useState(false);
+    const [showConfirmDiamond, setShowConfirmDiamond] = useState(false);
+    const [showConfirmPufferfish, setShowConfirmPufferfish] = useState(false);
     const [loadingShimmer, setLoadingShimmer] = useState(false);
     const [loadingRainbow, setLoadingRainbow] = useState(false);
     const [loadingShaking, setLoadingShaking] = useState(false);
@@ -253,6 +286,9 @@ const MinigamesExclusivesPage = () => {
     const [loadingAfk, setLoadingAfk] = useState(false);
     const [loadingSlNick1, setLoadingSlNick1] = useState(false);
     const [loadingSlNick2, setLoadingSlNick2] = useState(false);
+    const [loadingSweet, setLoadingSweet] = useState(false);
+    const [loadingDiamond, setLoadingDiamond] = useState(false);
+    const [loadingPufferfish, setLoadingPufferfish] = useState(false);
 
     const shimmerPrice = prices.prices?.shimmer;
     const rainbowPrice = prices.prices?.rainbow;
@@ -270,6 +306,9 @@ const MinigamesExclusivesPage = () => {
     const afkPrice = prices.prices?.afk;
     const slNick1Price = prices.prices?.sl_nick1;
     const slNick2Price = prices.prices?.sl_nick2;
+    const sweetPrice = prices.prices?.sweet;
+    const diamondPrice = prices.prices?.diamond;
+    const pufferfishPrice = prices.prices?.pufferfish;
 
 
     const shimmerBought = userServices?.shimmer_buyed || false;
@@ -304,6 +343,12 @@ const MinigamesExclusivesPage = () => {
     const slNick1Active = userServices?.sl_nick1_active || false;
     const slNick2Bought = userServices?.sl_nick2_buyed || false;
     const slNick2Active = userServices?.sl_nick2_active || false;
+    const sweetBought = userServices?.sweet_buyed || false;
+    const sweetActive = userServices?.sweet_active || false;
+    const diamondBought = userServices?.diamond_buyed || false;
+    const diamondActive = userServices?.diamond_active || false;
+    const pufferfishBought = userServices?.pufferfish_buyed || false;
+    const pufferfishActive = userServices?.pufferfish_active || false;
 
     const loadUserServices = useCallback(() => {
         setLoadingServices(true);
@@ -502,6 +547,27 @@ const MinigamesExclusivesPage = () => {
         successMessage: 'Вы успешно купили ник Призрак',
     });
 
+    const buySweet = () => buyService('sweet', {
+        loading: loadingSweet,
+        setLoading: setLoadingSweet,
+        setShowConfirm: setShowConfirmSweet,
+        successMessage: 'Вы успешно купили ник с клубничками',
+    });
+
+    const buyDiamond = () => buyService('diamond', {
+        loading: loadingDiamond,
+        setLoading: setLoadingDiamond,
+        setShowConfirm: setShowConfirmDiamond,
+        successMessage: 'Вы успешно купили ник с алмазами',
+    });
+
+    const buyPufferfish = () => buyService('pufferfish', {
+        loading: loadingPufferfish,
+        setLoading: setLoadingPufferfish,
+        setShowConfirm: setShowConfirmPufferfish,
+        successMessage: 'Вы успешно купили ник с рыбой фугу',
+    });
+
     const toggleShimmer = () => toggleService('shimmer', {
         loading: loadingShimmer,
         setLoading: setLoadingShimmer,
@@ -612,6 +678,27 @@ const MinigamesExclusivesPage = () => {
         setLoading: setLoadingSlNick2,
         enabledMessage: 'Ник Призрак включен',
         disabledMessage: 'Ник Призрак выключен',
+    });
+
+    const toggleSweet = () => toggleService('sweet', {
+        loading: loadingSweet,
+        setLoading: setLoadingSweet,
+        enabledMessage: 'Ник с клубничками включен',
+        disabledMessage: 'Ник с клубничками выключен',
+    });
+
+    const toggleDiamond = () => toggleService('diamond', {
+        loading: loadingDiamond,
+        setLoading: setLoadingDiamond,
+        enabledMessage: 'Ник с алмазами включен',
+        disabledMessage: 'Ник с алмазами выключен',
+    });
+
+    const togglePufferfish = () => toggleService('pufferfish', {
+        loading: loadingPufferfish,
+        setLoading: setLoadingPufferfish,
+        enabledMessage: 'Ник с рыбой фугу включен',
+        disabledMessage: 'Ник с рыбой фугу выключен',
     });
 
     if (!profile.profile) {
@@ -818,6 +905,39 @@ const MinigamesExclusivesPage = () => {
                                 disabled={loadingSlNick2}
                                 isBought={slNick2Bought}
                                 isActive={slNick2Active}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник с клубничками"
+                                description="Ник с клубничками"
+                                price={sweetPrice}
+                                PreviewComponent={SweetPreview}
+                                onBuy={() => setShowConfirmSweet(true)}
+                                onToggle={toggleSweet}
+                                disabled={loadingSweet}
+                                isBought={sweetBought}
+                                isActive={sweetActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник с алмазами"
+                                description="Ник с алмазами"
+                                price={diamondPrice}
+                                PreviewComponent={DiamondPreview}
+                                onBuy={() => setShowConfirmDiamond(true)}
+                                onToggle={toggleDiamond}
+                                disabled={loadingDiamond}
+                                isBought={diamondBought}
+                                isActive={diamondActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник с рыбой фугу"
+                                description="Ник с рыбой фугу"
+                                price={pufferfishPrice}
+                                PreviewComponent={PufferfishPreview}
+                                onBuy={() => setShowConfirmPufferfish(true)}
+                                onToggle={togglePufferfish}
+                                disabled={loadingPufferfish}
+                                isBought={pufferfishBought}
+                                isActive={pufferfishActive}
                             />
                         </div>
                     )}
@@ -1235,6 +1355,84 @@ const MinigamesExclusivesPage = () => {
                 >
                     <p>
                         Вы действительно хотите купить ник Призрак за <b className="text-success">{ruPluralizeVimers(slNick2Price)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!sweetBought && sweetPrice && (totalBalance < sweetPrice ? (
+                <ConfirmModal 
+                    show={showConfirmSweet} 
+                    close={() => setShowConfirmSweet(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника с клубничками.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmSweet} 
+                    close={() => setShowConfirmSweet(false)}
+                    confirmText="Купить"
+                    onConfirm={buySweet}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник с клубничками за <b className="text-success">{ruPluralizeVimers(sweetPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!diamondBought && diamondPrice && (totalBalance < diamondPrice ? (
+                <ConfirmModal 
+                    show={showConfirmDiamond} 
+                    close={() => setShowConfirmDiamond(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника с алмазами.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmDiamond} 
+                    close={() => setShowConfirmDiamond(false)}
+                    confirmText="Купить"
+                    onConfirm={buyDiamond}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник с алмазами за <b className="text-success">{ruPluralizeVimers(diamondPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!pufferfishBought && pufferfishPrice && (totalBalance < pufferfishPrice ? (
+                <ConfirmModal 
+                    show={showConfirmPufferfish} 
+                    close={() => setShowConfirmPufferfish(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника с рыбой фугу.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmPufferfish} 
+                    close={() => setShowConfirmPufferfish(false)}
+                    confirmText="Купить"
+                    onConfirm={buyPufferfish}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник с рыбой фугу за <b className="text-success">{ruPluralizeVimers(pufferfishPrice)}</b>?
                     </p>
                     Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
                 </ConfirmModal>
