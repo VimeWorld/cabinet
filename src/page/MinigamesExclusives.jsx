@@ -202,6 +202,36 @@ const PufferfishPreview = () => {
     );
 };
 
+const BloodyHandPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/bloody_hand.gif" 
+            alt="Ник с кровавой рукой" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
+const BloodyEyePreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/bloody_eye.gif" 
+            alt="Ник с кровавым глазом" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
+const PirateFlagPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/pirate_flag.gif" 
+            alt="Ник с пиратским флагом" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
 const ExclusiveProductCard = ({ title, description, price, PreviewComponent, onBuy, onToggle, disabled, isBought, isActive }) => {
     const showPrice = !isBought;
     const buttonText = isBought ? (isActive ? 'Выключить' : 'Включить') : 'Купить';
@@ -270,6 +300,9 @@ const MinigamesExclusivesPage = () => {
     const [showConfirmSweet, setShowConfirmSweet] = useState(false);
     const [showConfirmDiamond, setShowConfirmDiamond] = useState(false);
     const [showConfirmPufferfish, setShowConfirmPufferfish] = useState(false);
+    const [showConfirmBloodyHand, setShowConfirmBloodyHand] = useState(false);
+    const [showConfirmBloodyEye, setShowConfirmBloodyEye] = useState(false);
+    const [showConfirmPirateFlag, setShowConfirmPirateFlag] = useState(false);
     const [loadingShimmer, setLoadingShimmer] = useState(false);
     const [loadingRainbow, setLoadingRainbow] = useState(false);
     const [loadingShaking, setLoadingShaking] = useState(false);
@@ -289,6 +322,9 @@ const MinigamesExclusivesPage = () => {
     const [loadingSweet, setLoadingSweet] = useState(false);
     const [loadingDiamond, setLoadingDiamond] = useState(false);
     const [loadingPufferfish, setLoadingPufferfish] = useState(false);
+    const [loadingBloodyHand, setLoadingBloodyHand] = useState(false);
+    const [loadingBloodyEye, setLoadingBloodyEye] = useState(false);
+    const [loadingPirateFlag, setLoadingPirateFlag] = useState(false);
 
     const shimmerPrice = prices.prices?.shimmer;
     const rainbowPrice = prices.prices?.rainbow;
@@ -309,6 +345,9 @@ const MinigamesExclusivesPage = () => {
     const sweetPrice = prices.prices?.sweet;
     const diamondPrice = prices.prices?.diamond;
     const pufferfishPrice = prices.prices?.pufferfish;
+    const bloodyHandPrice = prices.prices?.bloody_hand;
+    const bloodyEyePrice = prices.prices?.bloody_eye;
+    const pirateFlagPrice = prices.prices?.pirate_flag;
 
 
     const shimmerBought = userServices?.shimmer_buyed || false;
@@ -349,6 +388,12 @@ const MinigamesExclusivesPage = () => {
     const diamondActive = userServices?.diamond_active || false;
     const pufferfishBought = userServices?.pufferfish_buyed || false;
     const pufferfishActive = userServices?.pufferfish_active || false;
+    const bloodyHandBought = userServices?.bloody_hand_buyed || false;
+    const bloodyHandActive = userServices?.bloody_hand_active || false;
+    const bloodyEyeBought = userServices?.bloody_eye_buyed || false;
+    const bloodyEyeActive = userServices?.bloody_eye_active || false;
+    const pirateFlagBought = userServices?.pirate_flag_buyed || false;
+    const pirateFlagActive = userServices?.pirate_flag_active || false;
 
     const loadUserServices = useCallback(() => {
         setLoadingServices(true);
@@ -568,6 +613,27 @@ const MinigamesExclusivesPage = () => {
         successMessage: 'Вы успешно купили ник с рыбой фугу',
     });
 
+    const buyBloodyHand = () => buyService('bloody_hand', {
+        loading: loadingBloodyHand,
+        setLoading: setLoadingBloodyHand,
+        setShowConfirm: setShowConfirmBloodyHand,
+        successMessage: 'Вы успешно купили ник с кровавой рукой',
+    });
+
+    const buyBloodyEye = () => buyService('bloody_eye', {
+        loading: loadingBloodyEye,
+        setLoading: setLoadingBloodyEye,
+        setShowConfirm: setShowConfirmBloodyEye,
+        successMessage: 'Вы успешно купили ник с кровавым глазом',
+    });
+
+    const buyPirateFlag = () => buyService('pirate_flag', {
+        loading: loadingPirateFlag,
+        setLoading: setLoadingPirateFlag,
+        setShowConfirm: setShowConfirmPirateFlag,
+        successMessage: 'Вы успешно купили ник с пиратским флагом',
+    });
+
     const toggleShimmer = () => toggleService('shimmer', {
         loading: loadingShimmer,
         setLoading: setLoadingShimmer,
@@ -699,6 +765,27 @@ const MinigamesExclusivesPage = () => {
         setLoading: setLoadingPufferfish,
         enabledMessage: 'Ник с рыбой фугу включен',
         disabledMessage: 'Ник с рыбой фугу выключен',
+    });
+
+    const toggleBloodyHand = () => toggleService('bloody_hand', {
+        loading: loadingBloodyHand,
+        setLoading: setLoadingBloodyHand,
+        enabledMessage: 'Ник с кровавой рукой включен',
+        disabledMessage: 'Ник с кровавой рукой выключен',
+    });
+
+    const toggleBloodyEye = () => toggleService('bloody_eye', {
+        loading: loadingBloodyEye,
+        setLoading: setLoadingBloodyEye,
+        enabledMessage: 'Ник с кровавым глазом включен',
+        disabledMessage: 'Ник с кровавым глазом выключен',
+    });
+
+    const togglePirateFlag = () => toggleService('pirate_flag', {
+        loading: loadingPirateFlag,
+        setLoading: setLoadingPirateFlag,
+        enabledMessage: 'Ник с пиратским флагом включен',
+        disabledMessage: 'Ник с пиратским флагом выключен',
     });
 
     if (!profile.profile) {
@@ -938,6 +1025,39 @@ const MinigamesExclusivesPage = () => {
                                 disabled={loadingPufferfish}
                                 isBought={pufferfishBought}
                                 isActive={pufferfishActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник с кровавой рукой"
+                                description="Ник с кровавой рукой"
+                                price={bloodyHandPrice}
+                                PreviewComponent={BloodyHandPreview}
+                                onBuy={() => setShowConfirmBloodyHand(true)}
+                                onToggle={toggleBloodyHand}
+                                disabled={loadingBloodyHand}
+                                isBought={bloodyHandBought}
+                                isActive={bloodyHandActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник с кровавым глазом"
+                                description="Ник с кровавым глазом"
+                                price={bloodyEyePrice}
+                                PreviewComponent={BloodyEyePreview}
+                                onBuy={() => setShowConfirmBloodyEye(true)}
+                                onToggle={toggleBloodyEye}
+                                disabled={loadingBloodyEye}
+                                isBought={bloodyEyeBought}
+                                isActive={bloodyEyeActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник с пиратским флагом"
+                                description="Ник с пиратским флагом"
+                                price={pirateFlagPrice}
+                                PreviewComponent={PirateFlagPreview}
+                                onBuy={() => setShowConfirmPirateFlag(true)}
+                                onToggle={togglePirateFlag}
+                                disabled={loadingPirateFlag}
+                                isBought={pirateFlagBought}
+                                isActive={pirateFlagActive}
                             />
                         </div>
                     )}
@@ -1433,6 +1553,84 @@ const MinigamesExclusivesPage = () => {
                 >
                     <p>
                         Вы действительно хотите купить ник с рыбой фугу за <b className="text-success">{ruPluralizeVimers(pufferfishPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!bloodyHandBought && bloodyHandPrice && (totalBalance < bloodyHandPrice ? (
+                <ConfirmModal 
+                    show={showConfirmBloodyHand} 
+                    close={() => setShowConfirmBloodyHand(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника с кровавой рукой.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmBloodyHand} 
+                    close={() => setShowConfirmBloodyHand(false)}
+                    confirmText="Купить"
+                    onConfirm={buyBloodyHand}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник с кровавой рукой за <b className="text-success">{ruPluralizeVimers(bloodyHandPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!bloodyEyeBought && bloodyEyePrice && (totalBalance < bloodyEyePrice ? (
+                <ConfirmModal 
+                    show={showConfirmBloodyEye} 
+                    close={() => setShowConfirmBloodyEye(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника с кровавым глазом.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmBloodyEye} 
+                    close={() => setShowConfirmBloodyEye(false)}
+                    confirmText="Купить"
+                    onConfirm={buyBloodyEye}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник с кровавым глазом за <b className="text-success">{ruPluralizeVimers(bloodyEyePrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!pirateFlagBought && pirateFlagPrice && (totalBalance < pirateFlagPrice ? (
+                <ConfirmModal 
+                    show={showConfirmPirateFlag} 
+                    close={() => setShowConfirmPirateFlag(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника с пиратским флагом.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmPirateFlag} 
+                    close={() => setShowConfirmPirateFlag(false)}
+                    confirmText="Купить"
+                    onConfirm={buyPirateFlag}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник с пиратским флагом за <b className="text-success">{ruPluralizeVimers(pirateFlagPrice)}</b>?
                     </p>
                     Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
                 </ConfirmModal>
