@@ -232,6 +232,36 @@ const PirateFlagPreview = () => {
     );
 };
 
+const DevilPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/devil.gif" 
+            alt="Ник с дьяволом" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
+const SurprisedPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/surprised.gif" 
+            alt="Удивлённый ник" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
+const SkeletonPreview = () => {
+    return (
+        <img 
+            src="/assets/image/exclusives/skeleton.gif" 
+            alt="Ник со скелетом" 
+            style={{ maxWidth: '400px', width: '100%', height: 'auto' }}
+        />
+    );
+};
+
 const ExclusiveProductCard = ({ title, description, price, PreviewComponent, onBuy, onToggle, disabled, isBought, isActive }) => {
     const showPrice = !isBought;
     const buttonText = isBought ? (isActive ? 'Выключить' : 'Включить') : 'Купить';
@@ -303,6 +333,9 @@ const MinigamesExclusivesPage = () => {
     const [showConfirmBloodyHand, setShowConfirmBloodyHand] = useState(false);
     const [showConfirmBloodyEye, setShowConfirmBloodyEye] = useState(false);
     const [showConfirmPirateFlag, setShowConfirmPirateFlag] = useState(false);
+    const [showConfirmDevil, setShowConfirmDevil] = useState(false);
+    const [showConfirmSurprised, setShowConfirmSurprised] = useState(false);
+    const [showConfirmSkeleton, setShowConfirmSkeleton] = useState(false);
     const [loadingShimmer, setLoadingShimmer] = useState(false);
     const [loadingRainbow, setLoadingRainbow] = useState(false);
     const [loadingShaking, setLoadingShaking] = useState(false);
@@ -325,6 +358,9 @@ const MinigamesExclusivesPage = () => {
     const [loadingBloodyHand, setLoadingBloodyHand] = useState(false);
     const [loadingBloodyEye, setLoadingBloodyEye] = useState(false);
     const [loadingPirateFlag, setLoadingPirateFlag] = useState(false);
+    const [loadingDevil, setLoadingDevil] = useState(false);
+    const [loadingSurprised, setLoadingSurprised] = useState(false);
+    const [loadingSkeleton, setLoadingSkeleton] = useState(false);
 
     const shimmerPrice = prices.prices?.shimmer;
     const rainbowPrice = prices.prices?.rainbow;
@@ -348,6 +384,9 @@ const MinigamesExclusivesPage = () => {
     const bloodyHandPrice = prices.prices?.bloody_hand;
     const bloodyEyePrice = prices.prices?.bloody_eye;
     const pirateFlagPrice = prices.prices?.pirate_flag;
+    const devilPrice = prices.prices?.devil;
+    const surprisedPrice = prices.prices?.surprised;
+    const skeletonPrice = prices.prices?.skeleton;
 
 
     const shimmerBought = userServices?.shimmer_buyed || false;
@@ -394,6 +433,12 @@ const MinigamesExclusivesPage = () => {
     const bloodyEyeActive = userServices?.bloody_eye_active || false;
     const pirateFlagBought = userServices?.pirate_flag_buyed || false;
     const pirateFlagActive = userServices?.pirate_flag_active || false;
+    const devilBought = userServices?.devil_buyed || false;
+    const devilActive = userServices?.devil_active || false;
+    const surprisedBought = userServices?.surprised_buyed || false;
+    const surprisedActive = userServices?.surprised_active || false;
+    const skeletonBought = userServices?.skeleton_buyed || false;
+    const skeletonActive = userServices?.skeleton_active || false;
 
     const loadUserServices = useCallback(() => {
         setLoadingServices(true);
@@ -634,6 +679,27 @@ const MinigamesExclusivesPage = () => {
         successMessage: 'Вы успешно купили ник с пиратским флагом',
     });
 
+    const buyDevil = () => buyService('devil', {
+        loading: loadingDevil,
+        setLoading: setLoadingDevil,
+        setShowConfirm: setShowConfirmDevil,
+        successMessage: 'Вы успешно купили ник с дьяволом',
+    });
+
+    const buySurprised = () => buyService('surprised', {
+        loading: loadingSurprised,
+        setLoading: setLoadingSurprised,
+        setShowConfirm: setShowConfirmSurprised,
+        successMessage: 'Вы успешно купили удивлённый ник',
+    });
+
+    const buySkeleton = () => buyService('skeleton', {
+        loading: loadingSkeleton,
+        setLoading: setLoadingSkeleton,
+        setShowConfirm: setShowConfirmSkeleton,
+        successMessage: 'Вы успешно купили ник со скелетом',
+    });
+
     const toggleShimmer = () => toggleService('shimmer', {
         loading: loadingShimmer,
         setLoading: setLoadingShimmer,
@@ -786,6 +852,27 @@ const MinigamesExclusivesPage = () => {
         setLoading: setLoadingPirateFlag,
         enabledMessage: 'Ник с пиратским флагом включен',
         disabledMessage: 'Ник с пиратским флагом выключен',
+    });
+
+    const toggleDevil = () => toggleService('devil', {
+        loading: loadingDevil,
+        setLoading: setLoadingDevil,
+        enabledMessage: 'Ник с дьяволом включен',
+        disabledMessage: 'Ник с дьяволом выключен',
+    });
+
+    const toggleSurprised = () => toggleService('surprised', {
+        loading: loadingSurprised,
+        setLoading: setLoadingSurprised,
+        enabledMessage: 'Удивлённый ник включен',
+        disabledMessage: 'Удивлённый ник выключен',
+    });
+
+    const toggleSkeleton = () => toggleService('skeleton', {
+        loading: loadingSkeleton,
+        setLoading: setLoadingSkeleton,
+        enabledMessage: 'Ник со скелетом включен',
+        disabledMessage: 'Ник со скелетом выключен',
     });
 
     if (!profile.profile) {
@@ -1058,6 +1145,39 @@ const MinigamesExclusivesPage = () => {
                                 disabled={loadingPirateFlag}
                                 isBought={pirateFlagBought}
                                 isActive={pirateFlagActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник с дьяволом"
+                                description="Ник с дьяволом"
+                                price={devilPrice}
+                                PreviewComponent={DevilPreview}
+                                onBuy={() => setShowConfirmDevil(true)}
+                                onToggle={toggleDevil}
+                                disabled={loadingDevil}
+                                isBought={devilBought}
+                                isActive={devilActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Удивлённый ник"
+                                description="Удивлённый ник"
+                                price={surprisedPrice}
+                                PreviewComponent={SurprisedPreview}
+                                onBuy={() => setShowConfirmSurprised(true)}
+                                onToggle={toggleSurprised}
+                                disabled={loadingSurprised}
+                                isBought={surprisedBought}
+                                isActive={surprisedActive}
+                            />
+                            <ExclusiveProductCard
+                                title="Ник со скелетом"
+                                description="Ник со скелетом"
+                                price={skeletonPrice}
+                                PreviewComponent={SkeletonPreview}
+                                onBuy={() => setShowConfirmSkeleton(true)}
+                                onToggle={toggleSkeleton}
+                                disabled={loadingSkeleton}
+                                isBought={skeletonBought}
+                                isActive={skeletonActive}
                             />
                         </div>
                     )}
@@ -1631,6 +1751,84 @@ const MinigamesExclusivesPage = () => {
                 >
                     <p>
                         Вы действительно хотите купить ник с пиратским флагом за <b className="text-success">{ruPluralizeVimers(pirateFlagPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!devilBought && devilPrice && (totalBalance < devilPrice ? (
+                <ConfirmModal 
+                    show={showConfirmDevil} 
+                    close={() => setShowConfirmDevil(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника с дьяволом.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmDevil} 
+                    close={() => setShowConfirmDevil(false)}
+                    confirmText="Купить"
+                    onConfirm={buyDevil}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник с дьяволом за <b className="text-success">{ruPluralizeVimers(devilPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!surprisedBought && surprisedPrice && (totalBalance < surprisedPrice ? (
+                <ConfirmModal 
+                    show={showConfirmSurprised} 
+                    close={() => setShowConfirmSurprised(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки удивлённого ника.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmSurprised} 
+                    close={() => setShowConfirmSurprised(false)}
+                    confirmText="Купить"
+                    onConfirm={buySurprised}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить удивлённый ник за <b className="text-success">{ruPluralizeVimers(surprisedPrice)}</b>?
+                    </p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ))}
+
+            {!skeletonBought && skeletonPrice && (totalBalance < skeletonPrice ? (
+                <ConfirmModal 
+                    show={showConfirmSkeleton} 
+                    close={() => setShowConfirmSkeleton(false)}
+                    confirmText="Пополнить счет"
+                    onConfirm={() => navigate("/payments")}
+                    title="Недостаточно вимеров"
+                >
+                    <p>У вас недостаточно вимеров для покупки ника со скелетом.</p>
+                    Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
+                </ConfirmModal>
+            ) : (
+                <ConfirmModal 
+                    show={showConfirmSkeleton} 
+                    close={() => setShowConfirmSkeleton(false)}
+                    confirmText="Купить"
+                    onConfirm={buySkeleton}
+                    title="Подтверждение покупки"
+                >
+                    <p>
+                        Вы действительно хотите купить ник со скелетом за <b className="text-success">{ruPluralizeVimers(skeletonPrice)}</b>?
                     </p>
                     Ваш баланс <b className="text-success">{ruPluralizeVimers(totalBalance)}</b>
                 </ConfirmModal>
